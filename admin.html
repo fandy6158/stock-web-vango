@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>到账解锁</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">解</div>
+        <div>
+          <h1>到账解锁</h1>
+          <div class="sub">微信看到钱到了，把订单号写进去</div>
+        </div>
+      </div>
+    </header>
+    <section class="search-card">
+      <label for="api">云函数地址</label>
+      <input id="api" type="url" placeholder="https://你的云函数域名" />
+      <label for="key">ADMIN_KEY</label>
+      <input id="key" type="password" placeholder="只给你自己用，不要发给用户" />
+      <label for="order">订单号（用户付款备注）</label>
+      <input id="order" type="text" placeholder="GU600519-A8K2" />
+      <label for="code">股票代码</label>
+      <input id="code" type="text" placeholder="600519" />
+      <div class="actions">
+        <button class="primary" id="unlock" type="button">确认到账并解锁</button>
+      </div>
+      <p class="hint" id="msg">这页不要发给用户，也不要公开转发。</p>
+    </section>
+  </div>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    $("api").value = localStorage.getItem("admin-api") || "https://stock-api-tvzvtpfrip.cn-hangzhou.fcapp.run";
+    $("key").value = localStorage.getItem("admin-key") || "";
+    $("unlock").onclick = async () => {
+      const api = $("api").value.replace(/\/$/, "");
+      const key = $("key").value.trim();
+      const order = $("order").value.trim();
+      const code = $("code").value.trim();
+      $("msg").textContent = "提交中…";
+      localStorage.setItem("admin-api", api);
+      localStorage.setItem("admin-key", key);
+      try {
+        const res = await fetch(api + "/paid", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-Admin-Key": key },
+          body: JSON.stringify({ order, code })
+        });
+        const data = await res.json();
+        $("msg").textContent = data.ok
+          ? "已写入白名单。让用户再点「我已付款，刷新查询」。"
+          : ("失败：" + (data.message || res.status));
+      } catch (err) {
+        $("msg").textContent = "失败：" + err.message + "。若还没上云，改用 GitHub 里的 data/paid.json。";
+      }
+    };
+  </script>
+</body>
+</html>

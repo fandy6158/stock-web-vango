@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>估值查询</title>
+  <meta name="description" content="输入股票代码，读取云端估值表并显示目标价与安全边际。" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="估值查询" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon.svg" />
+  <link rel="icon" href="./icons/icon.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">估</div>
+        <div>
+          <h1>估值查询</h1>
+          <div class="sub">输入代码 · 付款后查看估值</div>
+        </div>
+      </div>
+      <button class="icon-btn" id="toggle-settings" aria-label="设置">⚙</button>
+    </header>
+
+    <section class="search-card">
+      <div class="search-row">
+        <input id="query" type="text" inputmode="search" autocomplete="off" placeholder="输入股票代码或名称，如 600519" />
+        <button class="primary" id="lookup">查询</button>
+      </div>
+      <p class="hint">先确认代码存在，再出示收款码。付款备注请填页面生成的订单号。</p>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <p class="status" id="status"></p>
+
+    <section class="card paywall" id="paywall">
+      <div class="head-row">
+        <div class="name-block">
+          <div class="code" id="p-code"></div>
+          <h2 id="p-name"></h2>
+          <div class="industry" id="p-industry"></div>
+        </div>
+        <div class="badge hold">待付款</div>
+      </div>
+      <div class="pay-box">
+        <p class="pay-price">查询本条估值 <strong id="p-amount">1.99</strong> 元</p>
+        <img id="p-qr" class="qr" alt="微信收款码" src="./icons/wechat-pay.jpg" />
+        <p class="hint">打开微信扫码。转账备注必须填下面的订单号，否则无法对上。</p>
+        <div class="order-line">
+          <span>订单号</span>
+          <code id="p-order"></code>
+          <button class="ghost" id="copy-order" type="button">复制</button>
+        </div>
+        <p class="pay-note" id="p-note"></p>
+        <button class="primary" id="paid-refresh" type="button">我已付款，刷新查询</button>
+      </div>
+    </section>
+
+    <section class="card result" id="result">
+      <div class="head-row">
+        <div class="name-block">
+          <div class="code" id="r-code"></div>
+          <h2 id="r-name"></h2>
+          <div class="industry" id="r-industry"></div>
+        </div>
+        <div class="badge hold" id="r-rating">-</div>
+      </div>
+      <div class="grid" id="r-fields"></div>
+      <div class="note" id="r-note"></div>
+    </section>
+
+    <section class="panel" id="settings">
+      <h3>数据源设置</h3>
+      <p>正式环境把估值表放阿里云 OSS / 腾讯云 COS 私有桶，网页只填云函数地址。本地 CSV 仅供演示。</p>
+      <label for="api-url">云函数地址</label>
+      <input id="api-url" type="url" placeholder="https://xxx.tencentscf.com" />
+      <label for="csv-url">本地演示 CSV</label>
+      <input id="csv-url" type="url" placeholder="./data/stocks.csv" />
+      <div class="actions">
+        <button class="primary" id="save-url">保存并加载</button>
+        <button class="ghost" id="reset-url">恢复默认</button>
+      </div>
+      <p style="margin-top:14px;">iPhone 用法：Safari 打开本页 → 分享 → 添加到主屏幕。</p>
+    </section>
+
+    <section class="card notice">
+      <h3>注意事项</h3>
+      <ol>
+        <li>本页只展示作者维护的计算结果，不构成投资建议，不保证收益。</li>
+        <li>付款前先查询，确认表里有这只股票，再扫码。备注必须填写页面生成的订单号。</li>
+        <li>个人微信收款码不能自动到账通知。作者在微信看到转账并解锁后，再点「我已付款，刷新查询」。</li>
+        <li>未填订单号、填错订单号，或未等待作者确认，都无法看到完整数据。</li>
+        <li>估值数据由作者不定期更新，不保证与盘中实时行情一致。</li>
+        <li>iPhone：用 Safari 打开本页，点分享 → 添加到主屏幕，即可当 App 使用。</li>
+      </ol>
+    </section>
+
+    <footer>
+      研究笔记仅供参考，不构成投资建议。付款后请保留订单号以便核对。
+    </footer>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
