@@ -273,7 +273,7 @@ async function boot() {
     if (currentApiBase()) {
       PAY.apiBase = currentApiBase();
       await loadCatalog();
-      setStatus(`已连接云函数 · 目录 ${state.rows.length} 只（完整估值表不在网页里）`);
+      setStatus(`已连接云函数 `);
       renderChips();
       return;
     }
