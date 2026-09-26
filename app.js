@@ -250,7 +250,10 @@ function showPaywall(row) {
   $("p-amount").textContent = PAY.amount;
   $("p-qr").src = PAY.qrSrc;
   $("p-order").textContent = orderId;
-  $("p-note").textContent = `付款后把订单号发给微信 ${PAY.wechat}。作者确认到账并写入白名单后，再点下面按钮即可看到表格数据。个人收款码本身不会自动通知这个网页。`;
+ 
+  $("p-note").textContent = `付款后如遇不显示查询结果，请加微信：Vango77  或 私信推特X:@ai18431588 `;
+
+  
   $("paywall").classList.add("show");
 }
 
