@@ -5,7 +5,7 @@ const STORAGE_KEY = "stock-pwa-csv-url";
 // 当前流程：生成订单号 → 用户付款并填备注 → 你在微信看到到账后，把订单号写入 data/paid.json → 用户点刷新。
 const PAY = {
   enabled: true,
-  amount: "0.99",
+  amount: "0.10",
   qrSrc: "./icons/wechat-pay.jpg",
   wechat: "WuFan",
   paidListUrl: "./data/paid.json",
