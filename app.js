@@ -246,7 +246,7 @@ function showPaywall(row) {
   sessionStorage.setItem("pending-order", JSON.stringify({ code, orderId, name: row["名称"] }));
   $("p-code").textContent = code;
   $("p-name").textContent = row["名称"] || "未知标的";
-  $("p-industry").textContent = row["行业"] || "已找到记录，付款后显示完整估值： 【单只个股付费查询后，后续重复查询将免费】！！";
+  $("p-industry").textContent = row["行业"] || "已找到记录，付款后显示完整估值";
   $("p-amount").textContent = PAY.amount;
   $("p-qr").src = PAY.qrSrc;
   $("p-order").textContent = orderId;
