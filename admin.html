@@ -64,7 +64,7 @@
 
     <section class="search-card pane" id="pane-post">
       <h3>发布 / 更新文章</h3>
-      <p class="hint">先把 Excel 表格做好再截图。公开图游客能看；完整表截图放到非公开图。</p>
+      <p class="hint">文字可以直接打。图片：可点「选择文件」，也可以把截图复制后，在对应文字框里 Ctrl+V 粘贴。完整估值表请贴到非公开文字框。</p>
       <label for="art-id">文章 ID（可自动生成）</label>
       <input id="art-id" type="text" placeholder="留空则自动生成" />
       <label for="art-title">标题</label>
@@ -83,12 +83,12 @@
         <option value="svip">超级VIP</option>
       </select>
       <label for="art-public">公开文字</label>
-      <textarea id="art-public" rows="6" placeholder="游客可见的文字"></textarea>
+      <textarea id="art-public" rows="6" placeholder="游客可见的文字。可在此框 Ctrl+V 粘贴示意图截图。"></textarea>
       <label>公开图片（可选示意图）</label>
       <input id="art-pub-files" type="file" accept="image/*" multiple />
       <div class="preview" id="prev-pub"></div>
       <label for="art-private">非公开文字</label>
-      <textarea id="art-private" rows="6" placeholder="会员可见的说明"></textarea>
+      <textarea id="art-private" rows="6" placeholder="会员可见的说明。完整表格截图在此框 Ctrl+V 粘贴。"></textarea>
       <label>非公开图片（完整表格截图）</label>
       <input id="art-pri-files" type="file" accept="image/*" multiple />
       <div class="preview" id="prev-pri"></div>
@@ -230,6 +230,37 @@
 
     $("art-pub-files").onchange = () => readFiles($("art-pub-files"), pubFiles, "prev-pub");
     $("art-pri-files").onchange = () => readFiles($("art-pri-files"), priFiles, "prev-pri");
+
+    function addImageData(bucket, previewId, dataUrl) {
+      bucket.push(dataUrl);
+      const box = $(previewId);
+      const img = document.createElement("img");
+      img.src = dataUrl;
+      box.appendChild(img);
+    }
+
+    function bindPaste(textareaId, bucket, previewId) {
+      $(textareaId).addEventListener("paste", (e) => {
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+        let got = false;
+        for (const item of items) {
+          if (item.type && item.type.indexOf("image") === 0) {
+            got = true;
+            const file = item.getAsFile();
+            const reader = new FileReader();
+            reader.onload = () => addImageData(bucket, previewId, reader.result);
+            reader.readAsDataURL(file);
+          }
+        }
+        if (got) {
+          e.preventDefault();
+          $("msg-art").textContent = "已粘贴图片，发布时会随文章保存。";
+        }
+      });
+    }
+    bindPaste("art-public", pubFiles, "prev-pub");
+    bindPaste("art-private", priFiles, "prev-pri");
 
     function currentArticle() {
       return {
