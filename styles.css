@@ -331,3 +331,90 @@ footer {
 @media (min-width: 640px) {
   .grid { grid-template-columns: 1fr 1fr 1fr; }
 }
+
+
+.header-actions { display: flex; gap: 8px; align-items: center; }
+button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin: -6px 0 16px;
+  overflow-x: auto;
+}
+.tab {
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tab.on { color: #1a1406; background: linear-gradient(180deg, #f0d48a, #c9a14a); border-color: transparent; font-weight: 700; }
+.view { display: none; }
+.view.show { display: block; }
+.list { display: flex; flex-direction: column; gap: 12px; }
+.article-card { padding: 16px 18px; cursor: pointer; }
+.article-card h2 { font-size: 18px; margin: 6px 0 8px; }
+.article-card p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.level-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+.article { padding: 18px; }
+.article h2 { font-size: 22px; margin: 8px 0 12px; }
+.article .body { color: #d5deef; font-size: 15px; line-height: 1.75; white-space: pre-wrap; }
+.shots { display: flex; flex-direction: column; gap: 12px; margin: 14px 0; }
+.shots img {
+  width: 100%;
+  border-radius: 12px;
+  background: #0d1628;
+  border: 1px solid var(--line);
+}
+.lock-box {
+  margin: 16px 0;
+  padding: 18px;
+  border: 1px dashed rgba(232,195,106,.35);
+  border-radius: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+.plan-grid { display: grid; gap: 12px; margin: 12px 0 16px; }
+.plan-card { padding: 18px; }
+.plan-card .price { color: var(--gold); font-size: 28px; font-weight: 800; margin: 8px 0; }
+.plan-card ul { color: var(--muted); font-size: 13px; line-height: 1.7; padding-left: 18px; margin: 8px 0 14px; }
+.plan-mini { margin-bottom: 12px; }
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  display: grid; place-items: center;
+  padding: 16px;
+  z-index: 40;
+}
+.modal[hidden] { display: none !important; }
+.modal-card {
+  width: min(420px, 100%);
+  background: #121b2d;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.modal-card h3 { margin-bottom: 8px; }
+.modal-card label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 6px; }
+input[type="tel"] {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0d1628;
+  color: var(--text);
+  padding: 0 14px;
+  font-size: 16px;
+  outline: none;
+}

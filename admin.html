@@ -3,25 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>到账解锁</title>
+  <title>管理后台</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <div class="app">
     <header class="header">
       <div class="brand">
-        <div class="logo">解</div>
+        <div class="logo">管</div>
         <div>
-          <h1>到账解锁</h1>
-          <div class="sub">微信看到钱到了，把订单号写进去</div>
+          <h1>管理后台</h1>
+          <div class="sub">不要发给用户，也不要公开转发</div>
         </div>
       </div>
     </header>
+
     <section class="search-card">
       <label for="api">云函数地址</label>
       <input id="api" type="url" placeholder="https://你的云函数域名" />
       <label for="key">ADMIN_KEY</label>
-      <input id="key" type="password" placeholder="只给你自己用，不要发给用户" />
+      <input id="key" type="password" placeholder="只给你自己用" />
+    </section>
+
+    <nav class="tabs">
+      <button class="tab on" data-pane="paid" type="button">估值到账</button>
+      <button class="tab" data-pane="vip" type="button">开通会员</button>
+      <button class="tab" data-pane="post" type="button">发布文章</button>
+      <button class="tab" data-pane="list" type="button">文章列表</button>
+    </nav>
+
+    <section class="search-card pane show" id="pane-paid">
+      <h3>确认单次估值付款</h3>
       <label for="order">订单号（用户付款备注）</label>
       <input id="order" type="text" placeholder="GU600519-A8K2" />
       <label for="code">股票代码</label>
@@ -29,35 +41,276 @@
       <div class="actions">
         <button class="primary" id="unlock" type="button">确认到账并解锁</button>
       </div>
-      <p class="hint" id="msg">这页不要发给用户，也不要公开转发。</p>
+      <p class="hint" id="msg-paid">写入云端白名单；云函数不可用时写入本机演示账本。</p>
+    </section>
+
+    <section class="search-card pane" id="pane-vip">
+      <h3>确认会员付款</h3>
+      <label for="vip-phone">用户手机号</label>
+      <input id="vip-phone" type="tel" placeholder="13800000000" />
+      <label for="vip-order">订单号</label>
+      <input id="vip-order" type="text" placeholder="VIP-TRIAL-7D-XXXX" />
+      <label for="vip-plan">开通档位</label>
+      <select id="vip-plan">
+        <option value="trial">体验会员 · 99 元 · 7 天</option>
+        <option value="vip">VIP · 999 元 · 6 个月</option>
+        <option value="svip">超级VIP · 2999 元 · 12 个月</option>
+      </select>
+      <div class="actions">
+        <button class="primary" id="unlock-vip" type="button">确认到账并开通</button>
+      </div>
+      <p class="hint" id="msg-vip">从付款日起算时长。升级不叠加旧套餐剩余天数。</p>
+    </section>
+
+    <section class="search-card pane" id="pane-post">
+      <h3>发布 / 更新文章</h3>
+      <p class="hint">先把 Excel 表格做好再截图。公开图游客能看；完整表截图放到非公开图。</p>
+      <label for="art-id">文章 ID（可自动生成）</label>
+      <input id="art-id" type="text" placeholder="留空则自动生成" />
+      <label for="art-title">标题</label>
+      <input id="art-title" type="text" placeholder="文章标题" />
+      <label for="art-summary">列表简介</label>
+      <input id="art-summary" type="text" placeholder="一两句话" />
+      <label for="art-vis">类型</label>
+      <select id="art-vis">
+        <option value="public">公开文章（游客可读公开区）</option>
+        <option value="members">会员文章（未登录不出现在公开列表）</option>
+      </select>
+      <label for="art-level">非公开区最低档</label>
+      <select id="art-level">
+        <option value="trial">体验会员</option>
+        <option value="vip">VIP</option>
+        <option value="svip">超级VIP</option>
+      </select>
+      <label for="art-public">公开文字</label>
+      <textarea id="art-public" rows="6" placeholder="游客可见的文字"></textarea>
+      <label>公开图片（可选示意图）</label>
+      <input id="art-pub-files" type="file" accept="image/*" multiple />
+      <div class="preview" id="prev-pub"></div>
+      <label for="art-private">非公开文字</label>
+      <textarea id="art-private" rows="6" placeholder="会员可见的说明"></textarea>
+      <label>非公开图片（完整表格截图）</label>
+      <input id="art-pri-files" type="file" accept="image/*" multiple />
+      <div class="preview" id="prev-pri"></div>
+      <div class="actions">
+        <button class="primary" id="save-art" type="button">发布文章</button>
+        <button class="ghost" id="export-art" type="button">导出 JSON</button>
+      </div>
+      <p class="hint" id="msg-art">云函数未上线时，文章保存在这台浏览器，并写入 data 导出文件供你上传仓库。</p>
+    </section>
+
+    <section class="search-card pane" id="pane-list">
+      <h3>已发布</h3>
+      <div id="art-list" class="list"></div>
     </section>
   </div>
+
+  <style>
+    .pane { display: none; }
+    .pane.show { display: block; }
+    select, textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #0d1628;
+      color: var(--text);
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    .preview img { width: 100%; margin-top: 8px; border-radius: 12px; }
+    h3 { margin-bottom: 10px; }
+  </style>
+
   <script>
+    const STORE_KEY = "vango-local-db";
+    const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 } };
     const $ = (id) => document.getElementById(id);
+    const loadDb = () => {
+      try { return Object.assign({ users: {}, orders: [], articles: [] }, JSON.parse(localStorage.getItem(STORE_KEY) || "{}")); }
+      catch { return { users: {}, orders: [], articles: [] }; }
+    };
+    const saveDb = (db) => localStorage.setItem(STORE_KEY, JSON.stringify(db));
+
     $("api").value = localStorage.getItem("admin-api") || "https://stock-api-tvzvtpfrip.cn-hangzhou.fcapp.run";
     $("key").value = localStorage.getItem("admin-key") || "";
-    $("unlock").onclick = async () => {
+
+    document.querySelectorAll(".tabs .tab").forEach((btn) => {
+      btn.onclick = () => {
+        document.querySelectorAll(".tabs .tab").forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        document.querySelectorAll(".pane").forEach((p) => p.classList.remove("show"));
+        $("pane-" + btn.dataset.pane).classList.add("show");
+        if (btn.dataset.pane === "list") renderList();
+      };
+    });
+
+    async function postAdmin(path, body) {
       const api = $("api").value.replace(/\/$/, "");
       const key = $("key").value.trim();
-      const order = $("order").value.trim();
-      const code = $("code").value.trim();
-      $("msg").textContent = "提交中…";
       localStorage.setItem("admin-api", api);
       localStorage.setItem("admin-key", key);
+      const res = await fetch(api + path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Admin-Key": key },
+        body: JSON.stringify(body)
+      });
+      return res.json();
+    }
+
+    $("unlock").onclick = async () => {
+      const order = $("order").value.trim();
+      const code = $("code").value.trim();
+      $("msg-paid").textContent = "提交中…";
       try {
-        const res = await fetch(api + "/paid", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "X-Admin-Key": key },
-          body: JSON.stringify({ order, code })
-        });
-        const data = await res.json();
-        $("msg").textContent = data.ok
-          ? "已写入白名单。让用户再点「我已付款，刷新查询」。"
-          : ("失败：" + (data.message || res.status));
-      } catch (err) {
-        $("msg").textContent = "失败：" + err.message + "。若还没上云，改用 GitHub 里的 data/paid.json。";
+        const data = await postAdmin("/paid", { order, code });
+        $("msg-paid").textContent = data.ok
+          ? "已写入云端白名单。让用户再点刷新。"
+          : ("云端失败：" + (data.message || "") + "，改写本机账本。");
+        if (!data.ok) throw new Error("fallback");
+      } catch {
+        const db = loadDb();
+        db.orders.push({ orderId: order, type: "query", code, status: "paid", createdAt: Date.now() });
+        saveDb(db);
+        $("msg-paid").textContent = "云函数不可用，已写入本机演示账本。同一浏览器的前台刷新可解锁。";
       }
     };
+
+    $("unlock-vip").onclick = async () => {
+      const phone = $("vip-phone").value.trim();
+      const order = $("vip-order").value.trim();
+      const planId = $("vip-plan").value;
+      if (!/^1[3-9]\d{9}$/.test(phone)) {
+        $("msg-vip").textContent = "手机号不正确";
+        return;
+      }
+      $("msg-vip").textContent = "提交中…";
+      try {
+        const data = await postAdmin("/admin/vip", { phone, order, plan: planId });
+        if (data.ok) {
+          $("msg-vip").textContent = "已在云端开通。让用户刷新会员状态。";
+          return;
+        }
+        throw new Error(data.message || "fallback");
+      } catch {
+        const db = loadDb();
+        const days = PLANS[planId].days;
+        const user = db.users[phone] || { phone, level: "none", freeQueriesLeft: 2, token: "local-" + phone };
+        user.level = planId;
+        user.expireAt = Date.now() + days * 24 * 60 * 60 * 1000;
+        db.users[phone] = user;
+        db.orders.push({ orderId: order || ("VIP-" + planId.toUpperCase()), type: "vip", planId, phone, status: "paid", createdAt: Date.now() });
+        saveDb(db);
+        $("msg-vip").textContent = "云函数不可用，已在本机开通 " + phone + " 为 " + planId + "，到期 " + new Date(user.expireAt).toLocaleString() + "。用户需在同一浏览器登录。";
+      }
+    };
+
+    const pubFiles = [];
+    const priFiles = [];
+
+    function readFiles(input, bucket, previewId) {
+      const list = Array.from(input.files || []);
+      Promise.all(list.map((file) => new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      }))).then((urls) => {
+        bucket.length = 0;
+        urls.forEach((u) => bucket.push(u));
+        const box = $(previewId);
+        box.innerHTML = "";
+        urls.forEach((src) => {
+          const img = document.createElement("img");
+          img.src = src;
+          box.appendChild(img);
+        });
+      });
+    }
+
+    $("art-pub-files").onchange = () => readFiles($("art-pub-files"), pubFiles, "prev-pub");
+    $("art-pri-files").onchange = () => readFiles($("art-pri-files"), priFiles, "prev-pri");
+
+    function currentArticle() {
+      return {
+        id: $("art-id").value.trim() || ("art-" + Date.now()),
+        title: $("art-title").value.trim(),
+        summary: $("art-summary").value.trim(),
+        visibility: $("art-vis").value,
+        minLevel: $("art-level").value,
+        publicBody: $("art-public").value,
+        privateBody: $("art-private").value,
+        publicImages: pubFiles.slice(),
+        privateImages: priFiles.slice(),
+        published: true,
+        updatedAt: Date.now()
+      };
+    }
+
+    $("save-art").onclick = async () => {
+      const article = currentArticle();
+      if (!article.title) {
+        $("msg-art").textContent = "请填写标题";
+        return;
+      }
+      $("msg-art").textContent = "保存中…";
+      try {
+        const data = await postAdmin("/admin/article", article);
+        if (data.ok) {
+          $("msg-art").textContent = "已发布到云端。";
+          return;
+        }
+        throw new Error("fallback");
+      } catch {
+        const db = loadDb();
+        const idx = db.articles.findIndex((a) => a.id === article.id);
+        if (idx >= 0) db.articles[idx] = article;
+        else db.articles.push(article);
+        saveDb(db);
+        $("msg-art").textContent = "已保存到本机。用户打开同一浏览器即可看到。正式环境请接云函数，勿把完整表截图提交到公开仓库。";
+        $("art-id").value = article.id;
+      }
+    };
+
+    $("export-art").onclick = () => {
+      const db = loadDb();
+      const blob = new Blob([JSON.stringify(db.articles || [], null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "articles.json";
+      a.click();
+    };
+
+    function renderList() {
+      const db = loadDb();
+      const box = $("art-list");
+      box.innerHTML = "";
+      (db.articles || []).forEach((art) => {
+        const row = document.createElement("section");
+        row.className = "card article-card";
+        row.innerHTML = `<span class="level-tag">${art.visibility} / ${art.minLevel}</span><h2></h2><p></p>`;
+        row.querySelector("h2").textContent = art.title || art.id;
+        row.querySelector("p").textContent = art.summary || "";
+        row.onclick = () => {
+          $("art-id").value = art.id;
+          $("art-title").value = art.title || "";
+          $("art-summary").value = art.summary || "";
+          $("art-vis").value = art.visibility || "public";
+          $("art-level").value = art.minLevel || "trial";
+          $("art-public").value = art.publicBody || "";
+          $("art-private").value = art.privateBody || "";
+          pubFiles.length = 0;
+          priFiles.length = 0;
+          (art.publicImages || []).forEach((x) => pubFiles.push(x));
+          (art.privateImages || []).forEach((x) => priFiles.push(x));
+          $("prev-pub").innerHTML = pubFiles.map((src) => `<img src="${src}">`).join("");
+          $("prev-pri").innerHTML = priFiles.map((src) => `<img src="${src}">`).join("");
+          document.querySelector('[data-pane="post"]').click();
+        };
+        box.appendChild(row);
+      });
+      if (!box.children.length) box.innerHTML = "<p class='hint'>还没有本机文章。</p>";
+    }
   </script>
 </body>
 </html>
