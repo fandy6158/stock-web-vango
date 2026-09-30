@@ -14,9 +14,9 @@ const PAY = {
 };
 
 const PLANS = {
-  trial: { id: "trial", name: "体验会员", price: 99, days: 7, rank: 1, queries: "7 天内不限次（体验字段）", articles: "体验档文章 + 对应数据截图" },
-  vip: { id: "vip", name: "VIP", price: 999, days: 180, rank: 2, queries: "6 个月内不限次（完整常用字段）", articles: "体验 + VIP 文章和数据截图" },
-  svip: { id: "svip", name: "超级VIP", price: 2999, days: 365, rank: 3, queries: "12 个月内不限次（全部字段）", articles: "全部专栏和数据截图" }
+  trial: { id: "trial", name: "体验会员", price: 99, days: 7, rank: 1, queries: "7 天内不限次（体验字段）", articles: "体验档文章 + 对应截图" },
+  vip: { id: "vip", name: "VIP", price: 999, days: 180, rank: 2, queries: "6 个月内不限次（完整常用字段）", articles: "体验 + VIP 文章和截图" },
+  svip: { id: "svip", name: "超级VIP", price: 2999, days: 365, rank: 3, queries: "12 个月内不限次（全部字段）", articles: "全部专栏和完整截图" }
 };
 
 const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", admin: "管理员" };
@@ -539,7 +539,7 @@ async function lookup() {
 
     setStatus("");
     const reason = access.reason === "guest"
-      ? "1、未登录不能白查。2、可单次付费，或登录后使用 2 次免费查询。3、 开通会员随便查询。"
+      ? "未登录不能白查。可单次付费，或登录后使用 2 次注册查询 / 开通会员。"
       : "注册查询次数已用完。可单次付费或开通会员。";
     showPaywall(item, reason);
   } catch (err) {
