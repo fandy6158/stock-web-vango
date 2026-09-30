@@ -539,7 +539,7 @@ async function lookup() {
 
     setStatus("");
     const reason = access.reason === "guest"
-      ? "未登录不能白查。可单次付费，或登录后使用 2 次注册查询 / 开通会员。"
+      ? "1、未登录不能白查。2、可单次付费，或登录后使用 2 次免费查询。3、 开通会员随便查询。"
       : "注册查询次数已用完。可单次付费或开通会员。";
     showPaywall(item, reason);
   } catch (err) {
