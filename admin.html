@@ -186,23 +186,16 @@
         return;
       }
       $("msg-vip").textContent = "提交中…";
-      try {
-        const data = await postAdmin("/admin/vip", { phone, order, plan: planId });
-        if (data.ok) {
+      
+        try {
+        const data = await postAdmin("/admin/vip", { phone, order, plan: planId, planId });
+        if (data && data.ok) {
           $("msg-vip").textContent = "已在云端开通。让用户刷新会员状态。";
           return;
         }
-        throw new Error(data.message || "fallback");
-      } catch {
-        const db = loadDb();
-        const days = PLANS[planId].days;
-        const user = db.users[phone] || { phone, level: "none", freeQueriesLeft: 2, token: "local-" + phone };
-        user.level = planId;
-        user.expireAt = Date.now() + days * 24 * 60 * 60 * 1000;
-        db.users[phone] = user;
-        db.orders.push({ orderId: order || ("VIP-" + planId.toUpperCase()), type: "vip", planId, phone, status: "paid", createdAt: Date.now() });
-        saveDb(db);
-        $("msg-vip").textContent = "云函数不可用，已在本机开通 " + phone + " 为 " + planId + "，到期 " + new Date(user.expireAt).toLocaleString() + "。用户需在同一浏览器登录。";
+        $("msg-vip").textContent = "云端失败：" + ((data && data.message) || "无返回");
+      } catch (err) {
+        $("msg-vip").textContent = "请求失败：" + (err && err.message ? err.message : String(err));
       }
     };
 
