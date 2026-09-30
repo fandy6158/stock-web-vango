@@ -846,7 +846,9 @@ function renderMe() {
     <p>手机号：${maskPhone(u.phone)}</p>
     <p>当前身份：${LEVEL_LABEL[u.level] || u.level}</p>
     <p>到期时间：${u.level === "none" ? "—" : exp}</p>
-    <p>注册免费估值剩余：${u.freeQueriesLeft || 0} 次</p>
+    
+    ${(!u.level || u.level === "none") ? `<p>注册免费估值剩余：${u.freeQueriesLeft || 0} 次</p>` : ""}
+    
     <div class="actions" style="margin-top:12px">
       <button class="primary" id="me-plans" type="button">开通 / 升级</button>
       <button class="ghost" id="me-logout" type="button">退出登录</button>
