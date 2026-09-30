@@ -611,11 +611,20 @@ function renderAccount() {
   }
   const lv = LEVEL_LABEL[u.level] || "注册用户";
   btn.textContent = maskPhone(u.phone);
-  $("header-sub").textContent = `${lv} · 剩余免费查询 ${u.freeQueriesLeft || 0} 次`;
-  $("lookup-hint").textContent = u.level === "none"
-    ? `已登录。注册查询剩余 ${u.freeQueriesLeft || 0} 次；用完后可单次付费或开通会员。`
-    : `会员有效${u.expireAt ? "至 " + new Date(u.expireAt).toLocaleDateString() : ""}。期内估值按档位开放。`;
-}
+  if (u.level && u.level !== "none") {
+    $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "");
+    $("lookup-hint").textContent = "会员有效" + (u.expireAt ? "至 " + new Date(u.expireAt).toLocaleDateString() : "") + "。期内估值按档位开放。";
+  } else {
+    $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
+    $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次；用完后可单次付费或开通会员。";
+  }
+
+
+
+
+
+
+
 
 function articleCard(a, locked) {
   const el = document.createElement("section");
