@@ -383,9 +383,13 @@ function showEmpty(msg) {
   setStatus(msg);
 }
 
+
 function makeOrderId(prefix, extra) {
   const n = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `${prefix}${extra ? extra + "-" : ""}${n}`;
+  const mid = extra ? String(extra).replace(/-+$/g, "") + "-" : "";
+  return (prefix + mid + n).replace(/-+/g, "-");
+
+  
 }
 
 function isUnlocked(code, orderId) {
@@ -751,7 +755,9 @@ function startVipOrder(planId) {
     return;
   }
   const plan = PLANS[planId];
-  const orderId = makeOrderId("VIP-", plan.id.toUpperCase() + "-" + plan.days + "D-").replace(/-$/, "");
+  const orderId = makeOrderId("VIP-", plan.id.toUpperCase() + "-" + plan.days + "D");
+
+  
   const pending = { type: "vip", planId, orderId, phone: u.phone };
   sessionStorage.setItem("pending-vip", JSON.stringify(pending));
   const db = ensureStore();
@@ -768,17 +774,31 @@ async function refreshVip() {
   const pending = JSON.parse(sessionStorage.getItem("pending-vip") || "null");
   if (!pending) {
     setStatus("没有待确认的会员订单。");
+    alert("没有待确认的会员订单。请先点开通，再付款。");
     return;
   }
-  const remote = await apiTry("GET", "/me", null, authHeaders());
-  if (remote && remote.user) {
+
+  const remote = await apiTry("POST", "/vip/status", {
+    phone: pending.phone,
+    order: pending.orderId,
+    plan: pending.planId
+  }, authHeaders());
+
+  if (remote && remote.ok && remote.user && rankOf(remote.user.level) > 0) {
     saveSession(remote.user);
-    if (rankOf(remote.user.level) > 0) {
-      $("vip-paywall").classList.remove("show");
-      showView("me");
-      return;
-    }
+    $("vip-paywall").classList.remove("show");
+    showView("me");
+    return;
   }
+
+  const me = await apiTry("GET", "/me", null, authHeaders());
+  if (me && me.user && rankOf(me.user.level) > 0) {
+    saveSession(me.user);
+    $("vip-paywall").classList.remove("show");
+    showView("me");
+    return;
+  }
+
   const db = ensureStore();
   const hit = (db.orders || []).find((o) => o.orderId === pending.orderId && o.status === "paid");
   if (hit) {
@@ -787,9 +807,11 @@ async function refreshVip() {
     showView("me");
     return;
   }
-  $("login-msg") && ($("login-msg").textContent = "");
-  alert("还没查到这笔会员订单。请等作者在管理页确认到账后再点。");
+
+  alert("还没查到会员开通记录。请到管理页「开通会员」填写同一手机号和订单号。");
 }
+
+
 
 function applyPlan(phone, planId) {
   const plan = PLANS[planId];
