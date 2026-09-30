@@ -325,16 +325,7 @@ function findStock(query) {
 }
 
 function filterFields(row, mode) {
-  if (mode === "full") return row;
-  const keep = new Set(["代码", "名称", "code", "name", ...TRIAL_FIELDS]);
-  const out = {};
-  Object.keys(row).forEach((k) => {
-    if (keep.has(k) || keep.has(k.toUpperCase())) out[k] = row[k];
-  });
-  if (Object.keys(out).length <= 2) {
-    Object.keys(row).slice(0, 6).forEach((k) => { out[k] = row[k]; });
-  }
-  return out;
+  return row;
 }
 
 function accessMode() {
@@ -402,9 +393,15 @@ function isUnlocked(code, orderId) {
   const u = currentUser();
   const db = ensureStore();
   const all = [...(state.paid || []), ...(db.orders || [])];
+  const now = Date.now();
+  const week = 7 * 24 * 60 * 60 * 1000;
   return all.some((item) => {
     if (item.type && item.type !== "query") return false;
     if (item.status && item.status !== "paid") return false;
+    const start = Number(item.createdAt || item.at || item.paidAt || 0);
+    const exp = Number(item.expireAt || (start ? start + week : 0));
+    if (exp && now > exp) return false;
+    if (start && !item.expireAt && now - start > week) return false;
     const paidCode = normalizeCode(item.code || item.代码 || item.stock_code || "");
     const paidOrder = String(item.order || item.orderId || item.订单号 || "").toUpperCase();
     if (orderId && paidOrder && paidOrder === String(orderId).toUpperCase()) return true;
@@ -523,6 +520,8 @@ async function lookup() {
       if (currentApiBase()) {
         const revealed = await reveal(item["代码"] || item.code, pending && same ? pending.orderId : "MEMBER");
         if (revealed) return;
+        showEmpty("会员已记录在本机，但云端还没有完整估值。请打开管理页，用同一个手机号再点一次「确认到账并开通」，然后重新查询。");
+        return;
       }
       renderResult(filterFields(item, access.mode), access.mode === "trial" ? "体验会员字段" : "会员已解锁");
       return;
