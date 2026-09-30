@@ -10,7 +10,7 @@ const PAY = {
   qrSrc: "./icons/wechat-pay.jpg",
   wechat: "WuFan",
   paidListUrl: "./data/paid.json",
-  apiBase: "https://stock-api-tvzvtpfrip.cn-hangzhou.fcapp.run"
+  apiBase: "https://vango-member-hhjebqnncv.cn-hangzhou.fcapp.run"
 };
 
 const PLANS = {
