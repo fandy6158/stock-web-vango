@@ -611,20 +611,11 @@ function renderAccount() {
   }
   const lv = LEVEL_LABEL[u.level] || "注册用户";
   btn.textContent = maskPhone(u.phone);
-  if (u.level && u.level !== "none") {
-    $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "");
-    $("lookup-hint").textContent = "会员有效" + (u.expireAt ? "至 " + new Date(u.expireAt).toLocaleDateString() : "") + "。期内估值按档位开放。";
-  } else {
-    $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
-    $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次；用完后可单次付费或开通会员。";
-  }
-
-
-
-
-
-
-
+  $("header-sub").textContent = `${lv} · 剩余免费查询 ${u.freeQueriesLeft || 0} 次`;
+  $("lookup-hint").textContent = u.level === "none"
+    ? `已登录。注册查询剩余 ${u.freeQueriesLeft || 0} 次；用完后可单次付费或开通会员。`
+    : `会员有效${u.expireAt ? "至 " + new Date(u.expireAt).toLocaleDateString() : ""}。期内估值按档位开放。`;
+}
 
 function articleCard(a, locked) {
   const el = document.createElement("section");
@@ -833,25 +824,20 @@ function applyPlan(phone, planId) {
   if (currentUser() && currentUser().phone === phone) saveSession(user);
 }
 
-
-  
 function renderMe() {
   const box = $("me-box");
   const u = currentUser();
   if (!u) {
-    box.innerHTML = `<h3>未登录</h3><p>登录后可查看会员档位与到期时间。</p>`;
+    box.innerHTML = `<h3>未登录</h3><p>登录后可查看会员档位与剩余查询次数。</p>`;
     return;
   }
   const exp = u.expireAt ? new Date(u.expireAt).toLocaleString() : "未开通";
-  const freeLine = (!u.level || u.level === "none")
-    ? `<p>注册免费估值剩余：${u.freeQueriesLeft || 0} 次</p>`
-    : "";
   box.innerHTML = `
     <h3>我的账号</h3>
     <p>手机号：${maskPhone(u.phone)}</p>
     <p>当前身份：${LEVEL_LABEL[u.level] || u.level}</p>
     <p>到期时间：${u.level === "none" ? "—" : exp}</p>
-    ${freeLine}
+    <p>注册免费估值剩余：${u.freeQueriesLeft || 0} 次</p>
     <div class="actions" style="margin-top:12px">
       <button class="primary" id="me-plans" type="button">开通 / 升级</button>
       <button class="ghost" id="me-logout" type="button">退出登录</button>
