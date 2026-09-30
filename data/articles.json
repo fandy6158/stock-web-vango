@@ -1,0 +1,14 @@
+[
+  {
+    "id": "pub-welcome",
+    "title": "公开说明：如何阅读估值与专栏",
+    "summary": "游客可阅读。完整数据表截图放在会员文章的非公开区。",
+    "visibility": "public",
+    "minLevel": "trial",
+    "publicBody": "本站公开专栏谁都能看。\n\n估值：输入框可见。未登录不能白查，可单次付费 9.9 元；注册后每个手机号共 2 次免费查询；会员按档位查询。\n\n会员文章登录后可见标题简介。完整文字和表格截图按档位开放。\n\n发表示：先做好 Excel 表，再截图上传到非公开区。",
+    "publicImages": [],
+    "privateBody": "",
+    "privateImages": [],
+    "published": true
+  }
+]
