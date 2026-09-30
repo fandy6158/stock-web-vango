@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>WuFan投资策略频道</title>
+  <meta name="description" content="WuFan投资策略频道。公开专栏可阅读，A股估值按会员或单次付费查询。" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="WuFan投资策略频道" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icons/icon.svg" />
+  <link rel="icon" href="./icons/icon.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">W</div>
+        <div>
+          <h1>WuFan投资策略频道</h1>
+          <div class="sub" id="header-sub">公开文章可阅读 · 估值按会员或单次付费</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="ghost slim" id="btn-account" type="button">登录</button>
+        <button class="icon-btn" id="toggle-settings" aria-label="设置">⚙</button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab on" data-view="lookup" type="button">估值查询</button>
+      <button class="tab" data-view="public" type="button">公开专栏</button>
+      <button class="tab" data-view="members" type="button">会员专栏</button>
+      <button class="tab" data-view="plans" type="button">开通会员</button>
+    </nav>
+
+    <section class="view show" id="view-lookup">
+      <section class="search-card">
+        <div class="search-row">
+          <input id="query" type="text" inputmode="search" autocomplete="off" placeholder="输入股票代码或名称，如 600519" />
+          <button class="primary" id="lookup" type="button">查询</button>
+        </div>
+        <p class="hint" id="lookup-hint">输入框可看。未登录不能白查；注册用户共 2 次；会员期内按档位查询；也支持单次付费。</p>
+        <div class="chips" id="chips"></div>
+      </section>
+
+      <section class="card notice">
+        <h3>估值数据查询后如何使用</h3>
+        <ol>
+          <li>查询的数据模型，经过作者8年的观察实践，年化平均收益率25-35%，三年翻番！！适合专业投资者做组合投资时参考！适合小白自己构建投资组合，不被任何媒体忽悠。</li>
+          <li>如有疑问：请务必添加微信：vango77 或私信推特：@ai18431588</li>
+          <li>
+            若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，
+            <ol>
+              <li>若当前市场价低于 GXLGJ, 可 3-4 成仓买入长期持有；</li>
+              <li>若当前市场价介于 GXLGJ 与 X1GJ 之间, 可 2-3 成仓买入长期持有；</li>
+              <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 1-2 成仓买入长期持有，1-2 成仓波动操作；</li>
+              <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 1-2 成仓波动操作；</li>
+              <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
+            </ol>
+          </li>
+          <li>
+            若您查询的个股为：制造业、ICT 类、医药类，
+            <ol>
+              <li>若当前市场价低于 X0GJ，可 3-5 成仓买入长期持有；</li>
+              <li>若当前市场价介于 X0GJ 与 X1GJ 之间，可 2-4 成仓买入长期持有；</li>
+              <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 2-3 成仓买入长期持有，1-2 成仓波动操作；</li>
+              <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 2-4 成仓波动操作；</li>
+              <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
+            </ol>
+          </li>
+        </ol>
+      </section>
+
+      <p class="status" id="status"></p>
+
+      <section class="card paywall" id="paywall">
+        <div class="head-row">
+          <div class="name-block">
+            <div class="code" id="p-code"></div>
+            <h2 id="p-name"></h2>
+            <div class="industry" id="p-industry"></div>
+          </div>
+          <div class="badge hold" id="p-badge">待付款</div>
+        </div>
+        <div class="pay-box">
+          <p class="pay-price" id="p-price-line">单次查询估值 <strong id="p-amount">9.9</strong> 元</p>
+          <div class="plan-mini" id="pay-alt">
+            <p class="hint">也可开通会员，期内估值按档位不限次，并能看对应专栏截图。</p>
+            <button class="ghost" id="go-plans" type="button">查看会员档位</button>
+          </div>
+          <img id="p-qr" class="qr" alt="微信收款码" src="./icons/wechat-pay.jpg" />
+          <p class="hint">打开微信扫码。转账备注必须填下面的订单号，否则无法对上。</p>
+          <div class="order-line">
+            <span>订单号</span>
+            <code id="p-order"></code>
+            <button class="ghost" id="copy-order" type="button">复制</button>
+          </div>
+          <p class="pay-note" id="p-note"></p>
+          <button class="primary" id="paid-refresh" type="button">我已付款，刷新查询</button>
+        </div>
+      </section>
+
+      <section class="card result" id="result">
+        <div class="head-row">
+          <div class="name-block">
+            <div class="code" id="r-code"></div>
+            <h2 id="r-name"></h2>
+            <div class="industry" id="r-industry"></div>
+          </div>
+          <div class="badge hold" id="r-rating">-</div>
+        </div>
+        <div class="grid" id="r-fields"></div>
+        <div class="note" id="r-note"></div>
+      </section>
+    </section>
+
+    <section class="view" id="view-public">
+      <div class="list" id="public-list"></div>
+    </section>
+
+    <section class="view" id="view-members">
+      <div class="card notice" id="members-gate">
+        <h3>会员专栏</h3>
+        <p>登录后可看到付费文章标题与简介。完整文字和数据表截图按会员档位开放。</p>
+        <div class="actions">
+          <button class="primary" id="members-login" type="button">登录</button>
+          <button class="ghost" id="members-plans" type="button">开通会员</button>
+        </div>
+      </div>
+      <div class="list" id="member-list"></div>
+    </section>
+
+    <section class="view" id="view-article">
+      <button class="ghost slim" id="article-back" type="button">← 返回列表</button>
+      <article class="card article" id="article-box"></article>
+    </section>
+
+    <section class="view" id="view-plans">
+      <section class="card notice">
+        <h3>会员档位</h3>
+        <p>付款备注填页面生成的订单号。作者在管理页确认到账后立即生效。</p>
+      </section>
+      <div class="plan-grid" id="plan-grid"></div>
+      <section class="card paywall" id="vip-paywall">
+        <div class="pay-box">
+          <p class="pay-price">开通 <span id="v-plan-name">会员</span> <strong id="v-amount">99</strong> 元</p>
+          <img class="qr" alt="微信收款码" src="./icons/wechat-pay.jpg" />
+          <p class="hint">转账备注必须填订单号。</p>
+          <div class="order-line">
+            <span>订单号</span>
+            <code id="v-order"></code>
+            <button class="ghost" id="copy-vip-order" type="button">复制</button>
+          </div>
+          <p class="pay-note">付款后如未到账，加微信 vango77 或推特 @ai18431588</p>
+          <button class="primary" id="vip-refresh" type="button">我已付款，刷新会员状态</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="view-me">
+      <section class="card notice" id="me-box"></section>
+    </section>
+
+    <section class="panel" id="settings">
+      <h3>数据源设置</h3>
+      <p>正式环境把估值表放阿里云 OSS / 腾讯云 COS 私有桶，网页只填云函数地址。会员与文章也走同一云函数；未上线新接口时使用本机演示数据。</p>
+      <label for="api-url">云函数地址</label>
+      <input id="api-url" type="url" placeholder="https://xxx.tencentscf.com" />
+      <label for="csv-url">本地演示 CSV</label>
+      <input id="csv-url" type="url" placeholder="./data/stocks.csv" />
+      <div class="actions">
+        <button class="primary" id="save-url" type="button">保存并加载</button>
+        <button class="ghost" id="reset-url" type="button">恢复默认</button>
+      </div>
+      <p style="margin-top:14px;">iPhone 用法：Safari 打开本页 → 分享 → 添加到主屏幕。</p>
+    </section>
+
+    <section class="card notice">
+      <h3>注意事项</h3>
+      <ol>
+        <li>本页只展示作者维护的计算结果与专栏截图，不构成投资建议，不保证收益。</li>
+        <li>微信付款备注必须填订单号，到账后等 1–3 分钟再点刷新。</li>
+        <li>估值数据由作者每周或每月更新。文章里的表格以截图为准。</li>
+        <li>iPhone：用 Safari 打开本页，点分享 → 添加到主屏幕，即可当 App 使用。</li>
+      </ol>
+    </section>
+
+    <footer>
+      研究笔记仅供参考，不构成投资建议。付款后请保留订单号以便核对。
+    </footer>
+  </div>
+
+  <div class="modal" id="login-modal" hidden>
+    <div class="modal-card">
+      <h3>手机号登录</h3>
+      <p class="hint">国内手机号 + 短信验证码。未上线短信通道时，演示验证码为 123456。</p>
+      <label for="login-phone">手机号</label>
+      <input id="login-phone" type="tel" inputmode="numeric" maxlength="11" placeholder="11 位手机号" />
+      <label for="login-code">验证码</label>
+      <div class="search-row">
+        <input id="login-code" type="text" inputmode="numeric" maxlength="6" placeholder="6 位验证码" />
+        <button class="ghost" id="send-sms" type="button">发送</button>
+      </div>
+      <p class="hint" id="login-msg"></p>
+      <div class="actions">
+        <button class="primary" id="do-login" type="button">登录</button>
+        <button class="ghost" id="close-login" type="button">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
