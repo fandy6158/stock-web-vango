@@ -305,17 +305,33 @@
       a.click();
     };
 
-    function renderList() {
-      const db = loadDb();
+       async function renderList() {
       const box = $("art-list");
+      box.innerHTML = "<p class='hint'>正在从云端加载…</p>";
+      var items = [];
+      try {
+        const api = $("api").value.replace(/\/$/, "");
+        const key = $("key").value.trim();
+        const res = await fetch(api + "/admin/articles", {
+          headers: { "X-Admin-Key": key },
+          cache: "no-store"
+        });
+        const data = await res.json();
+        if (data && data.ok && Array.isArray(data.items)) items = data.items;
+      } catch (e) {}
       box.innerHTML = "";
-      (db.articles || []).forEach((art) => {
+      if (!items.length) {
+        box.innerHTML = "<p class='hint'>云端还没有文章。</p>";
+        return;
+      }
+      items.forEach((art) => {
         const row = document.createElement("section");
         row.className = "card article-card";
-        row.innerHTML = `<span class="level-tag">${art.visibility} / ${art.minLevel}</span><h2></h2><p></p>`;
+        row.innerHTML = '<span class="level-tag"></span><h2></h2><p></p><div class="actions" style="margin-top:8px"><button class="ghost" type="button" data-del="1">删除</button></div>';
+        row.querySelector(".level-tag").textContent = (art.visibility || "") + " / " + (art.minLevel || "");
         row.querySelector("h2").textContent = art.title || art.id;
         row.querySelector("p").textContent = art.summary || "";
-        row.onclick = () => {
+        row.querySelector("h2").onclick = function () {
           $("art-id").value = art.id;
           $("art-title").value = art.title || "";
           $("art-summary").value = art.summary || "";
@@ -327,14 +343,27 @@
           priFiles.length = 0;
           (art.publicImages || []).forEach((x) => pubFiles.push(x));
           (art.privateImages || []).forEach((x) => priFiles.push(x));
-          $("prev-pub").innerHTML = pubFiles.map((src) => `<img src="${src}">`).join("");
-          $("prev-pri").innerHTML = priFiles.map((src) => `<img src="${src}">`).join("");
+          $("prev-pub").innerHTML = pubFiles.map((src) => "<img src=\"" + src + "\">").join("");
+          $("prev-pri").innerHTML = priFiles.map((src) => "<img src=\"" + src + "\">").join("");
           document.querySelector('[data-pane="post"]').click();
+        };
+        row.querySelector("[data-del]").onclick = async function (e) {
+          e.stopPropagation();
+          if (!confirm("确定删除：" + (art.title || art.id) + "？")) return;
+          try {
+            const data = await postAdmin("/admin/article/delete", { id: art.id });
+            if (!data.ok) throw new Error(data.message || "删除失败");
+            renderList();
+          } catch (err) {
+            alert(err.message || "删除失败");
+          }
         };
         box.appendChild(row);
       });
-      if (!box.children.length) box.innerHTML = "<p class='hint'>还没有本机文章。</p>";
     }
+
+
+    
   </script>
 </body>
 </html>
