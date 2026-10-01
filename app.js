@@ -636,7 +636,12 @@ function renderPlans() {
       '<div class="level-tag">' + plan.name + "</div>" +
       '<div class="price">' + plan.price + " 元</div>" +
       '<p class="hint">' + plan.days + " 天</p>" +
-      "<ul><li>" + plan.queries + "</li><li>" + plan.articles + "</li></ul>" +
+   
+      "<ul><li>" + plan.queries + "</li><li>" + plan.articles + "</li>" + (plan.extras || []).map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
+
+
+
+      
       '<button class="primary" type="button">开通' + plan.name + "</button>";
     card.querySelector("button").addEventListener("click", function () { startVipOrder(plan.id); });
     grid.appendChild(card);
