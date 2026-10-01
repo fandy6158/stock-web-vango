@@ -175,7 +175,7 @@ async function sendSms(phone) {
   db.otps[phone] = { code: DEMO_OTP, expireAt: Date.now() + 5 * 60 * 1000 };
   saveStore(db);
   return { ok: true, demo: true, message: "短信已发送，请查看手机验证码" };
-
+}
 
   
 }
