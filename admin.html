@@ -419,7 +419,25 @@
           if (!confirm(u.phone + " 延期 " + days + " 天？")) return;
           extendUser(u.phone, days).catch(function (err) { alert(err.message || "延期失败"); });
         };
+    
+
         row.appendChild(btn);
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "ghost";
+        del.style.marginTop = "8px";
+        del.style.marginLeft = "8px";
+        del.textContent = "删除";
+        del.onclick = async function (e) {
+          e.stopPropagation();
+          if (!confirm("删除 " + u.phone + " ？")) return;
+          const data = await postAdmin("/admin/user/delete", { phone: u.phone });
+          if (!data || !data.ok) { alert((data && data.message) || "删除失败"); return; }
+          renderUsers();
+        };
+        row.appendChild(del);
+
+        
       }
       row.onclick = function () {
         $("vip-phone").value = u.phone;
