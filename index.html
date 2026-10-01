@@ -229,6 +229,15 @@
     </div>
   </div>
 
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function (list) {
+      list.forEach(function (sw) { sw.unregister(); });
+    });
+  }
+</script>
+
+  
 <script src="./app.js?v=6"></script>
   
 </body>
