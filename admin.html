@@ -371,6 +371,40 @@
         box.appendChild(row);
       });
     }
+    async function renderUsers() {
+      const box = $("user-list");
+      box.innerHTML = "<p class='hint'>正在加载…</p>";
+      var items = [];
+      try {
+        const api = $("api").value.replace(/\/$/, "");
+        const key = $("key").value.trim();
+        const res = await fetch(api + "/admin/users", {
+          headers: { "X-Admin-Key": key },
+          cache: "no-store"
+        });
+        const data = await res.json();
+        if (data && data.ok && Array.isArray(data.items)) items = data.items;
+      } catch (e) {}
+      box.innerHTML = "";
+      if (!items.length) {
+        box.innerHTML = "<p class='hint'>云端还没有用户，或 KEY / 地址不对。</p>";
+        return;
+      }
+      items.forEach(function (u) {
+        const row = document.createElement("section");
+        row.className = "card article-card";
+        row.innerHTML = "<span class='level-tag'></span><h2></h2><p></p>";
+        row.querySelector(".level-tag").textContent = u.levelText || u.level;
+        row.querySelector("h2").textContent = u.phone;
+        row.querySelector("p").textContent = "到期：" + (u.expireText || "—") + "　剩余免费查询：" + (u.freeQueriesLeft || 0);
+        row.onclick = function () {
+          $("vip-phone").value = u.phone;
+          document.querySelector('[data-pane="vip"]').click();
+        };
+        box.appendChild(row);
+      });
+    }
+    
 
 
     
