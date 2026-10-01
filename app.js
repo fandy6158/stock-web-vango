@@ -684,30 +684,28 @@ function startVipOrder(planId) {
 
 async function refreshVip() {
   const pending = JSON.parse(sessionStorage.getItem("pending-vip") || "null");
-  if (!pending) {
-    alert("没有待确认的会员订单。请先点开通，再付款。");
-    return;
-  }
+  const phone = (pending && pending.phone) || (currentUser() && currentUser().phone) || "";
   const remote = await apiTry("POST", "/vip/status", {
-    phone: pending.phone,
-    order: pending.orderId,
-    plan: pending.planId
+    phone: phone,
+    order: pending && pending.orderId,
+    plan: pending && pending.planId
   }, authHeaders());
   if (remote && remote.ok && remote.user && rankOf(remote.user.level) > 0) {
     saveSession(remote.user);
-    $("vip-paywall").classList.remove("show");
+    if ($("vip-paywall")) $("vip-paywall").classList.remove("show");
     showView("me");
     return;
   }
   const me = await apiTry("GET", "/me", null, authHeaders());
   if (me && me.user && rankOf(me.user.level) > 0) {
     saveSession(me.user);
-    $("vip-paywall").classList.remove("show");
+    if ($("vip-paywall")) $("vip-paywall").classList.remove("show");
     showView("me");
     return;
   }
-  alert("还没查到会员开通记录。请到管理页开通会员。");
+  alert("还没查到会员开通记录。请确认管理页开通的是当前登录手机号，然后退出重新登录。");
 }
+
 
 function applyPlan(phone, planId) {
   const plan = PLANS[planId];
