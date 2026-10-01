@@ -197,6 +197,7 @@ async function loginWithSms(phone, code) {
   const remote = await apiTry("POST", "/auth/login", { phone: phone, code: code });
   if (remote && remote.ok && remote.user) {
     saveSession(remote.user);
+    await loadArticles();
     return remote.user;
   }
   const db = ensureStore();
@@ -399,6 +400,8 @@ async function loadCatalog() {
 
 async function loadArticles() {
  const remote = await apiTry("GET", "/articles", null, authHeaders());
+
+  
   if (remote && Array.isArray(remote.items)) {
     state.articles = remote.items;
     return;
