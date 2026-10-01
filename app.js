@@ -398,7 +398,7 @@ async function loadCatalog() {
 }
 
 async function loadArticles() {
-  const remote = await apiTry("GET", "/articles");
+ const remote = await apiTry("GET", "/articles", null, authHeaders());
   if (remote && Array.isArray(remote.items)) {
     state.articles = remote.items;
     return;
