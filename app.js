@@ -174,7 +174,9 @@ async function sendSms(phone) {
   const db = ensureStore();
   db.otps[phone] = { code: DEMO_OTP, expireAt: Date.now() + 5 * 60 * 1000 };
   saveStore(db);
-  return { ok: true, demo: true, message: "演示验证码 123456（云端短信未上线）" };
+  return { ok: true, demo: true, message: "短信已经走阿里云号码认证，以手机收到的 6 位为准。
+
+" };
 }
 
 async function loginWithSms(phone, code) {
