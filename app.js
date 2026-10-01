@@ -575,7 +575,7 @@ function renderMemberList() {
   if ($("members-gate")) $("members-gate").style.display = u ? "none" : "block";
   const box = $("member-list");
   box.innerHTML = "";
-  if (!u) return;
+ 
   const list = (state.articles || []).filter(function (a) { return a.published !== false && a.visibility === "members"; });
   if (!list.length) {
     box.innerHTML = '<section class="card notice"><h3>暂无会员文章</h3></section>';
