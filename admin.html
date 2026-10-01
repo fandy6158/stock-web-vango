@@ -105,11 +105,26 @@
       <h3>已发布</h3>
       <div id="art-list" class="list"></div>
     </section>
+   
+
     <section class="search-card pane" id="pane-members">
       <h3>会员列表</h3>
-      <p class="hint">来自云端用户库。点手机号可填到「开通会员」。</p>
-      <div id="user-list" class="list"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div>
+          <h3>已开通</h3>
+          <div id="user-list" class="list"></div>
+        </div>
+        <div>
+          <h3>未开通</h3>
+          <div id="guest-list" class="list"></div>
+        </div>
+      </div>
     </section>
+
+
+
+    
+
     
   </div>
 
