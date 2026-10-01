@@ -386,9 +386,53 @@
         box.appendChild(row);
       });
     }
+
+    
+      async function extendUser(phone, days) {
+      const data = await postAdmin("/admin/user/extend", { phone: phone, days: days });
+      if (!data || !data.ok) throw new Error((data && data.message) || "延期失败");
+      renderUsers();
+    }
+
+    function daysOf(level) {
+      if (level === "svip") return 365;
+      if (level === "vip") return 180;
+      return 7;
+    }
+
+    function userCard(u, box, withExtend) {
+      const row = document.createElement("section");
+      row.className = "card article-card";
+      row.innerHTML = "<span class='level-tag'></span><h2></h2><p></p>";
+      row.querySelector(".level-tag").textContent = u.levelText || u.level;
+      row.querySelector("h2").textContent = u.phone;
+      row.querySelector("p").textContent = "到期：" + (u.expireText || "—");
+      if (withExtend) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "primary";
+        btn.style.marginTop = "8px";
+        btn.textContent = "一键延期";
+        btn.onclick = function (e) {
+          e.stopPropagation();
+          const days = daysOf(u.level);
+          if (!confirm(u.phone + " 延期 " + days + " 天？")) return;
+          extendUser(u.phone, days).catch(function (err) { alert(err.message || "延期失败"); });
+        };
+        row.appendChild(btn);
+      }
+      row.onclick = function () {
+        $("vip-phone").value = u.phone;
+        document.querySelector('[data-pane="vip"]').click();
+      };
+      box.appendChild(row);
+    }
+
     async function renderUsers() {
-      const box = $("user-list");
-      box.innerHTML = "<p class='hint'>正在加载…</p>";
+      const vipBox = $("user-list");
+      const guestBox = $("guest-list");
+      vipBox.innerHTML = "<p class='hint'>正在加载…</p>";
+      if (guestBox) guestBox.innerHTML = "";
       var items = [];
       try {
         const api = $("api").value.replace(/\/$/, "");
@@ -400,27 +444,17 @@
         const data = await res.json();
         if (data && data.ok && Array.isArray(data.items)) items = data.items;
       } catch (e) {}
-      box.innerHTML = "";
-      if (!items.length) {
-        box.innerHTML = "<p class='hint'>云端还没有用户，或 KEY / 地址不对。</p>";
-        return;
+      vipBox.innerHTML = "";
+      if (guestBox) guestBox.innerHTML = "";
+      const members = items.filter(function (u) { return u.level && u.level !== "none"; });
+      const guests = items.filter(function (u) { return !u.level || u.level === "none"; });
+      if (!members.length) vipBox.innerHTML = "<p class='hint'>暂无已开通会员。</p>";
+      members.forEach(function (u) { userCard(u, vipBox, true); });
+      if (guestBox) {
+        if (!guests.length) guestBox.innerHTML = "<p class='hint'>暂无未开通用户。</p>";
+        guests.forEach(function (u) { userCard(u, guestBox, false); });
       }
-      items.forEach(function (u) {
-        const row = document.createElement("section");
-        row.className = "card article-card";
-        row.innerHTML = "<span class='level-tag'></span><h2></h2><p></p>";
-        row.querySelector(".level-tag").textContent = u.levelText || u.level;
-        row.querySelector("h2").textContent = u.phone;
-        row.querySelector("p").textContent = "到期：" + (u.expireText || "—") + "　剩余免费查询：" + (u.freeQueriesLeft || 0);
-        row.onclick = function () {
-          $("vip-phone").value = u.phone;
-          document.querySelector('[data-pane="vip"]').click();
-        };
-        box.appendChild(row);
-      });
     }
-    
-
 
     
   </script>
