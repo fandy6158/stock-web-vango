@@ -110,9 +110,6 @@
       <p class="hint">来自云端用户库。点手机号可填到「开通会员」。</p>
       <div id="user-list" class="list"></div>
     </section>
-
-
-
     
   </div>
 
@@ -154,6 +151,8 @@
         document.querySelectorAll(".pane").forEach((p) => p.classList.remove("show"));
         $("pane-" + btn.dataset.pane).classList.add("show");
         if (btn.dataset.pane === "list") renderList();
+        if (btn.dataset.pane === "members") renderUsers();
+        
       };
     });
 
