@@ -756,14 +756,12 @@ function closeLogin() {
   $("login-modal").hidden = true;
 }
 
-
 async function boot() {
   restoreSession();
   const me = await apiTry("GET", "/me", null, authHeaders());
   if (me && me.user) saveSession(me.user);
   else if (currentUser()) saveSession(null);
   ensureStore();
-
 
   if ($("csv-url")) $("csv-url").value = currentCsvUrl();
   if ($("api-url")) $("api-url").value = currentApiBase();
