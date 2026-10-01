@@ -617,7 +617,7 @@ function openArticle(id) {
   });
   const priv = box.querySelector("#art-private");
   if (!currentUser() && a.visibility === "members") {
-    priv.innerHTML = '<div class="lock-box"><p>登录后可看更多。</p></div>';
+    priv.innerHTML = '<div class="lock-box"><p>登录注册会员可查更多      。</p></div>';
     showView("article");
     return;
   }
