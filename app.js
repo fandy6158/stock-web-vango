@@ -761,6 +761,7 @@ async function boot() {
   restoreSession();
   const me = await apiTry("GET", "/me", null, authHeaders());
   if (me && me.user) saveSession(me.user);
+  else if (currentUser()) saveSession(null);
   ensureStore();
 
 
