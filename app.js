@@ -201,11 +201,18 @@ async function loginWithSms(phone, code) {
     await loadArticles();
     return remote.user;
   }
+
+
+  if (currentApiBase()) {
+    throw new Error((remote && remote.message) || "云端登录失败，请重新发送验证码");
+  }
   const db = ensureStore();
   const otp = db.otps[phone];
   if (!otp || otp.code !== String(code).trim() || Date.now() > otp.expireAt) {
     throw new Error("验证码不正确或已过期");
   }
+
+  
   delete db.otps[phone];
   const existing = db.users[phone];
   const user = existing || {
