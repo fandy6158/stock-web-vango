@@ -15,8 +15,8 @@ const PAY = {
 
 const PLANS = {
   trial: { id: "trial", name: "体验会员", price: 99, days: 7, rank: 1, queries: "7 天内不限次数查询5000多只个股估价（体验字段）", articles: "体验档文章及分析数据截图" },
-  vip:   { id: "vip", name: "VIP", price: 799, days: 180, rank: 2, queries: "6 个月内不限次数查询5000多只个股估价（完整常用字段）", articles: " VIP等级文章及分析数据截图" },
-  svip:  { id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3, queries: "12 个月内不限内不限次数查询5000多只个股估价（全部字段）", articles: "VIP+SVIP 所有专栏文章及分析数据截图" }
+  vip: { id: "vip", name: "VIP", price: 799, days: 180, rank: 2, queries: "6 个月内不限次数查询5000多只个股估价（完整常用字段）", articles: "VIP等级文章及分析数据截图" },
+  svip: { id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3, queries: "12 个月内不限次数查询5000多只个股估价（全部字段）", articles: "VIP+SVIP 所有专栏文章及分析数据截图" }
 };
 
 const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", admin: "管理员" };
