@@ -15,7 +15,7 @@ const PAY = {
 
 const PLANS = {
   trial: {
-    id: "trial", name: "7天会员", price: 99, days: 7, rank: 1,
+    id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
     queries: "7 天内不限次数查询5000多只个股估价",
     articles: "体验档文章及分析数据截图",
     extras: []
@@ -548,11 +548,22 @@ function renderAccount() {
   }
 }
 
+function levelTagText(a) {
+  if (a.visibility === "public") return "公开";
+  const min = a.minLevel || "trial";
+  if (min === "svip") return "SVIP";
+  if (min === "vip") return "VIP、SVIP";
+  return "体验、VIP、SVIP";
+}
+
+
 function articleCard(a) {
   const el = document.createElement("section");
   el.className = "card article-card";
   el.innerHTML = '<span class="level-tag"></span><h2></h2><p></p>';
-  el.querySelector(".level-tag").textContent = a.visibility === "public" ? "公开" : ((PLANS[a.minLevel] || {}).name || a.minLevel);
+  el.querySelector(".level-tag").textContent = levelTagText(a);
+
+  
   el.querySelector("h2").textContent = a.title || "";
   el.querySelector("p").textContent = a.summary || "";
   el.addEventListener("click", function () { openArticle(a.id); });
