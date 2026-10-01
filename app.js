@@ -501,7 +501,7 @@ async function lookup() {
     }
     if (same && (await tryUnlockQuery(item, pending.orderId))) return;
     setStatus("");
-    showPaywall(item, access.reason === "guest" ? "未登录不能白查。可单次付费或开通会员。" : "注册查询次数已用完。");
+    showPaywall(item, access.reason === "guest" ? "登录获2次免费查询，开通会员不限次数。" : "注册查询次数已用完。");
   } catch (err) {
     showEmpty("查询失败：" + err.message);
   }
