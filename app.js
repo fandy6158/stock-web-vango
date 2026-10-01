@@ -636,7 +636,6 @@ function renderPlans() {
       '<div class="level-tag">' + plan.name + "</div>" +
       '<div class="price">' + plan.price + " 元</div>" +
       '<p class="hint">' + plan.days + " 天</p>" +
-   
       "<ul><li>" + plan.queries + "</li><li>" + plan.articles + "</li>" + (plan.extras || []).map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
 
 
