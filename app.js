@@ -212,7 +212,7 @@ async function loginWithSms(phone, code) {
     phone: phone,
     level: "none",
     expireAt: 0,
-    freeQueriesLeft: 2,
+    freeQueriesLeft: 5,
     token: "local-" + phone,
     createdAt: Date.now()
   };
@@ -502,7 +502,7 @@ async function lookup() {
     }
     if (same && (await tryUnlockQuery(item, pending.orderId))) return;
     setStatus("");
-    showPaywall(item, access.reason === "guest" ? "登录获2次免费查询，开通会员不限次数。" : "注册查询次数已用完。");
+    showPaywall(item, access.reason === "guest" ? "登录获5次免费查询，开通会员不限次数。" : "注册查询次数已用完。");
   } catch (err) {
     showEmpty("查询失败：" + err.message);
   }
@@ -710,7 +710,7 @@ async function refreshVip() {
 function applyPlan(phone, planId) {
   const plan = PLANS[planId];
   const db = ensureStore();
-  const user = db.users[phone] || { phone: phone, level: "none", freeQueriesLeft: 2, token: "local-" + phone };
+  const user = db.users[phone] || { phone: phone, level: "none", freeQueriesLeft: 5, token: "local-" + phone };
   user.level = plan.id;
   user.expireAt = Date.now() + plan.days * 24 * 60 * 60 * 1000;
   db.users[phone] = user;
