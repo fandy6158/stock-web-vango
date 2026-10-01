@@ -146,18 +146,19 @@ function saveSession(user) {
   renderAccount();
 }
 
+
 function restoreSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return;
-    const u = JSON.parse(raw);
-    const db = ensureStore();
-    const fresh = db.users[u.phone] || u;
-    saveSession(normalizeUser(fresh));
+    state.user = JSON.parse(raw);
+    renderAccount();
   } catch (e) {
     state.user = null;
   }
 }
+
+
 
 async function apiTry(method, path, body, headers) {
   const base = currentApiBase();
