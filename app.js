@@ -641,40 +641,30 @@ function renderMemberList() {
   const u = currentUser();
   if ($("members-gate")) $("members-gate").style.display = u ? "none" : "block";
   const box = $("member-list");
+  if (!box) return;
   box.innerHTML = "";
+  const level = state.memberLevel || "trial";
+  document.querySelectorAll("#member-tabs .tab").forEach(function (btn) {
+    btn.classList.toggle("on", btn.dataset.level === level);
+  });
   const list = (state.articles || []).filter(function (a) {
-    return a.published !== false && a.visibility === "members";
+    return a.published !== false && a.visibility === "members" && (a.minLevel || "trial") === level;
+  }).sort(function (a, b) {
+    return articleTime(b) - articleTime(a);
   });
   if (!list.length) {
-    box.innerHTML = '<section class="card notice"><h3>暂无会员文章</h3></section>';
+    box.innerHTML = '<section class="card notice"><h3>暂无</h3></section>';
     return;
   }
-  const groups = [
-    { level: "trial", title: "体验" },
-    { level: "vip", title: "VIP" },
-    { level: "svip", title: "SVIP" }
-  ];
-  groups.forEach(function (g) {
-    const items = list.filter(function (a) {
-      return (a.minLevel || "trial") === g.level;
-    }).sort(function (a, b) {
-      return articleTime(b) - articleTime(a);
-    });
-    const head = document.createElement("section");
-    head.className = "card notice";
-    head.innerHTML = "<h3></h3>";
-    head.querySelector("h3").textContent = g.title;
-    box.appendChild(head);
-    if (!items.length) {
-      const empty = document.createElement("section");
-      empty.className = "card notice";
-      empty.innerHTML = "<p>暂无</p>";
-      box.appendChild(empty);
-      return;
-    }
-    items.forEach(function (a) { box.appendChild(articleCard(a)); });
-  });
+  list.forEach(function (a) { box.appendChild(articleCard(a)); });
 }
+
+function canSeePrivate(article) {
+  const u = currentUser();
+  if (!u) return false;
+  return rankOf(u.level) >= rankOf(article.minLevel || "trial");
+}
+
 
 
 
