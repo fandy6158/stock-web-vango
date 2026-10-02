@@ -407,15 +407,34 @@ async function loadCatalog() {
 }
 
 async function loadArticles() {
- const remote = await apiTry("GET", "/articles", null, authHeaders());
+  var publicItems = [];
+  try {
+    const res = await fetch("./data/articles.json?t=" + Date.now(), { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      const items = Array.isArray(data) ? data : (data.items || []);
+      publicItems = items.filter(function (a) {
+        return a.published !== false && a.visibility === "public";
+      });
+    }
+  } catch (e) {}
 
-  
+  var memberItems = [];
+  const remote = await apiTry("GET", "/articles", null, authHeaders());
   if (remote && Array.isArray(remote.items)) {
-    state.articles = remote.items;
-    return;
+    memberItems = remote.items.filter(function (a) {
+      return a.published !== false && a.visibility === "members";
+    });
   }
-  state.articles = ensureStore().articles || defaultArticles();
+
+  state.articles = publicItems.concat(memberItems);
 }
+
+
+
+
+
+
 
 function renderChips() {
   const wrap = $("chips");
