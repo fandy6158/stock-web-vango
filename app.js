@@ -492,7 +492,17 @@ async function lookup() {
         showEmpty(data.message || ("没有找到「" + q + "」"));
         return;
       }
-      item = data.item;
+
+ item = data.item;
+  if (data.trialQueriesLeft != null && currentUser()) {
+  var u = currentUser();
+  u.trialQueriesLeft = data.trialQueriesLeft;
+  saveSession(u);
+  renderAccount();
+}
+
+
+      
     } else {
       if (!state.rows.length) {
         showEmpty("估值表还没加载成功。");
