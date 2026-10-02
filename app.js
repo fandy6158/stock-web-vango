@@ -948,6 +948,20 @@ $("tabs").addEventListener("click", function (e) {
   showView(btn.dataset.view);
 });
 
+
+const memberTabs = $("member-tabs");
+if (memberTabs) {
+  memberTabs.addEventListener("click", function (e) {
+    const btn = e.target.closest("[data-level]");
+    if (!btn) return;
+    state.memberLevel = btn.dataset.level;
+    renderMemberList();
+  });
+}
+
+
+
+
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(function () {});
 }
