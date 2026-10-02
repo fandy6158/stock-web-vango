@@ -62,7 +62,10 @@ const state = {
   user: null,
   articles: [],
   view: "lookup",
-  lastArticleList: "public"
+
+  lastArticleList: "public",
+  memberLevel: "trial"
+  
 };
 
 function loadStore() {
