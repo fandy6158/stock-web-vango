@@ -486,7 +486,13 @@ async function lookup() {
   try {
     var item = null;
     if (currentApiBase()) {
-      const res = await fetch(apiUrl("/lookup", { code: q }), { cache: "no-store" });
+    const res = await fetch(apiUrl("/lookup", { code: q }), {
+     cache: "no-store",
+     headers: authHeaders()
+    });
+
+
+      
       const data = await res.json();
       if (!data.found) {
         showEmpty(data.message || ("没有找到「" + q + "」"));
