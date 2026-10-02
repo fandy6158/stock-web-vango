@@ -566,9 +566,16 @@ function renderAccount() {
   }
   const lv = LEVEL_LABEL[u.level] || "注册用户";
   btn.textContent = maskPhone(u.phone);
-  if (u.level && u.level !== "none") {
-    $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "");
-    if ($("lookup-hint")) $("lookup-hint").textContent = "会员有效期内估值按档位开放。";
+
+
+if (u.level && u.level !== "none") {
+  var extra = "";
+  if (u.level === "trial") extra = " · 剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次";
+  $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "") + extra;
+  if ($("lookup-hint")) $("lookup-hint").textContent = u.level === "trial"
+    ? "体验会员剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次"
+    : "会员有效期内估值按档位开放。";
+  
   } else {
     $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
     if ($("lookup-hint")) $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次。";
