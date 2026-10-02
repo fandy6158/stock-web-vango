@@ -427,11 +427,16 @@ input[type="tel"] {
   font-size: 12px;
   margin: 4px 0 8px;
 }
-#members-gate .actions { margin-top: 0; }
+
+#members-gate .actions {
+  margin-top: 0;
+  justify-content: flex-end;
+  gap: 8px;
+}
 #members-gate button {
   height: auto;
-  padding: 8px 12px;
-  font-size: 14px;
+  padding: 4px 10px;
+  font-size: 12px;
   border-radius: 999px;
 }
 
