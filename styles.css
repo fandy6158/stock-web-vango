@@ -422,3 +422,15 @@ input[type="tel"] {
   font-size: 16px;
   outline: none;
 }
+
+#members-gate p {
+  font-size: 12px;
+  margin: 4px 0 8px;
+}
+#members-gate .actions { margin-top: 0; }
+#members-gate button {
+  height: auto;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 999px;
+}
