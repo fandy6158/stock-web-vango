@@ -306,7 +306,9 @@
       try {
         const data = await postAdmin("/admin/article", article);
         if (data.ok) {
-          $("msg-art").textContent = "已发布到云端。";
+         $("msg-art").textContent = article.visibility === "public"
+          ? "已发布到 GitHub 公开栏。"
+          : "已发布到云端。";
           return;
         }
         throw new Error("fallback");
