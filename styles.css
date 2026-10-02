@@ -443,6 +443,10 @@ input[type="tel"] {
   border-radius: 999px;
 }
 
+
+
+
 #member-tabs {
   margin: 10px 0 12px;
+  padding-left: 16px;
 }
