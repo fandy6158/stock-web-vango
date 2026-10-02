@@ -434,3 +434,7 @@ input[type="tel"] {
   font-size: 14px;
   border-radius: 999px;
 }
+
+#member-tabs {
+  margin: 10px 0 12px;
+}
