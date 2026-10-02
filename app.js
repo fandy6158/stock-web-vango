@@ -491,7 +491,6 @@ async function lookup() {
      headers: authHeaders()
     });
 
-
       
       const data = await res.json();
       if (!data.found) {
