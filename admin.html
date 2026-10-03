@@ -102,8 +102,15 @@
     </section>
 
     <section class="search-card pane" id="pane-list">
-      <h3>已发布</h3>
-      <div id="art-list" class="list"></div>
+    <h3>已发布</h3>
+      <div class="tabs" id="admin-art-tabs">
+        <button class="tab on" type="button" data-filter="public">公开栏</button>
+        <button class="tab" type="button" data-filter="trial">体验栏</button>
+        <button class="tab" type="button" data-filter="vip">VIP栏</button>
+        <button class="tab" type="button" data-filter="svip">SVIP栏</button>
+   </div>
+  <div id="art-list" class="list"></div>
+
     </section>
    
 
@@ -337,6 +344,15 @@
       a.click();
     };
 
+
+    var adminArtFilter = "public";
+
+    function matchAdminFilter(art) {
+      if (adminArtFilter === "public") return art.visibility === "public";
+      return art.visibility === "members" && (art.minLevel || "trial") === adminArtFilter;
+    }
+
+    
        async function renderList() {
       const box = $("art-list");
       box.innerHTML = "<p class='hint'>正在从云端加载…</p>";
@@ -352,11 +368,14 @@
         if (data && data.ok && Array.isArray(data.items)) items = data.items;
       } catch (e) {}
       box.innerHTML = "";
+      
+      items = items.filter(matchAdminFilter);
       if (!items.length) {
-        box.innerHTML = "<p class='hint'>云端还没有文章。</p>";
+        box.innerHTML = "<p class='hint'>这一栏还没有文章。</p>";
         return;
       }
       items.forEach((art) => {
+        
         const row = document.createElement("section");
         row.className = "card article-card";
         
@@ -497,6 +516,16 @@ row.querySelector("[data-pin]").onclick = async function (e) {
         guests.forEach(function (u) { userCard(u, guestBox, false); });
       }
     }
+    
+    $("admin-art-tabs").addEventListener("click", function (e) {
+      const btn = e.target.closest("[data-filter]");
+      if (!btn) return;
+      adminArtFilter = btn.dataset.filter;
+      document.querySelectorAll("#admin-art-tabs .tab").forEach(function (el) {
+        el.classList.toggle("on", el === btn);
+      });
+      renderList();
+    });
 
     
   </script>
