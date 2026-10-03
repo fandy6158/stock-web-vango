@@ -566,9 +566,15 @@ async function showView(name) {
   };
   const id = map[name] || "view-lookup";
   $(id).classList.add("show");
+
   document.querySelectorAll("#tabs .tab").forEach(function (btn) {
     btn.classList.toggle("on", btn.dataset.view === name || (name === "article" && btn.dataset.view === state.lastArticleList));
   });
+
+
+
+
+  
   if (name === "public" || name === "members") {
     if (!state.articlesLoaded) {
       await loadArticles();
