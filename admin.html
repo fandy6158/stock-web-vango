@@ -359,7 +359,22 @@
       items.forEach((art) => {
         const row = document.createElement("section");
         row.className = "card article-card";
-        row.innerHTML = '<span class="level-tag"></span><h2></h2><p></p><div class="actions" style="margin-top:8px"><button class="ghost" type="button" data-del="1">删除</button></div>';
+        
+        
+
+row.innerHTML = '<span class="level-tag"></span><h2></h2><p></p><div class="actions" style="margin-top:8px"><button class="ghost" type="button" data-pin="1">置顶</button><button class="ghost" type="button" data-del="1">删除</button></div>';
+row.querySelector("[data-pin]").textContent = art.pinned ? "取消置顶" : "置顶";
+row.querySelector("[data-pin]").onclick = async function (e) {
+  e.stopPropagation();
+  try {
+    const data = await postAdmin("/admin/article", Object.assign({}, art, { pinned: !art.pinned }));
+    if (!data.ok) throw new Error(data.message || "置顶失败");
+    renderList();
+  } catch (err) {
+    alert(err.message || "置顶失败");
+  }
+};
+        
         row.querySelector(".level-tag").textContent = (art.visibility || "") + " / " + (art.minLevel || "");
         row.querySelector("h2").textContent = art.title || art.id;
         row.querySelector("p").textContent = art.summary || "";
