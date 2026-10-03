@@ -64,7 +64,7 @@ const state = {
   view: "lookup",
 
   lastArticleList: "public",
-  memberLevel: "trial"
+  memberLevel: "trial",
   articlesLoaded: false
 };
 
