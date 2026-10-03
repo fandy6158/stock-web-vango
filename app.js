@@ -17,19 +17,19 @@ const PLANS = {
   trial: {
     id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
     queries: "7 天内100次内免费查询 5000多只个股估价",
-    articles: "体验档文章及分析数据截图",
+    articles: "体验档文章及分析数据",
     extras: []
   },
   vip: {
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
     queries: "6 个月内不限次数查询 5000多只个股估价",
-    articles: "VIP等级文章及分析数据截图",
+    articles: "体验+VIP等级文章及分析数据",
     extras: ["vip群（盘中逻辑荐股）"]
   },
   svip: {
     id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只个股估价",
-    articles: "VIP+SVIP 所有专栏文章及分析数据截图",
+    articles: "体验+VIP+SVIP 所有专栏文章及分析数据",
     extras: ["超级svip（盘中逻辑荐股++资产配置 ）"]
   }
 };
