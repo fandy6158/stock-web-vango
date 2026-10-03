@@ -640,7 +640,11 @@ function articleCard(a) {
 function renderPublicList() {
   const box = $("public-list");
   box.innerHTML = "";
-  const list = (state.articles || []).filter(function (a) { return a.published !== false && a.visibility === "public"; });
+  
+
+  const list = (state.articles || []).filter(function (a) { return a.published !== false && a.visibility === "public"; }).sort(byNewest);
+  
+  
   if (!list.length) {
     box.innerHTML = '<section class="card notice"><h3>暂无公开文章</h3></section>';
     return;
@@ -648,9 +652,19 @@ function renderPublicList() {
   list.forEach(function (a) { box.appendChild(articleCard(a)); });
 }
 
+
 function articleTime(a) {
-  return Number(a.updatedAt || a.createdAt || 0);
+  var t = Number(a.publishedAt || a.createdAt || 0);
+  if (t) return t;
+  var m = String(a.id || "").match(/(\d{13})/);
+  return m ? Number(m[1]) : 0;
 }
+
+function byNewest(a, b) {
+  return articleTime(b) - articleTime(a);
+}
+
+
 
 function renderMemberList() {
   const u = currentUser();
@@ -662,11 +676,10 @@ function renderMemberList() {
   document.querySelectorAll("#member-tabs .tab").forEach(function (btn) {
     btn.classList.toggle("on", btn.dataset.level === level);
   });
+
   const list = (state.articles || []).filter(function (a) {
     return a.published !== false && a.visibility === "members" && (a.minLevel || "trial") === level;
-  }).sort(function (a, b) {
-    return articleTime(b) - articleTime(a);
-  });
+  }).sort(byNewest);
   if (!list.length) {
     box.innerHTML = '<section class="card notice"><h3>暂无</h3></section>';
     return;
