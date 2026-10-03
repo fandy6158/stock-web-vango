@@ -166,18 +166,18 @@
     $("api").value = localStorage.getItem("admin-api") || "https://stock-api-tvzvtpfrip.cn-hangzhou.fcapp.run";
     $("key").value = localStorage.getItem("admin-key") || "";
 
-    document.querySelectorAll(".tabs .tab").forEach((btn) => {
-      btn.onclick = () => {
-        document.querySelectorAll(".tabs .tab").forEach((b) => b.classList.remove("on"));
-        btn.classList.add("on");
-        document.querySelectorAll(".pane").forEach((p) => p.classList.remove("show"));
-        $("pane-" + btn.dataset.pane).classList.add("show");
-        if (btn.dataset.pane === "list") renderList();
-        if (btn.dataset.pane === "members") renderUsers();
-        
-      };
-    });
+document.querySelectorAll(".tabs .tab[data-pane]").forEach((btn) => {
+  btn.onclick = () => {
+    document.querySelectorAll(".tabs .tab[data-pane]").forEach((b) => b.classList.remove("on"));
+    btn.classList.add("on");
+    document.querySelectorAll(".pane").forEach((p) => p.classList.remove("show"));
+    $("pane-" + btn.dataset.pane).classList.add("show");
+    if (btn.dataset.pane === "list") renderList();
+    if (btn.dataset.pane === "members") renderUsers();
+  };
+});
 
+    
     async function postAdmin(path, body) {
       const api = $("api").value.replace(/\/$/, "");
       const key = $("key").value.trim();
