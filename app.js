@@ -65,8 +65,10 @@ const state = {
 
   lastArticleList: "public",
   memberLevel: "trial"
-  
+  articlesLoaded: false
 };
+
+
 
 function loadStore() {
   try {
@@ -845,6 +847,11 @@ async function boot() {
   setStatus("正在连接数据源…");
   try {
     await loadArticles();
+   state.articlesLoaded = true;
+   if (state.view === "public") renderPublicList();
+   if (state.view === "members") renderMemberList();
+    
+    
     if (currentApiBase()) {
       PAY.apiBase = currentApiBase();
       await loadCatalog();
