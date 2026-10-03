@@ -279,10 +279,12 @@
     }
     bindPaste("art-public", pubFiles, "prev-pub");
     bindPaste("art-private", priFiles, "prev-pri");
+    var savedPublishedAt = 0;
 
     function currentArticle() {
+      var now = Date.now();
       return {
-        id: $("art-id").value.trim() || ("art-" + Date.now()),
+        id: $("art-id").value.trim() || ("art-" + now),
         title: $("art-title").value.trim(),
         summary: $("art-summary").value.trim(),
         visibility: $("art-vis").value,
@@ -292,10 +294,13 @@
         publicImages: pubFiles.slice(),
         privateImages: priFiles.slice(),
         published: true,
-        updatedAt: Date.now()
+        publishedAt: savedPublishedAt || now,
+        createdAt: savedPublishedAt || now,
+        updatedAt: now
       };
     }
 
+    
     $("save-art").onclick = async () => {
       const article = currentArticle();
       if (!article.title) {
@@ -360,6 +365,8 @@
         row.querySelector("p").textContent = art.summary || "";
         row.querySelector("h2").onclick = function () {
           $("art-id").value = art.id;
+          savedPublishedAt = Number(art.publishedAt || art.createdAt || 0);
+          
           $("art-title").value = art.title || "";
           $("art-summary").value = art.summary || "";
           $("art-vis").value = art.visibility || "public";
