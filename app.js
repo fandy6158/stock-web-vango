@@ -660,10 +660,13 @@ function articleTime(a) {
   return m ? Number(m[1]) : 0;
 }
 
+
 function byNewest(a, b) {
+  var pa = a.pinned ? 1 : 0;
+  var pb = b.pinned ? 1 : 0;
+  if (pa !== pb) return pb - pa;
   return articleTime(b) - articleTime(a);
 }
-
 
 
 function renderMemberList() {
