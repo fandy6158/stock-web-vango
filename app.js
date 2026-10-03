@@ -552,7 +552,7 @@ async function lookup() {
   }
 }
 
-function showView(name) {
+async function showView(name) {
   state.view = name;
   document.querySelectorAll(".view").forEach(function (el) { el.classList.remove("show"); });
   const map = {
@@ -565,14 +565,22 @@ function showView(name) {
   };
   const id = map[name] || "view-lookup";
   $(id).classList.add("show");
-  document.querySelectorAll(".tab").forEach(function (btn) {
+  document.querySelectorAll("#tabs .tab").forEach(function (btn) {
     btn.classList.toggle("on", btn.dataset.view === name || (name === "article" && btn.dataset.view === state.lastArticleList));
   });
+  if (name === "public" || name === "members") {
+    if (!state.articlesLoaded) {
+      await loadArticles();
+      state.articlesLoaded = true;
+    }
+  }
   if (name === "public") renderPublicList();
   if (name === "members") renderMemberList();
   if (name === "plans") renderPlans();
   if (name === "me") renderMe();
 }
+
+
 
 function renderAccount() {
   const btn = $("btn-account");
