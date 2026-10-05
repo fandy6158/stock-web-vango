@@ -728,8 +728,6 @@ function canSeePrivate(article) {
 
 
 
-
-
 function openArticle(id) {
   const a = (state.articles || []).find(function (x) { return x.id === id; });
   if (!a) return;
