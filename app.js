@@ -560,6 +560,7 @@ async function showView(name) {
     lookup: "view-lookup",
     public: "view-public",
     members: "view-members",
+    foreign: "view-foreign",
     article: "view-article",
     plans: "view-plans",
     me: "view-me"
@@ -573,9 +574,8 @@ async function showView(name) {
 
 
 
-
   
-  if (name === "public" || name === "members") {
+if (name === "public" || name === "members" || name === "foreign") {
     if (!state.articlesLoaded) {
       await loadArticles();
       state.articlesLoaded = true;
@@ -583,6 +583,7 @@ async function showView(name) {
   }
   if (name === "public") renderPublicList();
   if (name === "members") renderMemberList();
+  if (name === "foreign") renderForeignList();
   if (name === "plans") renderPlans();
   if (name === "me") renderMe();
 }
@@ -689,6 +690,35 @@ function renderMemberList() {
   }
   list.forEach(function (a) { box.appendChild(articleCard(a)); });
 }
+
+function canSeeForeign() {
+  const u = currentUser();
+  if (!u) return false;
+  return rankOf(u.level) >= 2;
+}
+function renderForeignList() {
+  const box = $("foreign-list");
+  const gate = $("foreign-gate");
+  if (!box) return;
+  if (!canSeeForeign()) {
+    if (gate) gate.style.display = "block";
+    box.innerHTML = "";
+    return;
+ 
+  
+  }
+  if (gate) gate.style.display = "none";
+  const list = (state.articles || []).filter(function (a) {
+    return a.published !== false && a.visibility === "foreign";
+  }).sort(byNewest);
+  box.innerHTML = "";
+  if (!list.length) {
+    box.innerHTML = '<section class="card notice"><h3>暂无外盘策略</h3></section>';
+    return;
+  }
+  list.forEach(function (a) { box.appendChild(articleCard(a)); });
+}
+
 
 function canSeePrivate(article) {
   const u = currentUser();
