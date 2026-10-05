@@ -575,7 +575,7 @@ async function showView(name) {
 
 
   
-if (name === "public" || name === "members" || name === "foreign") {
+if (name === "public" || name === "members" ) {
     if (!state.articlesLoaded) {
       await loadArticles();
       state.articlesLoaded = true;
@@ -583,7 +583,7 @@ if (name === "public" || name === "members" || name === "foreign") {
   }
   if (name === "public") renderPublicList();
   if (name === "members") renderMemberList();
-  if (name === "foreign") renderForeignList();
+
   if (name === "plans") renderPlans();
   if (name === "me") renderMe();
 }
