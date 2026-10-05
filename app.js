@@ -560,7 +560,7 @@ async function showView(name) {
     lookup: "view-lookup",
     public: "view-public",
     members: "view-members",
-    foreign: "view-foreign",
+
     article: "view-article",
     plans: "view-plans",
     me: "view-me"
