@@ -650,8 +650,8 @@ function articleCard(a) {
   el.innerHTML = '<span class="level-tag"></span><h2></h2><p></p>';
   el.querySelector(".level-tag").textContent = levelTagText(a);
 
-  
-  el.querySelector("h2").textContent = a.title || "";
+
+  el.querySelector("h2").textContent = (a.pinned ? "【置顶】" : "") + (a.title || "");
   el.querySelector("p").textContent = a.summary || "";
   el.addEventListener("click", function () { openArticle(a.id); });
   return el;
