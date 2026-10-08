@@ -173,7 +173,6 @@ function restoreSession() {
 }
 
 
-
 async function apiTry(method, path, body, headers) {
   const base = currentApiBase();
   if (!base) return null;
