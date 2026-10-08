@@ -57,6 +57,8 @@
         <option value="trial"> 体验会员  · 7 天</option>
         <option value="vip">       VIP  · 6 个月</option>
         <option value="svip">   超级VIP · 12 个月</option>
+        <option value="ssvip">尊享 · 12 个月</option>
+        
       </select>
       <div class="actions">
         <button class="primary" id="unlock-vip" type="button">确认到账并开通</button>
@@ -83,6 +85,8 @@
         <option value="trial">体验会员</option>
         <option value="vip">VIP</option>
         <option value="svip">超级VIP</option>
+       <option value="ssvip">尊享</option>
+        
       </select>
       <label for="art-public">公开文字</label>
       <textarea id="art-public" rows="6" placeholder="游客可见的文字。可在此框 Ctrl+V 粘贴示意图截图。"></textarea>
@@ -108,6 +112,8 @@
         <button class="tab" type="button" data-filter="trial">体验栏</button>
         <button class="tab" type="button" data-filter="vip">VIP栏</button>
         <button class="tab" type="button" data-filter="svip">SVIP栏</button>
+        <button class="tab" type="button" data-filter="ssvip">尊享栏</button>
+        
    </div>
   <div id="art-list" class="list"></div>
 
@@ -155,7 +161,7 @@
 
   <script>
     const STORE_KEY = "vango-local-db";
-    const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 } };
+    const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 }, ssvip: { days: 365 } };
     const $ = (id) => document.getElementById(id);
     const loadDb = () => {
       try { return Object.assign({ users: {}, orders: [], articles: [] }, JSON.parse(localStorage.getItem(STORE_KEY) || "{}")); }
@@ -438,6 +444,7 @@ row.querySelector("[data-pin]").onclick = async function (e) {
     }
 
     function daysOf(level) {
+      if (level === "ssvip") return 365;
       if (level === "svip") return 365;
       if (level === "vip") return 180;
       return 7;
