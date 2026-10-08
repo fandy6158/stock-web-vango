@@ -31,10 +31,19 @@ const PLANS = {
     queries: "12 个月内不限次数查询 5000多只个股估价",
     articles: "体验+VIP+SVIP 所有专栏文章及分析数据",
     extras: ["超级svip（盘中逻辑荐股++资产配置 ）"]
-  }
+  },
+
+ssvip: {
+  id: "ssvip", name: "尊享", price: 4999, days: 365, rank: 4,
+  queries: "12 个月内不限次数查询 5000多只个股估价",
+  articles: "全部专栏文章及分析数据",
+  extras: ["尊享服务（盘中逻辑荐股++资产配置++免费缠波理论课程）"]
+}
+  
 };
 
-const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", admin: "管理员" };
+
+const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享", admin: "管理员" };
 
 function apiUrl(path, params) {
   const base = currentApiBase();
@@ -132,6 +141,7 @@ function currentUser() {
 
 function rankOf(level) {
   if (level === "admin") return 9;
+  if (level === "ssvip") return 4;
   if (level === "svip") return 3;
   if (level === "vip") return 2;
   if (level === "trial") return 1;
@@ -616,13 +626,22 @@ if (u.level && u.level !== "none") {
   }
 }
 
+
+
 function levelTagText(a) {
   if (a.visibility === "public") return "公开";
   const min = a.minLevel || "trial";
-  if (min === "svip") return "SVIP";
-  if (min === "vip") return "VIP、SVIP";
-  return "体验、VIP、SVIP";
+  if (min === "ssvip") return "尊享";
+  if (min === "svip") return "SVIP、尊享";
+  if (min === "vip") return "VIP、SVIP、尊享";
+  return "体验、VIP、SVIP、尊享";
 }
+
+
+
+
+
+
 
 
 function articleCard(a) {
