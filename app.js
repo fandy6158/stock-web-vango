@@ -441,10 +441,12 @@ async function loadArticles() {
     });
   }
 
-  state.articles = publicItems.concat(memberItems);
+
+state.articles = publicItems.concat(memberItems);
+state.articles.forEach(function (a) {
+  if (String(a.title || "").indexOf("缠波理论课程简介") >= 0) a.pinned = true;
+});
 }
-
-
 
 
 
