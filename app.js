@@ -34,7 +34,7 @@ const PLANS = {
   },
 
 ssvip: {
-  id: "ssvip", name: "尊享", price: 4999, days: 365, rank: 4,
+  id: "ssvip", name: "尊享VIP", price: 4999, days: 365, rank: 4,
   queries: "12 个月内不限次数查询 5000多只个股估价",
   articles: "全部专栏文章及分析数据",
   extras: ["尊享服务（盘中逻辑荐股++资产配置++免费缠波理论课程）"]
@@ -43,7 +43,7 @@ ssvip: {
 };
 
 
-const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享", admin: "管理员" };
+const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip", admin: "管理员" };
 
 function apiUrl(path, params) {
   const base = currentApiBase();
