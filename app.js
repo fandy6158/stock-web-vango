@@ -24,20 +24,22 @@ const PLANS = {
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
     queries: "6 个月内不限次数查询 5000多只个股估价",
     articles: "体验+VIP等级文章及分析数据",
-    extras: ["vip群（盘中逻辑荐股）"]
+    extras: ["vip（盘中逻辑荐股）"]
   },
   svip: {
     id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只个股估价",
     articles: "体验+VIP+SVIP 所有专栏文章及分析数据",
-    extras: ["超级svip（盘中逻辑荐股++资产配置 ）"]
+    extras: ["超级svip（盘中逻辑荐股++资产配置计划 ）"]
   },
 
 ssvip: {
   id: "ssvip", name: "尊享VIP", price: 4999, days: 365, rank: 4,
   queries: "12 个月内不限次数查询 5000多只个股估价",
   articles: "全部专栏文章及分析数据",
-  extras: ["尊享服务（盘中逻辑荐股++资产配置++缠波理论课程）"]
+  extras: ["尊享服务1：缠波理论课程，为想从事或提高双向交易胜率学员服务"，
+           "尊享服务2：提供3倍股追踪计划，为职业投资者节省投研时间成本"]
+
 }
   
 };
