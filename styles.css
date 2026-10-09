@@ -452,7 +452,7 @@ input[type="tel"] {
 
 #members-gate button {
   height: auto;
-  padding: 5px 10px;
+  padding: 6px 12px;
   font-size: 13px;
   border-radius: 999px;
 }
@@ -464,7 +464,7 @@ input[type="tel"] {
 }
 
 #member-tabs .tab {
-  padding: 5px 10px;
+  padding: 6px 12px;
   font-size: 13px;
 }
 
