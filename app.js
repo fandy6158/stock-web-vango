@@ -45,8 +45,8 @@ ssvip: {
 foreign: {
   id: "foreign", name: "外盘VIP", price: 999, days: 365, rank: 0,
   queries: "外盘栏文章",
-  articles: "仅外盘栏，每周更新1-2篇，不定期发文。",
-  extras: ["外盘栏vip：BTC/黄金/原油/外汇/美股投资策略文章"]
+  articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
+  extras: [ "外盘栏vip： BTC/黄金/原油/外汇/美股 投资策略文章"]
 }
 
 
