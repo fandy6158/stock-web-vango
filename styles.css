@@ -404,6 +404,12 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 .plan-card { padding: 18px; }
 .plan-card .price { color: var(--gold); font-size: 28px; font-weight: 800; margin: 8px 0; }
 .plan-card ul { color: var(--muted); font-size: 13px; line-height: 1.7; padding-left: 18px; margin: 8px 0 14px; }
+
+.plan-card li {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .plan-mini { margin-bottom: 12px; }
 .modal {
   position: fixed; inset: 0;
