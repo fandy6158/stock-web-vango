@@ -568,13 +568,24 @@ async function lookup() {
       renderResult(item, "会员已解锁");
       return;
     }
-    if (access.type === "free") {
-      setStatus("");
-      $("paywall").classList.remove("show");
-      consumeFreeQuery();
-      renderResult(item, "注册体验查询，剩余 " + currentUser().freeQueriesLeft + " 次");
-      return;
-    }
+
+if (access.type === "free") {
+  setStatus("");
+  $("paywall").classList.remove("show");
+  if ((currentUser().freeQueriesLeft || 0) <= 0) {
+    showPaywall(item, "注册查询次数已用完。");
+    return;
+  }
+  const revealed = await reveal(item["代码"] || item.code, "FREE");
+  if (!revealed) {
+    showEmpty("云端还没有完整估值，请稍后重试。");
+    return;
+  }
+  consumeFreeQuery();
+  $("r-industry").textContent = "注册体验查询，剩余 " + currentUser().freeQueriesLeft + " 次";
+  return;
+}
+
     if (same && (await tryUnlockQuery(item, pending.orderId))) return;
     setStatus("");
     showPaywall(item, access.reason === "guest" ? "登录获5次免费查询，开通会员不限次数。" : "注册查询次数已用完。");
