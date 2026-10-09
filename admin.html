@@ -161,6 +161,15 @@
     textarea { min-height: 120px; resize: vertical; }
     .preview img { width: 100%; margin-top: 8px; border-radius: 12px; }
     h3 { margin-bottom: 10px; }
+    #member-cols {
+       display: grid;
+       grid-template-columns: 1fr;
+       gap: 12px;
+      }
+      @media (min-width: 800px) {
+      #member-cols { grid-template-columns: 1fr 1fr; }
+  }
+
   </style>
 
   <script>
