@@ -44,7 +44,7 @@ ssvip: {
 };
 
 
-const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip", admin: "管理员" };
+const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
 
 function apiUrl(path, params) {
   const base = currentApiBase();
@@ -636,7 +636,9 @@ function levelTagText(a) {
   if (min === "ssvip") return "尊享";
   if (min === "svip") return "SVIP、尊享";
   if (min === "vip") return "VIP、SVIP、尊享";
+ if (min === "foreign") return "外盘栏";
   return "体验、VIP、SVIP、尊享";
+   
 }
 
 
@@ -718,8 +720,13 @@ function renderMemberList() {
 function canSeePrivate(article) {
   const u = currentUser();
   if (!u) return false;
-  return rankOf(u.level) >= rankOf(article.minLevel || "trial");
+  if (u.level === "admin") return true;
+  const min = article.minLevel || "trial";
+  if (min === "foreign") return u.level === "foreign";
+  if (u.level === "foreign") return false;
+  return rankOf(u.level) >= rankOf(min);
 }
+
 
 
 
