@@ -455,6 +455,12 @@ input[type="tel"] {
   border-radius: 999px;
 }
 
+#members-gate button {
+  height: auto;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 999px;
+}
 
 
 
@@ -462,6 +468,14 @@ input[type="tel"] {
   margin: 10px 0 12px;
   padding-left: 16px;
 }
+
+#member-tabs .tab {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+
+
 
 #intro p {
   color: #fff;
