@@ -645,11 +645,11 @@ function renderAccount() {
 
 if (u.level && u.level !== "none") {
   var extra = "";
-  if (u.level === "trial") extra = " · 剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次";
-  $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "") + extra;
-  if ($("lookup-hint")) $("lookup-hint").textContent = u.level === "trial"
-    ? "体验会员剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次"
-    : "会员有效期内估值按档位开放。";
+if (u.level === "trial" || u.level === "foreign") extra = " · 剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次";
+$("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "") + extra;
+if ($("lookup-hint")) $("lookup-hint").textContent = (u.level === "trial" || u.level === "foreign")
+  ? "剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次"
+  : "会员有效期内估值按档位开放。";
   
   } else {
     $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
