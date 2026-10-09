@@ -485,12 +485,4 @@ input[type="tel"] {
   margin-bottom: 0;
 }
 
-#member-cols {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-@media (min-width: 800px) {
-  #member-cols { grid-template-columns: 1fr 1fr; }
-}
 
