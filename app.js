@@ -319,13 +319,17 @@ function filterFields(row) {
   return row;
 }
 
+
+
 function accessMode() {
   const u = currentUser();
   if (u && u.level === "admin") return { type: "member", mode: "full", reason: "admin" };
-  if (u && rankOf(u.level) >= 1) return { type: "member", mode: "full", reason: u.level };
+  if (u && (u.level === "foreign" || rankOf(u.level) >= 1)) return { type: "member", mode: "full", reason: u.level };
   if (u && (u.freeQueriesLeft || 0) > 0) return { type: "free", mode: "full", reason: "quota" };
   return { type: "pay", mode: "full", reason: u ? "no-quota" : "guest" };
 }
+
+
 
 function consumeFreeQuery() {
   const u = currentUser();
