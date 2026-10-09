@@ -16,26 +16,26 @@ const PAY = {
 const PLANS = {
   trial: {
     id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
-    queries: "7 天内100次内免费查询 5000多只个股估价",
+    queries: "7 天内100次内免费查询 5000多只A股多种估值模型查询",
     articles: "体验档文章及分析数据",
     extras: []
   },
   vip: {
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
-    queries: "6 个月内不限次数查询 5000多只个股估价",
+    queries: "6 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP等级文章及分析数据",
     extras: ["vip（盘中量化逻辑荐股）"]
   },
   svip: {
     id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3,
-    queries: "12 个月内不限次数查询 5000多只个股估价",
+    queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP+SVIP 所有专栏文章及分析数据",
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
 
 ssvip: {
   id: "ssvip", name: "尊享VIP", price: 4999, days: 365, rank: 4,
-  queries: "12 个月内不限次数查询 5000多只个股估价",
+  queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
   articles: "全部专栏文章及分析数据",
   extras: [ "尊享服务1：缠波理论课程，为想从事或提高双向交易胜率学员服务",
             "尊享服务2：提供3倍股追踪计划，为职业投资者节省投研时间成本"]
@@ -44,18 +44,17 @@ ssvip: {
 
 foreign: {
   id: "foreign", name: "外盘VIP", price: 999, days: 365, rank: 0,
-  queries: "外盘栏文章",
+  queries: "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
   articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
   extras: [ "外盘栏vip： BTC/黄金/原油/外汇/美股 投资策略文章"]
 }
 
 
-
-
-
-
   
 };
+
+
+
 
 
 const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
