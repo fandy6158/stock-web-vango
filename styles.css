@@ -84,7 +84,10 @@ button.primary {
 .notice h3 { font-size: 15px; margin-bottom: 10px; color: var(--danger) !important; font-weight: 700; }
 .notice ol, .notice li { padding-left: 18px; font-size: 14px; line-height: 1.7; }
 .notice li + li { margin-top: 6px; }
-.notice ol > li:nth-of-type(2) { color: var(--danger) !important; font-weight: 600; }
+
+
+
+
 
 #intro h3 { color: var(--danger) !important; }
 #intro p { color: var(--danger) !important; font-weight: 600; }
