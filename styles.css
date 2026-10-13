@@ -243,3 +243,29 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 .plan-card li {
   margin-bottom: 4px;
 }
+
+
+.article-card .level-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.article-card h2 {
+  font-size: 16px;
+  margin: 4px 0 6px;
+  color: #111;
+  line-height: 1.4;
+}
+
+.article-card p {
+  color: #555;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
