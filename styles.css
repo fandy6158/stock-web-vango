@@ -295,9 +295,9 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   color: #dc2626 !important;
   font-weight: 600;
 }
-
+/* 普通红色#dc2626  黑色#111 */
 .plan-card .price {
-  color: #dc2626 !important;
+  color: #111 !important;
 }
 
 
