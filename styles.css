@@ -167,12 +167,7 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   }
 }
 
-.qr {
-  width: 280px !important;
-  height: 280px !important;
-  max-width: 90%;
-  object-fit: contain;
-}
+
 
 
 #members-gate {
@@ -292,3 +287,5 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   max-width: 95%;
   object-fit: contain;
 }
+
+
