@@ -518,14 +518,7 @@ body {
   line-height: 1.7;
 }
 
-/* 原来黄色/内联提示文字改成更清晰的深色 */
-li[style*="f5c542"],
-p[style*="f5c542"],
-span[style*="f5c542"] {
-  color: #9a3412 !important;
-  font-weight: 600;
-  font-size: 14px;
-}
+
 
 /* 股票标签文字加深 */
 .chip {
