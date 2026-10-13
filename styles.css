@@ -201,3 +201,75 @@ button.ghost {
 .modal { background: rgba(0,0,0,.4); }
 .modal-card { background: #fff; }
 input[type="tel"] { background: #fff; color: #1a1a1a; }
+
+
+/* ========== 手机端优化 ========== */
+@media (max-width: 480px) {
+  body {
+    padding: 12px 10px 32px;
+    font-size: 14px;
+  }
+
+  .app { max-width: 100%; }
+
+  h1 { font-size: 18px; }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tabs {
+    gap: 6px;
+  }
+
+  .tab {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .search-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .search-row button.primary {
+    width: 100%;
+    height: 44px;
+  }
+
+  .chips {
+    gap: 6px;
+  }
+
+  .chip {
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+
+  .notice, .card {
+    padding: 12px 14px;
+  }
+
+  .notice ol, .notice li,
+  #intro ol, #intro li {
+    font-size: 13.5px;
+    padding-left: 16px;
+    line-height: 1.65;
+  }
+
+  .qr {
+    width: 180px;
+    height: 180px;
+  }
+
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
