@@ -288,4 +288,9 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   object-fit: contain;
 }
 
+.order-line code {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
 
