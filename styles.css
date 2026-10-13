@@ -274,14 +274,14 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 
-/* 取消特定行的红色，改回普通黑色 */
+/* 取消特定行的红色，改回普通黑色 
 .notice ol > li:nth-of-type(2),
 #intro ol > li:nth-of-type(2),
 .notice li[style*="dc2626"],
 #intro li[style*="dc2626"] {
   color: #222 !important;
   font-weight: normal !important;
-}
+}*/
 
 
 .qr {
