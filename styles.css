@@ -301,3 +301,6 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 
+.article h2 {
+  font-size: 18px !important;
+}
