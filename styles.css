@@ -465,3 +465,35 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 #intro p:last-child {
   margin-bottom: 0;
 }
+
+
+/* 强制覆盖原来的黄色内联文字，提高对比度 */
+li[style*="color:#f5c542"],
+li[style*="color: #f5c542"],
+p[style*="color:#f5c542"],
+span[style*="color:#f5c542"] {
+  color: #b8860b !important;   /* 更深的金色，清晰不刺眼 */
+  font-weight: 600;
+}
+
+/* 统一使用说明和作者简介里的嵌套列表 */
+.notice ol ol,
+.notice ol ol li {
+  color: #333 !important;
+  font-weight: normal;
+  margin-top: 4px;
+}
+
+/* 作者简介区域整体文字加深 */
+#intro,
+#intro li,
+#intro p,
+#intro ol {
+  color: #333 !important;
+}
+
+/* 注意事项区域的黄色提示也加深 */
+.notice li[style*="f5c542"] {
+  color: #a67c00 !important;
+  font-weight: 600;
+}
