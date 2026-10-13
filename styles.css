@@ -1,16 +1,16 @@
 :root {
-  --bg: #0b1220;
-  --bg-elev: #121b2d;
-  --bg-card: #172238;
-  --line: rgba(255, 255, 255, 0.08);
-  --text: #eef3ff;
-  --muted: #93a0b8;
-  --gold: #e8c36a;
-  --gold-dim: rgba(232, 195, 106, 0.16);
-  --buy: #3dd68c;
-  --hold: #e8c36a;
-  --sell: #ff6b7a;
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  --bg: #f7f8fa;
+  --bg-elev: #ffffff;
+  --bg-card: #ffffff;
+  --line: rgba(0, 0, 0, 0.08);
+  --text: #1a1a1a;
+  --muted: #666666;
+  --gold: #c9a063;
+  --gold-dim: rgba(201, 160, 99, 0.15);
+  --buy: #16a34a;
+  --hold: #c9a063;
+  --sell: #dc2626;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   --radius: 18px;
 }
 
@@ -18,7 +18,7 @@
 
 html, body {
   min-height: 100%;
-  background: radial-gradient(1200px 600px at 10% -10%, #1a2744 0%, var(--bg) 55%);
+  background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -80,7 +80,7 @@ h1 {
 }
 
 .search-card, .card, .panel {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -96,19 +96,19 @@ h1 {
   gap: 8px;
 }
 
-input[type="text"], input[type="url"] {
+input[type="text"], input[type="url"], input[type="tel"] {
   width: 100%;
   height: 48px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: #0d1628;
+  background: #ffffff;
   color: var(--text);
   padding: 0 14px;
   font-size: 16px;
   outline: none;
 }
 
-input:focus { border-color: rgba(232, 195, 106, 0.55); }
+input:focus { border-color: rgba(201, 160, 99, 0.6); }
 
 button.primary {
   height: 48px;
@@ -137,8 +137,8 @@ button.primary {
 
 .chip {
   border: 1px solid var(--line);
-  background: var(--bg-card);
-  color: var(--muted);
+  background: #f8f9fa;
+  color: #444;
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 12px;
@@ -178,9 +178,9 @@ button.primary {
   font-size: 13px;
   font-weight: 700;
 }
-.badge.buy { background: rgba(61, 214, 140, 0.15); color: var(--buy); }
+.badge.buy { background: rgba(22, 163, 74, 0.12); color: var(--buy); }
 .badge.hold { background: var(--gold-dim); color: var(--hold); }
-.badge.sell { background: rgba(255, 107, 122, 0.15); color: var(--sell); }
+.badge.sell { background: rgba(220, 38, 38, 0.12); color: var(--sell); }
 
 .price-row {
   display: grid;
@@ -190,7 +190,7 @@ button.primary {
 }
 
 .metric {
-  background: #10192c;
+  background: #f8f9fa;
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 12px;
@@ -219,7 +219,7 @@ button.primary {
 
 .note {
   padding: 16px 18px 18px;
-  color: #c9d4ea;
+  color: #444;
   line-height: 1.6;
   font-size: 14px;
 }
@@ -332,7 +332,6 @@ footer {
   .grid { grid-template-columns: 1fr 1fr 1fr; }
 }
 
-
 .header-actions { display: flex; gap: 8px; align-items: center; }
 button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 
@@ -343,12 +342,10 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
   margin: -6px 0 16px;
 }
 
-
-
 .tab {
   border: 1px solid var(--line);
-  background: var(--bg-elev);
-  color: var(--muted);
+  background: #ffffff;
+  color: #555;
   border-radius: 999px;
   padding: 8px 12px;
   font-size: 13px;
@@ -372,23 +369,22 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 }
 .article { padding: 18px; }
 .article h2 { font-size: 22px; margin: 8px 0 12px; }
-.article .body { color: #d5deef; font-size: 15px; line-height: 1.75; white-space: pre-wrap; }
+.article .body { color: #333; font-size: 15px; line-height: 1.75; white-space: pre-wrap; }
 .shots { display: flex; flex-direction: column; gap: 12px; margin: 14px 0; }
 .shots img {
   width: 100%;
   border-radius: 12px;
-  background: #0d1628;
+  background: #f8f9fa;
   border: 1px solid var(--line);
 }
 .lock-box {
   margin: 16px 0;
   padding: 18px;
-  border: 1px dashed rgba(232,195,106,.35);
+  border: 1px dashed rgba(201,160,99,.4);
   border-radius: 14px;
   text-align: center;
   color: var(--muted);
 }
-
 
 .plan-grid {
   display: grid;
@@ -399,7 +395,6 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 @media (max-width: 640px) {
   .plan-grid { grid-template-columns: 1fr; }
 }
-
 
 .plan-card { padding: 18px; }
 .plan-card .price { color: var(--gold); font-size: 28px; font-weight: 800; margin: 8px 0; }
@@ -413,7 +408,7 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 .plan-mini { margin-bottom: 12px; }
 .modal {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.4);
   display: grid; place-items: center;
   padding: 16px;
   z-index: 40;
@@ -421,7 +416,7 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 .modal[hidden] { display: none !important; }
 .modal-card {
   width: min(420px, 100%);
-  background: #121b2d;
+  background: #ffffff;
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 18px;
@@ -429,24 +424,11 @@ button.ghost.slim { height: 40px; padding: 0 12px; font-size: 13px; }
 }
 .modal-card h3 { margin-bottom: 8px; }
 .modal-card label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 6px; }
-input[type="tel"] {
-  width: 100%;
-  height: 48px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #0d1628;
-  color: var(--text);
-  padding: 0 14px;
-  font-size: 16px;
-  outline: none;
-}
 
 #members-gate p {
   font-size: 12px;
   margin: 4px 0 8px;
 }
-
-
 
 #members-gate .actions {
   margin-top: 0;
@@ -454,15 +436,12 @@ input[type="tel"] {
   gap: 8px;
 }
 
-
-
 #members-gate button {
   height: auto;
   padding: 5px 10px;
   font-size: 13px;
   border-radius: 999px;
 }
-
 
 #member-tabs {
   margin: 10px 0 12px;
@@ -474,9 +453,8 @@ input[type="tel"] {
   font-size: 13px;
 }
 
-
 #intro p {
-  color: #fff;
+  color: #333;
   font-size: 13px;
   line-height: 1.7;
   margin: 0 0 8px;
