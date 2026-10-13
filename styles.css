@@ -538,3 +538,30 @@ h1, h2, h3 {
   color: #111;
   font-weight: 700;
 }
+
+
+
+/* ========== 精准改色（只影响指定几处） ========== */
+
+/* 1. 「估值数据查询后如何使用」标题 */
+.view.show .notice:first-of-type h3 {
+  color: #dc2626 !important;
+}
+
+/* 2. 「如看不懂计算结果数据……」那一行 */
+.notice ol > li:nth-of-type(2) {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
+/* 3. 「作者简介及业务目标」大标题 */
+#intro h3 {
+  color: #dc2626 !important;
+}
+
+/* 4. 「作者简介：」和「业务目标：」两个小标题 */
+#intro > li:first-child,
+#intro > li:nth-child(2) {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
