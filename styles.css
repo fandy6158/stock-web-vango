@@ -497,3 +497,52 @@ span[style*="color:#f5c542"] {
   color: #a67c00 !important;
   font-weight: 600;
 }
+
+
+/* ========== 字体清晰度强化 ========== */
+body {
+  color: #1a1a1a;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* 使用说明、注意事项、作者简介整体加深 */
+.notice,
+.notice ol,
+.notice li,
+#intro,
+#intro li,
+#intro p {
+  color: #222 !important;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 原来黄色/内联提示文字改成更清晰的深色 */
+li[style*="f5c542"],
+p[style*="f5c542"],
+span[style*="f5c542"] {
+  color: #9a3412 !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* 股票标签文字加深 */
+.chip {
+  color: #1a1a1a !important;
+  font-weight: 500;
+  background: #f0f1f3;
+}
+
+/* 次要提示文字也不要太浅 */
+.hint,
+.status,
+.sub {
+  color: #444 !important;
+}
+
+/* 标题更有力 */
+h1, h2, h3 {
+  color: #111;
+  font-weight: 700;
+}
