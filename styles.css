@@ -199,3 +199,47 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   flex-wrap: wrap;
   gap: 8px;
 }
+
+.plan-card {
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.plan-card .level-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.plan-card .price {
+  color: var(--gold);
+  font-size: 32px;
+  font-weight: 800;
+  margin: 6px 0 4px;
+  line-height: 1.1;
+}
+
+.plan-card .hint {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.plan-card ul {
+  color: #333;
+  font-size: 13px;
+  line-height: 1.7;
+  padding-left: 18px;
+  margin: 8px 0 16px;
+}
+
+.plan-card li {
+  margin-bottom: 4px;
+}
