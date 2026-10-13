@@ -541,7 +541,7 @@ h1, h2, h3 {
 
 
 
-/* ========== 精准改色（只影响指定几处） ========== */
+/* ========== 精准改色（包含注意事项） ========== */
 
 /* 1. 「估值数据查询后如何使用」标题 */
 .view.show .notice:first-of-type h3 {
@@ -554,14 +554,25 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-/* 3. 「作者简介及业务目标」大标题 */
-#intro h3 {
-  color: #dc2626 !important;
-}
-
-/* 4. 「作者简介：」和「业务目标：」两个小标题 */
+/* 3. 「作者简介及业务目标」大标题 + 两个小标题 */
+#intro h3,
 #intro > li:first-child,
 #intro > li:nth-child(2) {
   color: #dc2626 !important;
   font-weight: 600;
 }
+
+/* 4. 「注意事项」标题 */
+section.card.notice:last-of-type h3,
+.card.notice h3:last-of-type {
+  color: #dc2626 !important;
+}
+
+/* 如果注意事项里的列表也要变红，取消下面注释 */
+/*
+section.card.notice:last-of-type li,
+.card.notice:last-of-type li {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+*/
