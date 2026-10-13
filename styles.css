@@ -132,3 +132,37 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 
 #paywall, #vip-paywall { display: none !important; }
 #paywall.show, #vip-paywall.show { display: block !important; }
+
+.plan-card {
+  padding: 18px;
+  overflow: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.plan-card ul {
+  color: #444;
+  font-size: 13px;
+  line-height: 1.7;
+  padding-left: 18px;
+  margin: 8px 0 14px;
+}
+
+.plan-card li {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+
+@media (max-width: 640px) {
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+}
