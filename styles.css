@@ -286,3 +286,9 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 
+.qr {
+  width: 320px !important;
+  height: 320px !important;
+  max-width: 95%;
+  object-fit: contain;
+}
