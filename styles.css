@@ -300,7 +300,16 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   color: #111 !important;
 }
 
-
 .article h2 {
   font-size: 18px !important;
 }
+
+
+
+.notice ol {
+  padding-left: 20px;      /* 整个列表左边缩进 20px */
+}
+.notice li {
+  padding-left: 4px !important;  /* 每个列表项的文字和数字之间只留 4px 间隙 */
+}
+
