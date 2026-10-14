@@ -77,10 +77,13 @@
       <label for="art-summary">列表简介</label>
       <input id="art-summary" type="text" placeholder="一两句话" />
       <label for="art-vis">类型</label>
-      <select id="art-vis">
-        <option value="public">公开文章（游客可读公开区）</option>
-        <option value="members">会员文章（游客仅可看标题）</option>
-      </select>
+
+     <select id="art-vis">
+        <option value="members" selected>会员文章（游客仅可看标题）</option>
+       <option value="public">公开文章（游客可读公开区）</option>
+     </select>
+
+      
       <label for="art-level">非公开区最低档</label>
       <select id="art-level">
         <option value="trial">体验会员</option>
