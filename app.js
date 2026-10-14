@@ -367,30 +367,17 @@ function renderResult(row, meta) {
     $("r-note").innerHTML = "<strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。";
 */
 
-/*
-  $("r-note").innerHTML = `
-  <strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。<br><br>
-  <strong>估值数据查询后如何使用：</strong>
-  <ol>
-    <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，主要参考估价 GXLGJ、X0GJ、MLGJ的数值;</li>
-    <li style="color:#dc2626;font-size:12.5px;">您查询的个股为：制造业、ICT 类、医药类，主要参考估价 X0GJ、X1GJ、MLGJ、YFGJ、YZHEYJ 的数值;</li>
-    <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：商贸类及暂时性亏损企业，主要参考估价 MLGJ、YZMLGJ、ML3GJ 的数值;</li>
-  </ol>
-` ;
-*/
 
 
-$("#r-note").html(`
+$("r-note").innerHTML = `
 <strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。<br><br>
 <strong>估值数据查询后如何使用：</strong>
 <ol>
-<li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，主要参考估价 GXL、X0GJ、MLGJ 的数值；</li>
-<li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：制造业、ICT 类、医药类，主要参考估价 X0GJ、X1GJ、MLGJ、YFGJ、YZHEYJ 的数值；</li>
-<li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：商贸类及暂时性亏损企业，主要参考估价 MLGJ、YZMLGJ、ML3GJ 的数值；</li>
+  <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，主要参考估价 GXL、X0GJ、MLGJ 的数值；</li>
+  <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：制造业、ICT 类、医药类，主要参考估价 X0GJ、X1GJ、MLGJ、YFGJ、YZHEYJ 的数值；</li>
+  <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：商贸类及暂时性亏损企业，主要参考估价 MLGJ、YZMLGJ、ML3GJ 的数值；</li>
 </ol>
-`);
-
-
+`;
 
 
   
