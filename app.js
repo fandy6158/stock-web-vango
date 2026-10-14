@@ -362,7 +362,38 @@ function renderResult(row, meta) {
     cell.querySelector(".v").textContent = val;
     grid.appendChild(cell);
   });
-  $("r-note").innerHTML = "<strong>说明：</strong>以上为作者维护的计算结果，不构成投资建议。";
+  $("r-note").innerHTML = "<strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。";
+
+/*
+$("r-note").innerHTML = `
+  <strong>说明：</strong>以上为作者维护的计算结果，不构成投资建议。<br><br>
+  <strong>估值数据查询后如何使用：</strong>
+  <ol>
+    <li>若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，
+      <ol>
+        <li>若当前市场价低于 GXLGJ，可 2-3 成仓买入长期持有；</li>
+        <li>若当前市场价介于 GXLGJ 与 X1GJ 之间，可 2 成仓买入长期持有；</li>
+        <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 1-2 成仓买入长期持有，1-2 成仓波动操作；</li>
+        <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 1-2 成仓波动操作；</li>
+        <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
+      </ol>
+    </li>
+    <li>若您查询的个股为：制造业、ICT 类、医药类，
+      <ol>
+        <li>若当前市场价低于 X0GJ，可 2-3 成仓买入长期持有；</li>
+        <li>若当前市场价介于 X0GJ 与 X1GJ 之间，可 1-3 成仓买入长期持有；</li>
+        <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 1-2 成仓买入长期持有，1-2 成仓波动操作；</li>
+        <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 2-3 成仓波动操作；</li>
+        <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
+      </ol>
+    </li>
+  </ol>
+` ;
+*/
+
+
+
+  
   box.classList.add("show");
 }
 
