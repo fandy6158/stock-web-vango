@@ -368,7 +368,6 @@ function renderResult(row, meta) {
 */
 
 
-
 $("r-note").innerHTML = `
 <strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。<br><br>
 <strong>估值数据查询后如何使用：</strong>
@@ -378,7 +377,6 @@ $("r-note").innerHTML = `
   <li style="color:#dc2626;font-size:12.5px;">若您查询的个股为：商贸类及暂时性亏损企业，主要参考估价 MLGJ、YZMLGJ、ML3GJ 的数值；</li>
 </ol>
 `;
-
 
   
 /*
