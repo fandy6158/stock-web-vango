@@ -18,18 +18,19 @@ const PLANS = {
     id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
     queries: "7 天内100次内免费查询 5000多只A股多种估值模型查询",
     articles: "体验档文章及分析数据",
-    extras: []
+    extras: [ "体验栏文章，内部含有2-3支个股。由量化公式在开盘前5min选出，属强势超短标的。"]
   },
+  
   vip: {
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
     queries: "6 个月内不限次数查询 5000多只A股多种估值模型查询",
-    articles: "体验+VIP等级文章及分析数据",
+    articles: "体验+VIP等级专栏文章及分析数据",
     extras: ["vip（盘中量化逻辑荐股）"]
   },
   svip: {
     id: "svip", name: "超级VIP", price: 1999, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
-    articles: "体验+VIP+SVIP 所有专栏文章及分析数据",
+    articles: "体验+VIP+SVIP等级专栏文章及分析数据",
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
 
@@ -45,11 +46,10 @@ ssvip: {
 
 foreign: {
   id: "foreign", name: "外盘VIP", price: 999, days: 365, rank: 0,
-  queries: "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
+  queries:  "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
   articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
   extras: [ "外盘栏vip：提供追踪BTC/黄金/原油/外汇/美股/国内期货 投资机会的策略文章服务" ]
 }
-
 
   
 };
