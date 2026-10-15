@@ -368,7 +368,7 @@ function renderResult(row, meta) {
 */
 
 $("r-note").innerHTML = `
-<strong  style="color:#111827;font-size:14px;">说明：</strong><span style="color:#111827;font-size:14px;">以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。</span><br><br>
+<strong  style="color:#111827;font-size:14px;">说明：</strong><span style="color:#111827;font-size:13px;">以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。</span><br><br>
 <strong  style="color:#111827;font-size:14px;">估值数据查询后如何使用：</strong>
 <ol style="margin:8px 0 0 0;padding-left:1.2em;list-style-position:inside;">
 <li style="color:#dc2626; font-size:12.5px; margin:4px 0;">若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，主要参考估价 GXL、X0GJ、MLGJ 的数值；</li>
