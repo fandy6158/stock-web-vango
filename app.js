@@ -367,12 +367,13 @@ function renderResult(row, meta) {
 
   
 $("r-note").innerHTML = `
-<strong  style="color:#111111;font-size:13px;margin:4px 0 0 0;">说明：</strong><span style="color:#111111;font-size:13px;">以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。</span><br><br>
-<strong  style="color:#dc2626;font-size:13px;margin:4px 0 0 0;">估值数据查询后如何使用：</strong>
+<strong  style="color:#111111;font-size:13px;margin:4px 0 0 0;">说明：</strong> <span style="color:#111111;font-size:13px;">以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。</span><br><br>
+<strong  style="color:#dc2626;font-size:13px;margin:4px 0 0 0;">估值数据查询后如何使用：</strong> <span style="color:#111111;font-size:13px;">一般情况下，若收盘价低于参考估价，低于越多安全系数越高</span><br><br>
 <ol style="margin:4px 0 0 0;padding-left:1.2em;list-style-position:inside;">
 <li style="color:#111111; font-size:12.5px; margin:2px 0;">若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，主要参考估价 GXLGJ、X0GJ、MLGJ 的数值；</li>
 <li style="color:#111111; font-size:12.5px; margin:2px 0;">若您查询的个股为：制造业、ICT 类、医药类，主要参考估价 X0GJ、MLGJ、X1GJ、YFGJ、YZHEYJ 的数值；</li>
 <li style="color:#111111; font-size:12.5px; margin:2px 0;">若您查询的个股为：商贸类及暂时性亏损企业，主要参考估价 MLGJ、YZMLGJ、ML3GJ 的数值；</li>
+<li style="color:#111111; font-size:12.5px; margin:2px 0;">若您查询的个股为：次新股或新股上市几年后暴跌，可参考调整后的首发价CQIPOJ 的数值；</li>
 </ol>
 `;
 
