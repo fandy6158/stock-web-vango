@@ -378,8 +378,6 @@ $("r-note").innerHTML = `
 `;
 
 
-
-
   
 /*
 $("r-note").innerHTML = `
