@@ -795,15 +795,27 @@ function renderMemberList() {
 
 
 
+
 function canSeePrivate(article) {
   const u = currentUser();
   if (!u) return false;
   if (u.level === "admin") return true;
+
   const min = article.minLevel || "trial";
-  if (min === "foreign") return u.level === "foreign";
+
+  // 外盘栏：外盘VIP 和 尊享VIP 都能看
+  if (min === "foreign") {
+    return u.level === "foreign" || u.level === "ssvip";
+  }
+
+  // 外盘VIP 不能看其他栏
   if (u.level === "foreign") return false;
+
   return rankOf(u.level) >= rankOf(min);
 }
+
+
+
 
 
 
