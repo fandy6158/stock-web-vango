@@ -83,11 +83,14 @@
   },
   {
     "id": "art-1792378679337",
-    "title": "【体验喜报】20261019 盘前量化推荐个股：晶科科技大涨",
+    "title": "【体验喜报】20261019 盘前量化推荐个股：晶科科技 封涨停",
     "summary": "",
     "visibility": "public",
-    "publicBody": "",
-    "publicImages": [],
+    "publicBody": "【体验喜报】20261019 盘前量化推荐个股：晶科科技 封涨停\n",
+    "publicImages": [
+      "./images/art-1792378679337-1.png",
+      "./images/art-1792378679337-2.png"
+    ],
     "privateBody": "",
     "privateImages": [],
     "published": true
