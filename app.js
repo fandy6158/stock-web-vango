@@ -37,14 +37,14 @@ const PLANS = {
     extras: ["vip（盘中量化逻辑荐股）"]
   },
   svip: {
-    id: "svip", name: "超级VIP", price: 2099, days: 365, rank: 3,
+    id: "svip", name: "超级VIP", price: 2199, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP+SVIP等级专栏文章及分析数据",
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
 
 ssvip: {
-  id: "ssvip", name: "尊享VIP", price: 5599, days: 365, rank: 4,
+  id: "ssvip", name: "尊享VIP", price: 5299, days: 365, rank: 4,
   queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
   articles: "全部专栏文章及分析数据",
   extras: [ "尊享服务1：一对一资产组合配置服务",
