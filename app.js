@@ -15,9 +15,9 @@ const PAY = {
 
 const PLANS = {
   trial: {
-    id: "trial", name: "体验VIP", price: 99, days: 7, rank: 1,
+    id: "trial", name: "体验VIP", price: 199, days: 7, rank: 1,
 /*
-   id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
+   id: "trial", name: "体验会员", price: 199, days: 7, rank: 1,
 */
     
     queries: "7 天内100次内免费查询 5000多只A股多种估值模型查询",
@@ -44,7 +44,7 @@ const PLANS = {
   },
 
 ssvip: {
-  id: "ssvip", name: "尊享VIP", price: 4999, days: 365, rank: 4,
+  id: "ssvip", name: "尊享VIP", price: 5999, days: 365, rank: 4,
   queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
   articles: "全部专栏文章及分析数据",
   extras: [ "尊享服务1：一对一资产组合配置服务",
