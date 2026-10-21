@@ -34,7 +34,7 @@ const PLANS = {
  
     queries: "6 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP等级专栏文章及分析数据",
-    extras: ["vip（盘中量化逻辑荐股）"]
+    extras: ["普通vip（盘中量化逻辑荐股）"]
   },
   svip: {
     id: "svip", name: "超级VIP", price: 2299, days: 365, rank: 3,
