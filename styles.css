@@ -313,3 +313,18 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   padding-left: 4px !important;  /* 每个列表项的文字和数字之间只留 4px 间隙 */
 }
 
+
+/* 文章内所有图片自动缩小适配 */
+.article img,
+.shots img,
+#art-public-imgs img,
+#art-private img {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin: 12px 0;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
