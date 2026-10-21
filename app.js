@@ -15,7 +15,7 @@ const PAY = {
 
 const PLANS = {
   trial: {
-    id: "trial", name: "体验VIP", price: 199, days: 7, rank: 1,
+    id: "trial", name: "体验VIP", price: 299, days: 7, rank: 1,
 /*
    id: "trial", name: "体验会员", price: 199, days: 7, rank: 1,
 */
@@ -26,7 +26,7 @@ const PLANS = {
   },
   
   vip: {
-    id: "vip", name: "普通VIP", price: 899, days: 180, rank: 2,
+    id: "vip", name: "普通VIP", price: 999, days: 180, rank: 2,
 
 /*
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
@@ -37,24 +37,24 @@ const PLANS = {
     extras: ["vip（盘中量化逻辑荐股）"]
   },
   svip: {
-    id: "svip", name: "超级VIP", price: 2199, days: 365, rank: 3,
+    id: "svip", name: "超级VIP", price: 2299, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP+SVIP等级专栏文章及分析数据",
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
 
 ssvip: {
-  id: "ssvip", name: "尊享VIP", price: 5299, days: 365, rank: 4,
+  id: "ssvip", name: "尊享VIP", price: 5999, days: 365, rank: 4,
   queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
   articles: "全部专栏文章及分析数据",
   extras: [ "尊享服务1：一对一资产组合配置服务",
             "尊享服务2：提供3倍股追踪计划，为职业投资者节省投研时间成本",
-            "尊享服务3：不定期腾讯视频讲解缠波理论课程，提高双向交易胜率"  ]
+            "尊享服务3：不定期腾讯视频讲解缠波理论速成课程，提高双向交易胜率"  ]
 },
 
 
 foreign: {
-  id: "foreign", name: "外盘VIP", price: 1299, days: 365, rank: 0,
+  id: "foreign", name: "外盘VIP", price: 1699, days: 365, rank: 0,
   queries:  "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
   articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
   extras: [ "外盘栏vip：提供追踪BTC/黄金/原油/外汇/美股/国内期货 投资机会的策略文章服务" ]
