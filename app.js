@@ -15,14 +15,23 @@ const PAY = {
 
 const PLANS = {
   trial: {
-    id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
+    id: "trial", name: "体验VIP", price: 99, days: 7, rank: 1,
+/*
+   id: "trial", name: "体验会员", price: 99, days: 7, rank: 1,
+*/
+    
     queries: "7 天内100次内免费查询 5000多只A股多种估值模型查询",
     articles: "体验档文章及分析数据",
     extras: [ "体验栏文章，内部含有2-3支个股。由量化公式在开盘前5min选出，属强势超短标的"]
   },
   
   vip: {
+    id: "vip", name: "普通VIP", price: 799, days: 180, rank: 2,
+
+/*
     id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
+*/
+ 
     queries: "6 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP等级专栏文章及分析数据",
     extras: ["vip（盘中量化逻辑荐股）"]
@@ -56,7 +65,12 @@ foreign: {
 
 
 
-const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
+const LEVEL_LABEL = { none: "注册用户", trial: "体验VIP", vip: "普通VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
+
+/*
+    const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
+*/
+
 
 function apiUrl(path, params) {
   const base = currentApiBase();
