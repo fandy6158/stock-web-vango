@@ -527,10 +527,9 @@ async function loadArticles() {
 
 state.articles = publicItems.concat(memberItems);
 state.articles.forEach(function (a) {
-  if (String(a.title || "").indexOf("    缠波理论课程简介及收费定价     ") >= 0) a.pinned = true;
+  if (String(a.title || "").indexOf("缠波完美理论简介及收费定价") >= 0) a.pinned = true;
 });
 }
-
 
 
 
