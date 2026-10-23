@@ -751,7 +751,7 @@ if (name === "public" || name === "members" ) {
 }
 
 
-
+/*
 function renderAccount() {
   const btn = $("btn-account");
   const u = currentUser();
@@ -777,6 +777,43 @@ if ($("lookup-hint")) $("lookup-hint").textContent = (u.level === "trial" || u.l
     if ($("lookup-hint")) $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次。";
   }
 }
+
+*/
+
+function renderAccount() {
+  const btn = $("btn-account");
+  const u = currentUser();
+  if (!u) {
+    btn.textContent = "登录";
+    $("header-sub").textContent = "公开文章可阅读 · 估值按会员或单次付费";
+    return;
+  }
+  const lv = LEVEL_LABEL[u.level] || "注册用户";
+  btn.textContent = maskPhone(u.phone);
+
+  if (u.level && u.level !== "none") {
+    var extra = "";
+    if (u.level === "trial" || u.level === "foreign") {
+      extra = " · 剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次";
+    }
+    $("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "") + extra;
+    if ($("lookup-hint")) {
+      $("lookup-hint").textContent = (u.level === "trial" || u.level === "foreign")
+        ? "剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次"
+        : "会员有效期内估值按档位开放。";
+    }
+  } else {
+    $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
+    if ($("lookup-hint")) {
+      $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次。";
+    }
+  }
+}
+
+
+
+
+
 
 
 
