@@ -866,7 +866,7 @@ function renderMemberList() {
 
 
 
-
+/*
 
 function canSeePrivate(article) {
   const u = currentUser();
@@ -886,7 +886,26 @@ function canSeePrivate(article) {
   return rankOf(u.level) >= rankOf(min);
 }
 
+*/
 
+
+function canSeePrivate(article) {
+  const u = currentUser();
+  if (!u) return false;
+  if (u.level === "admin") return true;
+
+  const min = article.minLevel || "trial";
+
+  // 外盘栏：外盘VIP 和 尊享VIP 都能看
+  if (min === "foreign") {
+    return u.level === "foreign" || u.level === "ssvip";
+  }
+
+  // 外盘VIP、估值专属：不能看任何会员专栏
+  if (u.level === "foreign" || u.level === "query") return false;
+
+  return rankOf(u.level) >= rankOf(min);
+}
 
 
 
