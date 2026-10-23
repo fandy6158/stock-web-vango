@@ -86,7 +86,7 @@ query: {
 
 
 
-const LEVEL_LABEL = { none: "注册用户", trial: "体验VIP", vip: "普通VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
+const LEVEL_LABEL = { none: "注册用户", trial: "体验VIP", vip: "普通VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,  query: "估值专属VIP",  admin: "管理员" };
 
 /*
     const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
