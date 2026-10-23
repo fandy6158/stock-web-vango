@@ -814,9 +814,6 @@ function renderAccount() {
 
 
 
-
-
-
 function levelTagText(a) {
   if (a.visibility === "public") return "公开";
   const min = a.minLevel || "trial";
@@ -827,10 +824,6 @@ function levelTagText(a) {
   return "体验、VIP、SVIP、尊享";
    
 }
-
-
-
-
 
 
 
