@@ -53,14 +53,20 @@
       <label for="vip-order">订单号</label>
       <input id="vip-order" type="text" placeholder="VIP-TRIAL-7D-XXXX" />
       <label for="vip-plan">开通档位</label>
+  
       <select id="vip-plan">
         <option value="trial">   体验会员  · 7 天</option>
-        <option value="vip">       VIP  · 6 个月</option>
+        <option value="vip">         VIP  · 6 个月</option>
         <option value="svip">    超级VIP · 12 个月</option>
         <option value="ssvip">   尊享VIP · 12 个月</option>
         <option value="foreign"> 外盘VIP· 12 个月</option>
-        
+        <option value="query">   估值专属VIP · 12 个月</option>
+       
       </select>
+
+
+
+      
       <div class="actions">
         <button class="primary" id="unlock-vip" type="button">确认到账并开通</button>
       </div>
@@ -180,7 +186,14 @@ select, textarea {
   <script>
     const STORE_KEY = "vango-local-db";
    
-    const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 }, ssvip: { days: 365 }, foreign: { days: 365 } };
+  //  const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 }, ssvip: { days: 365 }, foreign: { days: 365 } };//
+
+
+    const PLANS = { trial: { days: 7 }, vip: { days: 180 }, svip: { days: 365 }, ssvip: { days: 365 }, foreign: { days: 365 } ,query: { days: 365 }};
+
+
+
+    
     
     const $ = (id) => document.getElementById(id);
     const loadDb = () => {
