@@ -187,6 +187,7 @@ function currentUser() {
   return state.user;
 }
 
+/*
 function rankOf(level) {
   if (level === "admin") return 9;
   if (level === "ssvip") return 4;
@@ -195,6 +196,23 @@ function rankOf(level) {
   if (level === "trial") return 1;
   return 0;
 }
+*/
+
+function rankOf(level) {
+  if (level === "admin") return 9;
+  if (level === "ssvip") return 4;
+  if (level === "svip") return 3;
+  if (level === "vip") return 2;
+  if (level === "trial") return 1;
+  if (level === "query" || level === "foreign") return 0;
+  return 0;
+}
+
+
+
+
+
+
 
 function maskPhone(phone) {
   const s = String(phone || "");
