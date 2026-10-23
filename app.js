@@ -808,7 +808,7 @@ function renderAccount() {
       $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次。";
     }
   }
-}
+
 
 
 
