@@ -1,5 +1,5 @@
 const DEFAULT_CSV = "./data/stocks.csv";
-const DEFAULT_CSV = "./data/us-stocks.csv";
+
 const STORAGE_KEY = "stock-pwa-csv-url";
 const SESSION_KEY = "vango-session";
 const STORE_KEY = "vango-local-db";
