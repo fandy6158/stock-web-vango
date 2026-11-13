@@ -1018,9 +1018,10 @@ document.querySelectorAll('.market-btn').forEach(function(btn) {
       }
     }
  btn.addEventListener("click", function () {
-      switchMarket(this.dataset.market);});
+      switchMarket(this.dataset.market);
  
   });
+});
 });
 
 
