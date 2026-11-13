@@ -45,7 +45,7 @@ const PLANS = {
     id: "svip", name: "超级VIP", price: 2299, days: 365, rank: 3,
     queries: "365天不限次数查询：A股5000多只+美股3000多只多种估值模型",
     articles: "体验+VIP+SVIP等级专栏文章及分析数据",
-    extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
+    extras: [ "超级svip（一对一咨询服务++资产配置计划 ）"]
   },
 
   ssvip: {
