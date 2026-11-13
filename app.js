@@ -370,7 +370,25 @@ function parseCsv(text) {
 }
 
 
- // -------------新增切换A股 美股按钮 可用
+ 
+
+
+
+async function loadCsv(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error("无法读取 CSV（HTTP " + res.status + "）");
+  const text = await res.text();
+  const rows = parseCsv(text);
+  if (!rows.length) throw new Error("CSV 是空的，或表头无法识别");
+  state.rows = rows;
+  state.source = url;
+  state.loadedAt = new Date();
+  return rows;
+}
+
+
+
+// -------------新增切换A股 美股按钮 可用
 async function switchMarket(market) {
   if (market === currentMarket) return;
   currentMarket = market;
@@ -407,23 +425,6 @@ async function switchMarket(market) {
   }
 }
 
-
-
-
-
-
-
-async function loadCsv(url) {
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error("无法读取 CSV（HTTP " + res.status + "）");
-  const text = await res.text();
-  const rows = parseCsv(text);
-  if (!rows.length) throw new Error("CSV 是空的，或表头无法识别");
-  state.rows = rows;
-  state.source = url;
-  state.loadedAt = new Date();
-  return rows;
-}
 
 
 
@@ -1185,6 +1186,18 @@ function closeLogin() {
   $("login-modal").hidden = true;
 }
 
+
+// 市场切换按钮
+document.querySelectorAll(".market-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    switchMarket(this.dataset.market);
+  });
+});
+
+
+
+
+
 async function boot() {
   restoreSession();
   const me = await apiTry("GET", "/me", null, authHeaders());
@@ -1220,13 +1233,6 @@ async function boot() {
 }
 
 
-
-// 市场切换按钮
-document.querySelectorAll(".market-btn").forEach(btn => {
-  btn.addEventListener("click", function () {
-    switchMarket(this.dataset.market);
-  });
-});
 
 
 
