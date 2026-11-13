@@ -20,7 +20,7 @@ let currentMarket = "cn";   // 当前市场：cn / us
 
 const PAY = {
   enabled: true,
-  amount: "9.9",
+  amount: "4.9",
   qrSrc: "./icons/wechat-pay.jpg",
   wechat: "WuFan",
   paidListUrl: "./data/paid.json",
