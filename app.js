@@ -1017,7 +1017,8 @@ document.querySelectorAll('.market-btn').forEach(function(btn) {
         input.placeholder = '输入A股代码或名称，如 600519';
       }
     }
-
+ btn.addEventListener("click", function () {
+      switchMarket(this.dataset.market);});
  
   });
 });
