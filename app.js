@@ -1,20 +1,14 @@
 
 
 const DEFAULT_CSV = "./data/stocks.csv";
-const STORAGE_KEY = "stock-pwa-csv-url";
-/*
-const SESSION_KEY = "vango-session";
-const STORE_KEY = "vango-local-db";
-const DEMO_OTP = "123456";
-*/
 
-// A股默认CSV
+
+
+// ==================== 基础配置 ====================
 const DEFAULT_CSV_CN = "./data/stocks.csv";
-// 美股默认CSV
 const DEFAULT_CSV_US = "./data/us-stocks.csv";
-
-// 兼容原来的变量（默认还是用A股）
 const DEFAULT_CSV = DEFAULT_CSV_CN;
+
 const STORAGE_KEY = "stock-pwa-csv-url";
 const SESSION_KEY = "vango-session";
 const STORE_KEY = "vango-local-db";
@@ -24,7 +18,8 @@ const CSV_MAP = {
   cn: DEFAULT_CSV_CN,
   us: DEFAULT_CSV_US
 };
-let currentMarket = "cn";   // 默认A股
+
+let currentMarket = "cn";   // 当前市场：cn / us
 
 
 const PAY = {
@@ -39,10 +34,6 @@ const PAY = {
 const PLANS = {
   trial: {
     id: "trial", name: "体验VIP", price: 299, days: 7, rank: 1,
-/*
-   id: "trial", name: "体验会员", price: 199, days: 7, rank: 1,
-*/
-    
     queries: "7 天内100次内免费查询 5000多只A股多种估值模型查询",
     articles: "体验档文章及分析数据",
     extras: [ "体验栏文章，内部含有2-3支个股。由量化公式在开盘前5min选出，属强势超短标的"]
@@ -50,11 +41,6 @@ const PLANS = {
   
   vip: {
     id: "vip", name: "普通VIP", price: 999, days: 180, rank: 2,
-
-/*
-    id: "vip", name: "VIP", price: 799, days: 180, rank: 2,
-*/
- 
     queries: "6 个月内不限次数查询 5000多只A股多种估值模型查询",
     articles: "体验+VIP等级专栏文章及分析数据",
     extras: ["普通vip（盘中量化逻辑荐股）"]
@@ -66,54 +52,45 @@ const PLANS = {
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
 
-ssvip: {
-  id: "ssvip", name: "尊享VIP", price: 5999, days: 365, rank: 4,
-  queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
-  articles: "全部专栏文章及分析数据",
-  extras: [ "尊享服务1：一对一资产组合配置服务",
-            "尊享服务2：提供3倍股追踪计划，为职业投资者节省投研时间成本",
-            "尊享服务3：不定期腾讯视频讲解缠波理论速成课程，提高双向交易胜率"  ]
-},
+  ssvip: {
+    id: "ssvip", name: "尊享VIP", price: 5999, days: 365, rank: 4,
+    queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
+    articles: "全部专栏文章及分析数据",
+    extras: [ "尊享服务1：一对一资产组合配置服务",
+              "尊享服务2：提供3倍股追踪计划，为职业投资者节省投研时间成本",
+              "尊享服务3：不定期腾讯视频讲解缠波理论速成课程，提高双向交易胜率"  ]
+  },
 
+  foreign: {
+    id: "foreign", name: "外盘VIP", price: 1699, days: 365, rank: 0,
+    queries:  "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
+    articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
+    extras: [ "外盘栏vip：提供追踪BTC/黄金/原油/外汇/美股/国内期货 投资机会的策略文章服务" ]
+  },
 
-foreign: {
-  id: "foreign", name: "外盘VIP", price: 1699, days: 365, rank: 0,
-  queries:  "赠送365天内100次内免费查询 5000多只A股多种估值模型查询",
-  articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
-  extras: [ "外盘栏vip：提供追踪BTC/黄金/原油/外汇/美股/国内期货 投资机会的策略文章服务" ]
-},
-
-
-
-query: {
+  query: {
     id: "query", 
     name: "估值专属VIP",
-    price: 999,          // 你自己定价格
-    days: 365,           // 你自己定天数
-    rank: 0,             // 和 foreign 一样 rank=0，不参与专栏等级
+    price: 999,
+    days: 365,
+    rank: 0,
     queries: "365天内不限次数查询 5000多只A股多种估值模型",
     articles: "不含任何会员专栏文章，仅限估值查询系统",
     extras: ["专为只需要估值工具的用户设计，性价比更高"]
   }
-
-
-
-
-
-
-
-  
-  
 };
 
 
-
-
-const LEVEL_LABEL = { none: "注册用户", trial: "体验VIP", vip: "普通VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,  query: "估值专属VIP",  admin: "管理员" };
-
-/*
-    const LEVEL_LABEL = { none: "注册用户", trial: "体验会员", vip: "VIP", svip: "超级VIP", ssvip: "尊享vip",foreign: "外盘栏vip" ,admin: "管理员" };
-*/
+const LEVEL_LABEL = {
+  none: "注册用户",
+  trial: "体验VIP",
+  vip: "普通VIP",
+  svip: "超级VIP",
+  ssvip: "尊享vip",
+  foreign: "外盘栏vip",
+  query: "估值专属VIP",
+  admin: "管理员"
+};
 
 
 function apiUrl(path, params) {
@@ -135,6 +112,7 @@ const $ = function (id) { return document.getElementById(id); };
 
 const state = {
   rows: [],
+  total: 0,
   source: "",
   loadedAt: null,
   pending: null,
@@ -142,7 +120,6 @@ const state = {
   user: null,
   articles: [],
   view: "lookup",
-
   lastArticleList: "public",
   memberLevel: "trial",
   articlesLoaded: false
@@ -210,17 +187,6 @@ function currentUser() {
   return state.user;
 }
 
-/*
-function rankOf(level) {
-  if (level === "admin") return 9;
-  if (level === "ssvip") return 4;
-  if (level === "svip") return 3;
-  if (level === "vip") return 2;
-  if (level === "trial") return 1;
-  return 0;
-}
-*/
-
 function rankOf(level) {
   if (level === "admin") return 9;
   if (level === "ssvip") return 4;
@@ -230,12 +196,6 @@ function rankOf(level) {
   if (level === "query" || level === "foreign") return 0;
   return 0;
 }
-
-
-
-
-
-
 
 function maskPhone(phone) {
   const s = String(phone || "");
@@ -249,7 +209,6 @@ function saveSession(user) {
   renderAccount();
 }
 
-
 function restoreSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY);
@@ -260,7 +219,6 @@ function restoreSession() {
     state.user = null;
   }
 }
-
 
 async function apiTry(method, path, body, headers) {
   const base = currentApiBase();
@@ -295,7 +253,6 @@ async function sendSms(phone) {
   return { ok: true, demo: true, message: "短信已发送，请查看手机验证码" };
 }
 
-
 async function loginWithSms(phone, code) {
   const remote = await apiTry("POST", "/auth/login", { phone: phone, code: code });
   if (remote && remote.ok && remote.user) {
@@ -303,7 +260,6 @@ async function loginWithSms(phone, code) {
     await loadArticles();
     return remote.user;
   }
-
 
   if (currentApiBase()) {
     throw new Error((remote && remote.message) || "云端登录失败，请重新发送验证码");
@@ -314,7 +270,6 @@ async function loginWithSms(phone, code) {
     throw new Error("验证码不正确或已过期");
   }
 
-  
   delete db.otps[phone];
   const existing = db.users[phone];
   const user = existing || {
@@ -335,26 +290,12 @@ function normalizeCode(value) {
   return String(value || "").trim().toUpperCase().replace(/\s+/g, "").replace(/\.SS$|\.SZ$|\.HK$|\.US$/i, "");
 }
 
-
-/*
 function currentCsvUrl() {
-  return localStorage.getItem(STORAGE_KEY) || DEFAULT_CSV;
-}
-*/
-
-function currentCsvUrl() {
-  // 优先用当前市场对应的地址
   if (CSV_MAP[currentMarket]) {
     return CSV_MAP[currentMarket];
   }
   return localStorage.getItem(STORAGE_KEY) || DEFAULT_CSV;
 }
-
-
-
-
-
-
 
 function parseCsv(text) {
   const rows = [];
@@ -370,11 +311,6 @@ function parseCsv(text) {
   return rows;
 }
 
-
- 
-
-
-
 async function loadCsv(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("无法读取 CSV（HTTP " + res.status + "）");
@@ -382,20 +318,18 @@ async function loadCsv(url) {
   const rows = parseCsv(text);
   if (!rows.length) throw new Error("CSV 是空的，或表头无法识别");
   state.rows = rows;
+  state.total = rows.length;
   state.source = url;
   state.loadedAt = new Date();
   return rows;
 }
 
-
-
-
 async function switchMarket(market) {
   if (market === currentMarket) return;
   currentMarket = market;
 
-  // 更新按钮样式
-  document.querySelectorAll(".market-btn").forEach(btn => {
+  // 更新按钮高亮
+  document.querySelectorAll(".market-btn").forEach(function (btn) {
     btn.classList.toggle("on", btn.dataset.market === market);
   });
 
@@ -416,28 +350,24 @@ async function switchMarket(market) {
 
   try {
     if (currentApiBase()) {
-      await loadCatalog();          // 走云函数
-      setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
+      await loadCatalog();
+      setStatus(
+        (market === "us" ? "美股" : "A股") +
+        "数据已加载，共 " + (state.total || state.rows.length) + " 只"
+      );
       renderChips();
     } else {
-      // 本地演示模式才走CSV
       await loadCsv(currentCsvUrl());
-      setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
+      setStatus(
+        (market === "us" ? "美股" : "A股") +
+        "数据已加载，共 " + state.rows.length + " 只"
+      );
       renderChips();
     }
   } catch (err) {
     setStatus("加载失败：" + err.message);
   }
 }
-
-
-
-
-
-
-
-
-
 
 function restoreCache() {
   try {
@@ -467,18 +397,6 @@ function filterFields(row) {
   return row;
 }
 
-/*
-
-function accessMode() {
-  const u = currentUser();
-  if (u && u.level === "admin") return { type: "member", mode: "full", reason: "admin" };
-  if (u && (u.level === "foreign" || rankOf(u.level) >= 1)) return { type: "member", mode: "full", reason: u.level };
-  if (u && (u.freeQueriesLeft || 0) > 0) return { type: "free", mode: "full", reason: "quota" };
-  return { type: "pay", mode: "full", reason: u ? "no-quota" : "guest" };
-}
-
-*/
-
 function accessMode() {
   const u = currentUser();
   if (u && u.level === "admin") return { type: "member", mode: "full", reason: "admin" };
@@ -488,16 +406,6 @@ function accessMode() {
   if (u && (u.freeQueriesLeft || 0) > 0) return { type: "free", mode: "full", reason: "quota" };
   return { type: "pay", mode: "full", reason: u ? "no-quota" : "guest" };
 }
-
-
-
-
-
-
-
-
-
-
 
 function consumeFreeQuery() {
   const u = currentUser();
@@ -530,13 +438,8 @@ function renderResult(row, meta) {
     cell.querySelector(".v").textContent = val;
     grid.appendChild(cell);
   });
-  
-/*
-    $("r-note").innerHTML = "<strong>说明：</strong>以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。";
-*/
 
-  
-$("r-note").innerHTML = `
+  $("r-note").innerHTML = `
 <strong  style="color:#111111;font-size:13px;margin:2px 0 0 0;">说明：</strong> <span style="color:#111111;font-size:13px;">以上为作者维护的计算结果，仅供投资参考，不保证绝对收益。</span><br><br>
 <strong  style="color:#dc2626;font-size:13px;margin:2px 0 0 0;">估值数据查询后如何使用：</strong> <span style="color:#dc2626;font-size:13px;"> 1】一般情况下，纯估值角度：若收盘价低于参考估价，低得越多安全性越高。</span><br>
 <span style="color:#dc2626;font-size:13px;"> 2】一般情况下，若收盘价高于参考估价+趋势向上，可根据涨幅情况，适时适仓参与。若收盘价高于X2GJ X3GJ 慎重考量。 </span><br><br>
@@ -548,42 +451,8 @@ $("r-note").innerHTML = `
 </ol>
 `;
 
-
-  
-/*
-$("r-note").innerHTML = `
-  <strong>说明：</strong>以上为作者维护的计算结果，不构成投资建议。<br><br>
-  <strong>估值数据查询后如何使用：</strong>
-  <ol>
-    <li>若您查询的个股为：银行、保险、证券、中国石油、中国石化等大蓝筹，
-      <ol>
-        <li>若当前市场价低于 GXLGJ，可 2-3 成仓买入长期持有；</li>
-        <li>若当前市场价介于 GXLGJ 与 X1GJ 之间，可 2 成仓买入长期持有；</li>
-        <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 1-2 成仓买入长期持有，1-2 成仓波动操作；</li>
-        <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 1-2 成仓波动操作；</li>
-        <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
-      </ol>
-    </li>
-    <li>若您查询的个股为：制造业、ICT 类、医药类，
-      <ol>
-        <li>若当前市场价低于 X0GJ，可 2-3 成仓买入长期持有；</li>
-        <li>若当前市场价介于 X0GJ 与 X1GJ 之间，可 1-3 成仓买入长期持有；</li>
-        <li>若当前市场价介于 X1GJ 与 X2GJ 之间，可 1-2 成仓买入长期持有，1-2 成仓波动操作；</li>
-        <li>若当前市场价介于 X2GJ 与 X3GJ 之间，最好仅使用 2-3 成仓波动操作；</li>
-        <li>若当前市场价高于 X3GJ，最好不要碰，不要参与；</li>
-      </ol>
-    </li>
-  </ol>
-` ;
-*/
   box.classList.add("show");
 }
-
-
-
-
-
-
 
 function setStatus(msg) {
   if ($("status")) $("status").textContent = msg || "";
@@ -649,27 +518,16 @@ function showPaywall(row, reason) {
   $("paywall").classList.add("show");
 }
 
-/*
 async function loadCatalog() {
-  const res = await fetch(apiUrl("/catalog"), { cache: "no-store" });
+  const res = await fetch(apiUrl("/catalog", { market: currentMarket }), {
+    cache: "no-store"
+  });
   if (!res.ok) throw new Error("云函数 catalog 失败");
   const data = await res.json();
   state.rows = data.items || [];
+  state.total = data.total || state.rows.length;
   state.source = currentApiBase();
 }
-*/
-
-async function loadCatalog() {
-  const res = await fetch(apiUrl("/catalog", { market: currentMarket }), { cache: "no-store" });
-  if (!res.ok) throw new Error("云函数 catalog 失败");
-  const data = await res.json();
-  state.rows = data.items || [];
-  state.source = currentApiBase();
-}
-
-
-
-
 
 async function loadArticles() {
   var publicItems = [];
@@ -692,15 +550,11 @@ async function loadArticles() {
     });
   }
 
-
-state.articles = publicItems.concat(memberItems);
-state.articles.forEach(function (a) {
-  if (String(a.title || "").indexOf("缠波完美理论简介及收费定价") >= 0) a.pinned = true;
-});
+  state.articles = publicItems.concat(memberItems);
+  state.articles.forEach(function (a) {
+    if (String(a.title || "").indexOf("缠波完美理论简介及收费定价") >= 0) a.pinned = true;
+  });
 }
-
-
-
 
 function renderChips() {
   const wrap = $("chips");
@@ -721,20 +575,14 @@ function renderChips() {
 
 async function reveal(code, orderId) {
   const u = currentUser();
-  /*
-  const url = apiUrl("/reveal", { code: code, order: orderId, phone: u ? u.phone : "", token: u ? u.token : "" });
-  */
-const url = apiUrl("/reveal", { 
-  code: code, 
-  order: orderId, 
-  phone: u ? u.phone : "", 
-  token: u ? u.token : "",
-  market: currentMarket
-});
+  const url = apiUrl("/reveal", {
+    code: code,
+    order: orderId,
+    phone: u ? u.phone : "",
+    token: u ? u.token : "",
+    market: currentMarket
+  });
 
-
-
-  
   const res = await fetch(url, { cache: "no-store", headers: authHeaders() });
   const data = await res.json();
   if (data.ok && data.item) {
@@ -765,32 +613,24 @@ async function lookup() {
   try {
     var item = null;
     if (currentApiBase()) {
-   /*     
-   const res = await fetch(apiUrl("/lookup", { code: q }), {
-   */
-    const res = await fetch(apiUrl("/lookup", { code: q, market: currentMarket }), {
-      
-     cache: "no-store",
-     headers: authHeaders()
-    });
+      const res = await fetch(apiUrl("/lookup", { code: q, market: currentMarket }), {
+        cache: "no-store",
+        headers: authHeaders()
+      });
 
-      
       const data = await res.json();
       if (!data.found) {
         showEmpty(data.message || ("没有找到「" + q + "」"));
         return;
       }
 
- item = data.item;
-  if (data.trialQueriesLeft != null && currentUser()) {
-  var u = currentUser();
-  u.trialQueriesLeft = data.trialQueriesLeft;
-  saveSession(u);
-  renderAccount();
-}
-
-
-      
+      item = data.item;
+      if (data.trialQueriesLeft != null && currentUser()) {
+        var u = currentUser();
+        u.trialQueriesLeft = data.trialQueriesLeft;
+        saveSession(u);
+        renderAccount();
+      }
     } else {
       if (!state.rows.length) {
         showEmpty("估值表还没加载成功。");
@@ -802,9 +642,11 @@ async function lookup() {
         return;
       }
     }
+
     const pending = JSON.parse(sessionStorage.getItem("pending-order") || "null");
     const same = pending && pending.type !== "vip" && normalizeCode(pending.code) === normalizeCode(item["代码"] || item.code);
     const access = accessMode();
+
     if (access.type === "member") {
       setStatus("");
       $("paywall").classList.remove("show");
@@ -818,22 +660,22 @@ async function lookup() {
       return;
     }
 
-if (access.type === "free") {
-  setStatus("");
-  $("paywall").classList.remove("show");
-  if ((currentUser().freeQueriesLeft || 0) <= 0) {
-    showPaywall(item, "注册查询次数已用完。");
-    return;
-  }
-  const revealed = await reveal(item["代码"] || item.code, "FREE");
-  if (!revealed) {
-    showEmpty("云端还没有完整估值，请稍后重试。");
-    return;
-  }
-  consumeFreeQuery();
-  $("r-industry").textContent = "注册体验查询，剩余 " + currentUser().freeQueriesLeft + " 次";
-  return;
-}
+    if (access.type === "free") {
+      setStatus("");
+      $("paywall").classList.remove("show");
+      if ((currentUser().freeQueriesLeft || 0) <= 0) {
+        showPaywall(item, "注册查询次数已用完。");
+        return;
+      }
+      const revealed = await reveal(item["代码"] || item.code, "FREE");
+      if (!revealed) {
+        showEmpty("云端还没有完整估值，请稍后重试。");
+        return;
+      }
+      consumeFreeQuery();
+      $("r-industry").textContent = "注册体验查询，剩余 " + currentUser().freeQueriesLeft + " 次";
+      return;
+    }
 
     if (same && (await tryUnlockQuery(item, pending.orderId))) return;
     setStatus("");
@@ -850,7 +692,6 @@ async function showView(name) {
     lookup: "view-lookup",
     public: "view-public",
     members: "view-members",
-
     article: "view-article",
     plans: "view-plans",
     me: "view-me"
@@ -862,10 +703,7 @@ async function showView(name) {
     btn.classList.toggle("on", btn.dataset.view === name || (name === "article" && btn.dataset.view === state.lastArticleList));
   });
 
-
-
-  
-if (name === "public" || name === "members" ) {
+  if (name === "public" || name === "members") {
     if (!state.articlesLoaded) {
       await loadArticles();
       state.articlesLoaded = true;
@@ -873,40 +711,9 @@ if (name === "public" || name === "members" ) {
   }
   if (name === "public") renderPublicList();
   if (name === "members") renderMemberList();
-
   if (name === "plans") renderPlans();
   if (name === "me") renderMe();
 }
-
-
-/*
-function renderAccount() {
-  const btn = $("btn-account");
-  const u = currentUser();
-  if (!u) {
-    btn.textContent = "登录";
-    $("header-sub").textContent = "公开文章可阅读 · 估值按会员或单次付费";
-    return;
-  }
-  const lv = LEVEL_LABEL[u.level] || "注册用户";
-  btn.textContent = maskPhone(u.phone);
-
-
-if (u.level && u.level !== "none") {
-  var extra = "";
-if (u.level === "trial" || u.level === "foreign") extra = " · 剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次";
-$("header-sub").textContent = lv + (u.expireAt ? " · 至 " + new Date(u.expireAt).toLocaleDateString() : "") + extra;
-if ($("lookup-hint")) $("lookup-hint").textContent = (u.level === "trial" || u.level === "foreign")
-  ? "剩余 " + (u.trialQueriesLeft == null ? "—" : u.trialQueriesLeft) + " 次"
-  : "会员有效期内估值按档位开放。";
-  
-  } else {
-    $("header-sub").textContent = lv + " · 剩余免费查询 " + (u.freeQueriesLeft || 0) + " 次";
-    if ($("lookup-hint")) $("lookup-hint").textContent = "已登录。注册查询剩余 " + (u.freeQueriesLeft || 0) + " 次。";
-  }
-}
-
-*/
 
 function renderAccount() {
   const btn = $("btn-account");
@@ -938,31 +745,21 @@ function renderAccount() {
   }
 }
 
-
-
-
-
 function levelTagText(a) {
   if (a.visibility === "public") return "公开";
   const min = a.minLevel || "trial";
   if (min === "ssvip") return "尊享";
   if (min === "svip") return "SVIP、尊享";
   if (min === "vip") return "VIP、SVIP、尊享";
- if (min === "foreign") return "外盘栏";
+  if (min === "foreign") return "外盘栏";
   return "体验、VIP、SVIP、尊享";
-   
 }
-
-
-
 
 function articleCard(a) {
   const el = document.createElement("section");
   el.className = "card article-card";
   el.innerHTML = '<span class="level-tag"></span><h2></h2><p></p>';
   el.querySelector(".level-tag").textContent = levelTagText(a);
-
-
   el.querySelector("h2").textContent = (a.pinned ? "【置顶】" : "") + (a.title || "");
   el.querySelector("p").textContent = a.summary || "";
   el.addEventListener("click", function () { openArticle(a.id); });
@@ -972,18 +769,16 @@ function articleCard(a) {
 function renderPublicList() {
   const box = $("public-list");
   box.innerHTML = "";
-  
+  const list = (state.articles || []).filter(function (a) {
+    return a.published !== false && a.visibility === "public";
+  }).sort(byNewest);
 
-  const list = (state.articles || []).filter(function (a) { return a.published !== false && a.visibility === "public"; }).sort(byNewest);
-  
-  
   if (!list.length) {
     box.innerHTML = '<section class="card notice"><h3>暂无公开文章</h3></section>';
     return;
   }
   list.forEach(function (a) { box.appendChild(articleCard(a)); });
 }
-
 
 function articleTime(a) {
   var t = Number(a.publishedAt || a.createdAt || 0);
@@ -992,14 +787,12 @@ function articleTime(a) {
   return m ? Number(m[1]) : 0;
 }
 
-
 function byNewest(a, b) {
   var pa = a.pinned ? 1 : 0;
   var pb = b.pinned ? 1 : 0;
   if (pa !== pb) return pb - pa;
   return articleTime(b) - articleTime(a);
 }
-
 
 function renderMemberList() {
   const u = currentUser();
@@ -1015,6 +808,7 @@ function renderMemberList() {
   const list = (state.articles || []).filter(function (a) {
     return a.published !== false && a.visibility === "members" && (a.minLevel || "trial") === level;
   }).sort(byNewest);
+
   if (!list.length) {
     box.innerHTML = '<section class="card notice"><h3>暂无</h3></section>';
     return;
@@ -1022,10 +816,6 @@ function renderMemberList() {
   list.forEach(function (a) { box.appendChild(articleCard(a)); });
 }
 
-
-
-/*
-
 function canSeePrivate(article) {
   const u = currentUser();
   if (!u) return false;
@@ -1033,41 +823,14 @@ function canSeePrivate(article) {
 
   const min = article.minLevel || "trial";
 
-  // 外盘栏：外盘VIP 和 尊享VIP 都能看
   if (min === "foreign") {
     return u.level === "foreign" || u.level === "ssvip";
   }
 
-  // 外盘VIP 不能看其他栏
-  if (u.level === "foreign") return false;
-
-  return rankOf(u.level) >= rankOf(min);
-}
-
-*/
-
-
-function canSeePrivate(article) {
-  const u = currentUser();
-  if (!u) return false;
-  if (u.level === "admin") return true;
-
-  const min = article.minLevel || "trial";
-
-  // 外盘栏：外盘VIP 和 尊享VIP 都能看
-  if (min === "foreign") {
-    return u.level === "foreign" || u.level === "ssvip";
-  }
-
-  // 外盘VIP、估值专属：不能看任何会员专栏
   if (u.level === "foreign" || u.level === "query") return false;
 
   return rankOf(u.level) >= rankOf(min);
 }
-
-
-
-
 
 function openArticle(id) {
   const a = (state.articles || []).find(function (x) { return x.id === id; });
@@ -1085,7 +848,7 @@ function openArticle(id) {
   });
   const priv = box.querySelector("#art-private");
   if (!currentUser() && a.visibility === "members") {
-    priv.innerHTML = '<div class="lock-box"><p>登录注册会员可查更多      。</p></div>';
+    priv.innerHTML = '<div class="lock-box"><p>登录注册会员可查更多内容。</p></div>';
     showView("article");
     return;
   }
@@ -1118,11 +881,9 @@ function renderPlans() {
       '<div class="level-tag">' + plan.name + "</div>" +
       '<div class="price">' + plan.price + " 元</div>" +
       '<p class="hint">' + plan.days + " 天</p>" +
-      "<ul><li>" + plan.queries + "</li><li>" + plan.articles + "</li>" + (plan.extras || []).map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
-
-
-
-      
+      "<ul><li>" + plan.queries + "</li><li>" + plan.articles + "</li>" +
+      (plan.extras || []).map(function (t) { return "<li>" + t + "</li>"; }).join("") +
+      "</ul>" +
       '<button class="primary" type="button">开通' + plan.name + "</button>";
     card.querySelector("button").addEventListener("click", function () { startVipOrder(plan.id); });
     grid.appendChild(card);
@@ -1140,7 +901,15 @@ function startVipOrder(planId) {
   const pending = { type: "vip", planId: planId, orderId: orderId, phone: u.phone };
   sessionStorage.setItem("pending-vip", JSON.stringify(pending));
   const db = ensureStore();
-  db.orders.push({ orderId: orderId, type: "vip", planId: planId, phone: u.phone, amount: plan.price, status: "pending", createdAt: Date.now() });
+  db.orders.push({
+    orderId: orderId,
+    type: "vip",
+    planId: planId,
+    phone: u.phone,
+    amount: plan.price,
+    status: "pending",
+    createdAt: Date.now()
+  });
   saveStore(db);
   $("v-plan-name").textContent = plan.name;
   $("v-amount").textContent = String(plan.price);
@@ -1172,7 +941,6 @@ async function refreshVip() {
   }
   alert("还没查到会员开通记录。请确认管理页开通的是当前登录手机号，然后退出重新登录。");
 }
-
 
 function applyPlan(phone, planId) {
   const plan = PLANS[planId];
@@ -1223,17 +991,12 @@ function closeLogin() {
   $("login-modal").hidden = true;
 }
 
-
-// 市场切换按钮
-document.querySelectorAll(".market-btn").forEach(btn => {
+// 市场切换按钮绑定
+document.querySelectorAll(".market-btn").forEach(function (btn) {
   btn.addEventListener("click", function () {
     switchMarket(this.dataset.market);
   });
 });
-
-
-
-
 
 async function boot() {
   restoreSession();
@@ -1247,17 +1010,17 @@ async function boot() {
   renderAccount();
   renderPlans();
   setStatus("正在连接数据源…");
+
   try {
     await loadArticles();
-   state.articlesLoaded = true;
-   if (state.view === "public") renderPublicList();
-   if (state.view === "members") renderMemberList();
-    
-    
+    state.articlesLoaded = true;
+    if (state.view === "public") renderPublicList();
+    if (state.view === "members") renderMemberList();
+
     if (currentApiBase()) {
       PAY.apiBase = currentApiBase();
       await loadCatalog();
-      setStatus("已连接云函数");
+      setStatus("已连接云函数，共 " + (state.total || state.rows.length) + " 只");
       renderChips();
       return;
     }
@@ -1268,14 +1031,6 @@ async function boot() {
     setStatus("加载失败：" + err.message);
   }
 }
-
-
-
-
-
-
-
-
 
 function saveUrl() {
   const url = $("csv-url").value.trim() || DEFAULT_CSV;
@@ -1373,7 +1128,6 @@ $("tabs").addEventListener("click", function (e) {
   showView(btn.dataset.view);
 });
 
-
 const memberTabs = $("member-tabs");
 if (memberTabs) {
   memberTabs.addEventListener("click", function (e) {
@@ -1383,9 +1137,6 @@ if (memberTabs) {
     renderMemberList();
   });
 }
-
-
-
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(function () {});
