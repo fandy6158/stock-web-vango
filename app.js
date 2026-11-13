@@ -595,7 +595,7 @@ function showPaywall(row, reason) {
   $("p-amount").textContent = PAY.amount;
   $("p-qr").src = PAY.qrSrc;
   $("p-order").textContent = orderId;
-  $("p-note").textContent = "付款后如遇不显示查询结果，请加微信：Vango77 或私信推特 X:@ai18431588";
+  $("p-note").textContent = "付款后如遇不显示查询结果，请加微信：TrustFan 或私信推特 X:@ai18431588";
   $("paywall").classList.add("show");
 }
 
