@@ -44,6 +44,7 @@ const PLANS = {
   svip: {
     id: "svip", name: "超级VIP", price: 2299, days: 365, rank: 3,
     queries: "12 个月内不限次数查询 5000多只A股多种估值模型查询",
+    queries: "12 个月内不限次数查询 3000多只美股多种估值模型查询",
     articles: "体验+VIP+SVIP等级专栏文章及分析数据",
     extras: [ "超级svip（盘中量化逻辑荐股++资产配置计划 ）"]
   },
@@ -427,19 +428,29 @@ function accessMode(market = "cn") {
     return { type: "member", mode: "full", reason: "admin" };
   }
 
-  // ========== 美股权限控制 ==========
-  if (market === "us") {
-    // 只允许这些等级查美股
-    const allowedUsLevels = ["svip", "ssvip", "foreign", "usquery"];
-    
-    if (u && allowedUsLevels.includes(u.level)) {
-      return { type: "member", mode: "full", reason: u.level };
-    }
-    
-    // 美股没有免费次数，直接要求付费或开通对应会员
-    return { type: "pay", mode: "full", reason: u ? "no-us-permission" : "guest" };
+   // ========== 美股权限控制 ==========
+if (market === "us") {
+  // 不限次数的等级
+  const unlimitedUsLevels = ["svip", "ssvip", "usquery"];
+  
+  if (u && unlimitedUsLevels.includes(u.level)) {
+    return { type: "member", mode: "full", reason: u.level };
   }
 
+  // 外盘VIP：有次数限制（和A股一样用 trialQueriesLeft）
+  if (u && u.level === "foreign") {
+    if ((u.trialQueriesLeft || 0) > 0) {
+      return { type: "free", mode: "full", reason: "foreign-quota" };
+    } else {
+      return { type: "pay", mode: "full", reason: "no-us-permission" };
+    }
+  }
+
+  // 其他情况都不能直接查美股
+  return { type: "pay", mode: "full", reason: u ? "no-us-permission" : "guest" };
+}
+
+  
   // ========== A股保持原来的逻辑 ==========
   if (u && (u.level === "foreign" || u.level === "query" || u.level === "usquery" || rankOf(u.level) >= 1)) {
     return { type: "member", mode: "full", reason: u.level };
@@ -454,18 +465,35 @@ function accessMode(market = "cn") {
 
 
 
-
-
-
 function consumeFreeQuery() {
   const u = currentUser();
-  if (!u || (u.freeQueriesLeft || 0) <= 0) return;
-  u.freeQueriesLeft -= 1;
+  if (!u) return;
+
+  if (u.level === "foreign" || u.level === "trial") {
+    if ((u.trialQueriesLeft || 0) <= 0) return;
+    u.trialQueriesLeft -= 1;
+  } else {
+    if ((u.freeQueriesLeft || 0) <= 0) return;
+    u.freeQueriesLeft -= 1;
+  }
+
   const db = ensureStore();
-  if (db.users[u.phone]) db.users[u.phone].freeQueriesLeft = u.freeQueriesLeft;
+  if (db.users[u.phone]) {
+    db.users[u.phone].trialQueriesLeft = u.trialQueriesLeft;
+    db.users[u.phone].freeQueriesLeft = u.freeQueriesLeft;
+  }
   saveStore(db);
   saveSession(u);
 }
+
+
+
+
+
+
+
+
+
 
 function renderResult(row, meta) {
   const box = $("result");
