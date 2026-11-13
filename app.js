@@ -1018,12 +1018,7 @@ document.querySelectorAll('.market-btn').forEach(function(btn) {
       }
     }
 
-    // 4. 这里调用你加载对应市场数据的函数
-    // 例如：
-    // loadMarketData(market);
-    // 或 state.market = market; 然后重新加载 catalog 等
-
-    console.log('当前切换到市场：', market);
+ 
   });
 });
 
