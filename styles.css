@@ -335,13 +335,13 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 /* 市场切换按钮 */
 .market-switch {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .market-btn {
   padding: 4px 8px;          /* 原来是 6px 14px，改小一点 */
-  border-radius: 20px;        /* 可选，圆角也稍微小一点 */
+  border-radius: 16px;        /* 可选，圆角也稍微小一点 */
   border: 1px solid #e5e7eb;
   background: #fff;
   color: #374151;
