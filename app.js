@@ -1,7 +1,8 @@
 
-/*
+
 const DEFAULT_CSV = "./data/stocks.csv";
 const STORAGE_KEY = "stock-pwa-csv-url";
+/*
 const SESSION_KEY = "vango-session";
 const STORE_KEY = "vango-local-db";
 const DEMO_OTP = "123456";
