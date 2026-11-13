@@ -44,6 +44,10 @@
       <button class="tab" data-view="plans" type="button">开通会员</button>
     </nav>
 
+
+
+    
+  <!--    
     <section class="view show" id="view-lookup">
       <section class="search-card">
         <div class="search-row">
@@ -51,8 +55,25 @@
           <button class="primary" id="lookup" type="button">查询</button>
         </div>
         <p class="hint" id="lookup-hint">输入股票代码，出现微信支付即可查。未登录扫码单次查询9.9元， 注册登录可免费查询 5 次；体验会员限100次，VIP会员期内可不限次数免费查询。</p>
-
         <div class="chips" id="chips"></div>
+
+ -->
+
+
+        <section class="view show" id="view-lookup">
+  <section class="search-card">
+    <!-- 新增：市场切换 -->
+    <div class="market-switch" style="display:flex;gap:8px;margin-bottom:12px;">
+      <button type="button" class="ghost slim market-btn on" data-market="cn">A股查询</button>
+      <button type="button" class="ghost slim market-btn" data-market="us">美股查询</button>
+    </div>
+
+    <div class="search-row">
+      <input id="query" type="text" inputmode="search" autocomplete="off" placeholder="输入A股股票代码或名称，如 600519" /> 
+      <button class="primary" id="lookup" type="button">查询</button>
+    </div>
+
+        
       </section>
       <p class="status" id="status"></p>
 
