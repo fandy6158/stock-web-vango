@@ -340,16 +340,15 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 .market-btn {
-  padding: 6px 14px;
-  border-radius: 18px;
+  padding: 4px 12px;          /* 原来是 6px 14px，改小一点 */
+  border-radius: 16px;        /* 可选，圆角也稍微小一点 */
   border: 1px solid #e5e7eb;
   background: #fff;
   color: #374151;
-  font-size: 13px;
+  font-size: 12px;            /* 字体也稍微小一点 */
   cursor: pointer;
   transition: all 0.2s;
 }
-
 /* 选中状态 */
 
 
@@ -362,13 +361,13 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 
 
 
-
-
 /* 鼠标悬停效果（可选） */
 .market-btn:hover:not(.active) {
   border-color: #f59e0b;
   color: #d97706;
 }
+
+
 
 
 
