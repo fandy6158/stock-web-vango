@@ -1,9 +1,30 @@
-const DEFAULT_CSV = "./data/stocks.csv";
 
+/*
+const DEFAULT_CSV = "./data/stocks.csv";
 const STORAGE_KEY = "stock-pwa-csv-url";
 const SESSION_KEY = "vango-session";
 const STORE_KEY = "vango-local-db";
 const DEMO_OTP = "123456";
+*/
+
+// A股默认CSV
+const DEFAULT_CSV_CN = "./data/stocks.csv";
+// 美股默认CSV
+const DEFAULT_CSV_US = "./data/us-stocks.csv";
+
+// 兼容原来的变量（默认还是用A股）
+const DEFAULT_CSV = DEFAULT_CSV_CN;
+const STORAGE_KEY = "stock-pwa-csv-url";
+const SESSION_KEY = "vango-session";
+const STORE_KEY = "vango-local-db";
+const DEMO_OTP = "123456";
+
+const CSV_MAP = {
+  cn: DEFAULT_CSV_CN,
+  us: DEFAULT_CSV_US
+};
+let currentMarket = "cn";   // 默认A股
+
 
 const PAY = {
   enabled: true,
@@ -313,9 +334,26 @@ function normalizeCode(value) {
   return String(value || "").trim().toUpperCase().replace(/\s+/g, "").replace(/\.SS$|\.SZ$|\.HK$|\.US$/i, "");
 }
 
+
+/*
 function currentCsvUrl() {
   return localStorage.getItem(STORAGE_KEY) || DEFAULT_CSV;
 }
+*/
+
+function currentCsvUrl() {
+  // 优先用当前市场对应的地址
+  if (CSV_MAP[currentMarket]) {
+    return CSV_MAP[currentMarket];
+  }
+  return localStorage.getItem(STORAGE_KEY) || DEFAULT_CSV;
+}
+
+
+
+
+
+
 
 function parseCsv(text) {
   const rows = [];
@@ -331,6 +369,50 @@ function parseCsv(text) {
   return rows;
 }
 
+
+ // -------------新增切换A股 美股按钮 可用
+async function switchMarket(market) {
+  if (market === currentMarket) return;
+  currentMarket = market;
+
+  // 更新按钮样式
+  document.querySelectorAll(".market-btn").forEach(btn => {
+    btn.classList.toggle("on", btn.dataset.market === market);
+  });
+
+  // 更新输入框提示
+  const input = $("query");
+  if (input) {
+    input.placeholder = market === "us" 
+      ? "输入美股代码或名称，如 AAPL / TSLA" 
+      : "输入A股股票代码或名称，如 600519";
+    input.value = "";
+  }
+
+  // 清空结果
+  $("result").classList.remove("show");
+  $("paywall").classList.remove("show");
+  setStatus("正在加载" + (market === "us" ? "美股" : "A股") + "数据…");
+
+  try {
+    // 如果走云函数，目前先提示（后面再扩展后端）
+    if (currentApiBase()) {
+      setStatus("当前为云函数模式，美股数据请先配置对应接口。暂时使用本地CSV。");
+    }
+    await loadCsv(currentCsvUrl());
+    setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
+    renderChips();
+  } catch (err) {
+    setStatus("加载失败：" + err.message);
+  }
+}
+
+
+
+
+
+
+
 async function loadCsv(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("无法读取 CSV（HTTP " + res.status + "）");
@@ -342,6 +424,13 @@ async function loadCsv(url) {
   state.loadedAt = new Date();
   return rows;
 }
+
+
+
+
+
+
+
 
 function restoreCache() {
   try {
@@ -1129,6 +1218,21 @@ async function boot() {
     setStatus("加载失败：" + err.message);
   }
 }
+
+
+
+// 市场切换按钮
+document.querySelectorAll(".market-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    switchMarket(this.dataset.market);
+  });
+});
+
+
+
+
+
+
 
 function saveUrl() {
   const url = $("csv-url").value.trim() || DEFAULT_CSV;
