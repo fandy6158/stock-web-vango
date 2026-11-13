@@ -348,10 +348,6 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   transition: all 0.2s;
 }
 
-.market-btn.on {
-  background: #f59e0b;      /* 黄色背景 */
-  color: #fff;
-  border-color: #f59e0b;
-  font-weight: 600;
-}
+
+
 
