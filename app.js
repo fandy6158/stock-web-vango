@@ -28,6 +28,32 @@ const PAY = {
 };
 
 const PLANS = {
+
+ query: {
+    id: "query", 
+    name: "A股专属估值VIP",
+    price: 899,
+    days: 365,
+    rank: 0,
+    queries: "365天内不限次数查询 5000多只A股多种估值模型",
+    articles: "不含任何会员专栏文章，仅限估值查询系统",
+    extras: ["专为只需要估值工具的用户设计，性价比更高"]
+  },
+
+
+usquery: {
+  id: "usquery",
+  name: "美股专属估值VIP",
+  price: 699,          // 你自己定价格
+  days: 365,
+  rank: 0,              // 和 foreign、query 一样，不参与专栏等级
+  queries: "365天内不限次数查询 3000多只美股多种估值模型",
+  articles: "不含任何会员专栏文章，仅限美股估值查询",
+  extras: ["专为只需要美股估值工具的用户设计"]
+},
+
+
+  
   trial: {
     id: "trial", name: "体验VIP", price: 299, days: 7, rank: 1,
     queries: "7 天100次免费查询 5000多只A股多种估值模型",
@@ -62,30 +88,8 @@ const PLANS = {
     queries:  "赠送365天内100次内免费查询 A股5000多只+美股3000多只多种估值模型查询",
     articles: "仅查外盘栏，每周更新1-2篇，极高胜率才发文。",
     extras: [ "外盘栏vip：提供追踪BTC/黄金/原油/外汇/美股/国内期货 投资机会的策略文章服务" ]
-  },
-
-  query: {
-    id: "query", 
-    name: "A股专属估值VIP",
-    price: 899,
-    days: 365,
-    rank: 0,
-    queries: "365天内不限次数查询 5000多只A股多种估值模型",
-    articles: "不含任何会员专栏文章，仅限估值查询系统",
-    extras: ["专为只需要估值工具的用户设计，性价比更高"]
-  },
-
-usquery: {
-  id: "usquery",
-  name: "美股专属估值VIP",
-  price: 699,          // 你自己定价格
-  days: 365,
-  rank: 0,              // 和 foreign、query 一样，不参与专栏等级
-  queries: "365天内不限次数查询 3000多只美股多种估值模型",
-  articles: "不含任何会员专栏文章，仅限美股估值查询",
-  extras: ["专为只需要美股估值工具的用户设计"]
-}
-  
+  }
+ 
 };
 
 
