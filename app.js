@@ -1,6 +1,6 @@
 
 
-const DEFAULT_CSV = "./data/stocks.csv";
+
 
 
 
