@@ -991,9 +991,13 @@ function closeLogin() {
  document.querySelectorAll(".market-btn").forEach(function (btn) {
    btn.addEventListener("click", function () {
     switchMarket(this.dataset.market);
+
+     // 切换市场成功后，加上这两行就行
+document.querySelectorAll('.market-btn').forEach(btn => btn.classList.remove('active'));
+event.currentTarget.classList.add('active');   // 或者 this.classList.add('active');
+
        });
   });
-
 
 
 
