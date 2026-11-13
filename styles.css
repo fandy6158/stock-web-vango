@@ -341,7 +341,7 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 
 .market-btn {
   padding: 6px 14px;
-  border-radius: 20px;
+  border-radius: 18px;
   border: 1px solid #e5e7eb;
   background: #fff;
   color: #374151;
@@ -356,7 +356,7 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 .market-btn.active {
   background: linear-gradient(180deg, #f0d48a, #c9a14a);
   color: #1a1406;
-  border-color: transparent;
+/*   border-color: transparent;  */
   font-weight: 600;
 }
 
