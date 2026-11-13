@@ -388,7 +388,7 @@ async function loadCsv(url) {
 
 
 
-// -------------新增切换A股 美股按钮 可用
+
 async function switchMarket(market) {
   if (market === currentMarket) return;
   currentMarket = market;
@@ -401,29 +401,34 @@ async function switchMarket(market) {
   // 更新输入框提示
   const input = $("query");
   if (input) {
-    input.placeholder = market === "us" 
-      ? "输入美股代码或名称，如 AAPL / TSLA" 
+    input.placeholder = market === "us"
+      ? "输入美股代码或名称，如 AAPL / TSLA"
       : "输入A股股票代码或名称，如 600519";
     input.value = "";
   }
 
   // 清空结果
-  $("result").classList.remove("show");
-  $("paywall").classList.remove("show");
+  if ($("result")) $("result").classList.remove("show");
+  if ($("paywall")) $("paywall").classList.remove("show");
+
   setStatus("正在加载" + (market === "us" ? "美股" : "A股") + "数据…");
 
   try {
-    // 如果走云函数，目前先提示（后面再扩展后端）
     if (currentApiBase()) {
-      setStatus("当前为云函数模式，美股数据请先配置对应接口。暂时使用本地CSV。");
+      await loadCatalog();          // 走云函数
+      setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
+      renderChips();
+    } else {
+      // 本地演示模式才走CSV
+      await loadCsv(currentCsvUrl());
+      setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
+      renderChips();
     }
-    await loadCsv(currentCsvUrl());
-    setStatus((market === "us" ? "美股" : "A股") + "数据已加载，共 " + state.rows.length + " 只");
-    renderChips();
   } catch (err) {
     setStatus("加载失败：" + err.message);
   }
 }
+
 
 
 
@@ -643,6 +648,7 @@ function showPaywall(row, reason) {
   $("paywall").classList.add("show");
 }
 
+/*
 async function loadCatalog() {
   const res = await fetch(apiUrl("/catalog"), { cache: "no-store" });
   if (!res.ok) throw new Error("云函数 catalog 失败");
@@ -650,6 +656,19 @@ async function loadCatalog() {
   state.rows = data.items || [];
   state.source = currentApiBase();
 }
+*/
+
+async function loadCatalog() {
+  const res = await fetch(apiUrl("/catalog", { market: currentMarket }), { cache: "no-store" });
+  if (!res.ok) throw new Error("云函数 catalog 失败");
+  const data = await res.json();
+  state.rows = data.items || [];
+  state.source = currentApiBase();
+}
+
+
+
+
 
 async function loadArticles() {
   var publicItems = [];
@@ -701,7 +720,20 @@ function renderChips() {
 
 async function reveal(code, orderId) {
   const u = currentUser();
+  /*
   const url = apiUrl("/reveal", { code: code, order: orderId, phone: u ? u.phone : "", token: u ? u.token : "" });
+  */
+const url = apiUrl("/reveal", { 
+  code: code, 
+  order: orderId, 
+  phone: u ? u.phone : "", 
+  token: u ? u.token : "",
+  market: currentMarket
+});
+
+
+
+  
   const res = await fetch(url, { cache: "no-store", headers: authHeaders() });
   const data = await res.json();
   if (data.ok && data.item) {
@@ -732,7 +764,11 @@ async function lookup() {
   try {
     var item = null;
     if (currentApiBase()) {
-    const res = await fetch(apiUrl("/lookup", { code: q }), {
+   /*     
+   const res = await fetch(apiUrl("/lookup", { code: q }), {
+   */
+    const res = await fetch(apiUrl("/lookup", { code: q, market: currentMarket }), {
+      
      cache: "no-store",
      headers: authHeaders()
     });
