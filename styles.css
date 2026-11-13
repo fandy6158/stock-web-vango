@@ -329,7 +329,6 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 
-/* 市场切换按钮 */
 .market-switch {
   display: flex;
   gap: 8px;
@@ -347,19 +346,14 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
   transition: all 0.2s;
 }
 
-/* 选中状态 */
 .market-btn.active {
-  background: #f59e0b;          /* 橙色背景，和顶部“量化估值查询”按钮接近 */
-  color: #fff;                  /* 白色文字 */
+  background: #f59e0b;      /* 橙色背景 */
+  color: #000;              /* 黑色字体 */
   border-color: #f59e0b;
   font-weight: 600;
 }
 
-
-/* 鼠标悬停效果（可选） 
 .market-btn:hover:not(.active) {
   border-color: #f59e0b;
   color: #d97706;
-  */
 }
-
