@@ -66,14 +66,26 @@ const PLANS = {
 
   query: {
     id: "query", 
-    name: "估值专属VIP",
+    name: "A股专属估值VIP",
     price: 999,
     days: 365,
     rank: 0,
     queries: "365天内不限次数查询 5000多只A股多种估值模型",
     articles: "不含任何会员专栏文章，仅限估值查询系统",
     extras: ["专为只需要估值工具的用户设计，性价比更高"]
-  }
+  },
+
+usquery: {
+  id: "usquery",
+  name: "美股专属估值VIP",
+  price: 799,          // 你自己定价格
+  days: 365,
+  rank: 0,              // 和 foreign、query 一样，不参与专栏等级
+  queries: "365天内不限次数查询美股估值",
+  articles: "不含任何会员专栏文章，仅限美股估值查询",
+  extras: ["专为只需要美股估值工具的用户设计"]
+}
+  
 };
 
 
@@ -84,7 +96,8 @@ const LEVEL_LABEL = {
   svip: "超级VIP",
   ssvip: "尊享vip",
   foreign: "外盘栏vip",
-  query: "估值专属VIP",
+  query: "A股专属估值VIP",
+  usquery: "美股专属估值VIP"
   admin: "管理员"
 };
 
@@ -393,15 +406,49 @@ function filterFields(row) {
   return row;
 }
 
-function accessMode() {
+
+
+
+
+
+
+function accessMode(market = "cn") {
   const u = currentUser();
-  if (u && u.level === "admin") return { type: "member", mode: "full", reason: "admin" };
-  if (u && (u.level === "foreign" || u.level === "query" || rankOf(u.level) >= 1)) {
+  
+  // 管理员永远可以
+  if (u && u.level === "admin") {
+    return { type: "member", mode: "full", reason: "admin" };
+  }
+
+  // ========== 美股权限控制 ==========
+  if (market === "us") {
+    // 只允许这些等级查美股
+    const allowedUsLevels = ["svip", "ssvip", "foreign", "usquery"];
+    
+    if (u && allowedUsLevels.includes(u.level)) {
+      return { type: "member", mode: "full", reason: u.level };
+    }
+    
+    // 美股没有免费次数，直接要求付费或开通对应会员
+    return { type: "pay", mode: "full", reason: u ? "no-us-permission" : "guest" };
+  }
+
+  // ========== A股保持原来的逻辑 ==========
+  if (u && (u.level === "foreign" || u.level === "query" || u.level === "usquery" || rankOf(u.level) >= 1)) {
     return { type: "member", mode: "full", reason: u.level };
   }
-  if (u && (u.freeQueriesLeft || 0) > 0) return { type: "free", mode: "full", reason: "quota" };
+  if (u && (u.freeQueriesLeft || 0) > 0) {
+    return { type: "free", mode: "full", reason: "quota" };
+  }
   return { type: "pay", mode: "full", reason: u ? "no-quota" : "guest" };
 }
+
+
+
+
+
+
+
 
 function consumeFreeQuery() {
   const u = currentUser();
@@ -641,7 +688,13 @@ async function lookup() {
 
     const pending = JSON.parse(sessionStorage.getItem("pending-order") || "null");
     const same = pending && pending.type !== "vip" && normalizeCode(pending.code) === normalizeCode(item["代码"] || item.code);
-    const access = accessMode();
+   // const access = accessMode();
+
+
+    const currentMarket = document.querySelector(".market-btn.active")?.dataset.market || "cn";
+    const access = accessMode(currentMarket);
+
+    
 
     if (access.type === "member") {
       setStatus("");
