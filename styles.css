@@ -340,8 +340,8 @@ footer { margin-top: 28px; color: #666; font-size: 12px; text-align: center; lin
 }
 
 .market-btn {
-  padding: 4px 12px;          /* 原来是 6px 14px，改小一点 */
-  border-radius: 16px;        /* 可选，圆角也稍微小一点 */
+  padding: 4px 8px;          /* 原来是 6px 14px，改小一点 */
+  border-radius: 14px;        /* 可选，圆角也稍微小一点 */
   border: 1px solid #e5e7eb;
   background: #fff;
   color: #374151;
