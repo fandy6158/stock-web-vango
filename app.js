@@ -32,7 +32,7 @@ const PLANS = {
  query: {
     id: "query", 
     name: "A股专属估值VIP",
-    price: 599,
+    price: 399,
     days: 365,
     rank: 0,
     queries: "365天内不限次数查询 5000多只A股多种估值模型",
@@ -44,7 +44,7 @@ const PLANS = {
 usquery: {
   id: "usquery",
   name: "美股专属估值VIP",
-  price: 499,          // 你自己定价格
+  price: 399,          // 你自己定价格
   days: 365,
   rank: 0,              // 和 foreign、query 一样，不参与专栏等级
   queries: "365天内不限次数查询 3000多只美股多种估值模型",
