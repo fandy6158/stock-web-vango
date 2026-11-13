@@ -97,7 +97,7 @@ const LEVEL_LABEL = {
   ssvip: "尊享vip",
   foreign: "外盘栏vip",
   query: "A股专属估值VIP",
-  usquery: "美股专属估值VIP"
+  usquery: "美股专属估值VIP",
   admin: "管理员"
 };
 
@@ -202,7 +202,7 @@ function rankOf(level) {
   if (level === "svip") return 3;
   if (level === "vip") return 2;
   if (level === "trial") return 1;
-  if (level === "query" || level === "foreign") return 0;
+  if (level === "query" || level === "foreign"|| level === "usquery") return 0;
   return 0;
 }
 
@@ -338,10 +338,16 @@ async function switchMarket(market) {
   currentMarket = market;
 
   // 更新按钮高亮
-  document.querySelectorAll(".market-btn").forEach(function (btn) {
-    btn.classList.toggle("on", btn.dataset.market === market);
-  });
+//  document.querySelectorAll(".market-btn").forEach(function (btn) {
+//    btn.classList.toggle("on", btn.dataset.market === market);
+//  });
 
+// 更新按钮高亮
+   document.querySelectorAll(".market-btn").forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.market === market);
+   });
+  
+  
   // 更新输入框提示
   const input = $("query");
   if (input) {
@@ -691,8 +697,13 @@ async function lookup() {
    // const access = accessMode();
 
 
-    const currentMarket = document.querySelector(".market-btn.active")?.dataset.market || "cn";
-    const access = accessMode(currentMarket);
+ //    const currentMarket = document.querySelector(".market-btn.active")?.dataset.market || "cn";
+ //   const access = accessMode(currentMarket);
+   const access = accessMode(currentMarket); 
+
+
+
+
 
     
 
