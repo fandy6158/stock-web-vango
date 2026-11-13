@@ -988,11 +988,54 @@ function closeLogin() {
 }
 
 // 市场切换按钮绑定
-document.querySelectorAll(".market-btn").forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    switchMarket(this.dataset.market);
+//  document.querySelectorAll(".market-btn").forEach(function (btn) {
+//    btn.addEventListener("click", function () {
+//     switchMarket(this.dataset.market);
+//        });
+//      });
+
+
+
+// ===================== 市场切换按钮（A股 / 美股） =====================
+document.querySelectorAll('.market-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    // 1. 切换选中样式
+    document.querySelectorAll('.market-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    this.classList.add('active');
+
+    // 2. 获取当前市场
+    const market = this.getAttribute('data-market'); // "cn" 或 "us"
+
+    // 3. 更新输入框提示文字
+    const input = document.getElementById('query');
+    if (input) {
+      if (market === 'us') {
+        input.placeholder = '输入美股代码或名称，如 AAPL / TSLA';
+      } else {
+        input.placeholder = '输入A股代码或名称，如 600519';
+      }
+    }
+
+    // 4. 这里调用你加载对应市场数据的函数
+    // 例如：
+    // loadMarketData(market);
+    // 或 state.market = market; 然后重新加载 catalog 等
+
+    console.log('当前切换到市场：', market);
   });
 });
+
+
+
+
+
+
+
+
+
+
 
 async function boot() {
   restoreSession();
