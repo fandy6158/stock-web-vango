@@ -987,19 +987,21 @@ function closeLogin() {
   $("login-modal").hidden = true;
 }
 
+
+
 // 市场切换按钮绑定
- document.querySelectorAll(".market-btn").forEach(function (btn) {
-   btn.addEventListener("click", function () {
+document.querySelectorAll(".market-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    // 1. 先执行原来的切换逻辑
     switchMarket(this.dataset.market);
 
-     // 切换市场成功后，加上这两行就行
-document.querySelectorAll('.market-btn').forEach(btn => btn.classList.remove('active'));
-event.currentTarget.classList.add('active');   // 或者 this.classList.add('active');
-
-       });
+    // 2. 切换选中样式
+    document.querySelectorAll(".market-btn").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    this.classList.add("active");
   });
-
-
+});
 
 
 
