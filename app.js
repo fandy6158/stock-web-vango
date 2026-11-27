@@ -58,7 +58,7 @@ usquery: {
     id: "trial", name: "体验VIP", price: 299, days: 7, rank: 1,
     queries: "7 天100次免费查询 5000多只A股多种估值模型",
     articles: "体验档文章及分析数据",
-    extras: [ "体验栏文章，内部含有2-3支个股。由量化公式在开盘前5min选出，属强势超短标的"]
+    extras: [ "体验栏文章:1进2策略，盘前5min量化选出1-3支，短线强势"]
   },
   
   vip: {
